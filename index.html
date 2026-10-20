@@ -12818,9 +12818,7 @@ const SPIEL = (() => {
       var f=Math.round(bilder*1000/(t-start)); bilder=0; start=t;
       el.className = f>=57?'':(f>=40?'mittel':'schlecht');
       var stufe = 0; try { if (typeof SPIEL!=='undefined' && SPIEL.laeuft && typeof SPIEL.grafikStufe==='number') stufe = SPIEL.grafikStufe; } catch(e){}
-      // V5.5: dazu die FPS, die ohne Bildschirm-Grenze möglich wären (aus der Rechenzeit pro Bild)
-      var moeglich = 0; try { if (typeof SPIEL!=='undefined' && SPIEL.laeuft && SPIEL.rechenzeit > 0) moeglich = Math.round(1000 / SPIEL.rechenzeit); } catch(e){}
-      el.innerHTML = f+' FPS'+(moeglich>f?'<small>möglich ~'+Math.min(999, moeglich)+'</small>':'')+(stufe>0?'<small>Auto '+stufe+'</small>':'');
+      el.innerHTML = f+' FPS'+(stufe>0?'<small>Auto '+stufe+'</small>':'');
     }
   }
   function knoepfe(){
