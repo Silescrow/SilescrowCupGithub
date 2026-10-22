@@ -1600,7 +1600,8 @@ body::before{
 #spielerEditWahl .se-actions{display:flex;gap:8px}
 #spielerEditWahl .se-actions .se-entf{flex:0 0 auto;background:#ff6b6b !important;color:#fff !important;border:2px solid #000;border-radius:10px;font:900 13px var(--text,Arial);padding:0 10px;cursor:pointer}
 #spielerEditWahl .se-actions .se-close{flex:1 1 auto}
-#menue #plaetze .platz .du-bearbeiten{display:none !important}
+#menue #plaetze .platz .du-bearbeiten{display:grid !important;place-items:center;transform:none !important;position:absolute !important;right:2px !important;top:2px !important;left:auto !important;width:17px !important;height:17px !important;min-width:0 !important;padding:0 !important;border:1.5px solid #0b1430 !important;border-radius:50% !important;background:#ffe234 !important;font-size:0 !important;line-height:1 !important;animation:none !important;box-shadow:1px 1px 0 rgba(0,0,0,.4) !important;z-index:9}
+#menue #plaetze .platz .du-bearbeiten span{font-size:11px !important;line-height:1;color:#0b1430}   /* V6.0: kleines ✎ zeigt: antippen = Nummer/Position ändern */
 #menue #plaetze .platz.belegt{cursor:pointer}
 #spielerEditWahl .se-more{grid-column:1/-1;background:#1e3268}
 #spielerEditWahl .se-moregrid{display:grid;grid-template-columns:repeat(8,1fr);gap:4px;margin-top:6px}
@@ -4984,7 +4985,7 @@ function zeichnePlaetze(){
     const steuer = (i === 0 || !p) ? '' : '<button class=\"tw' + (zustand.torwart === i ? ' an' : ' pos-' + (zustand.posi[idx] || '').toLowerCase()) + '\" type=\"button\" aria-label=\"Position von ' + p.name + ' ändern\">' + (zustand.torwart === i ? '<svg viewBox=\"0 0 16 16\"><path d=\"M4 15V7.5C4 6 6 6 6 7.5V4C6 2.5 8 2.5 8 4V3.5C8 2 10 2 10 3.5V4.5C10 3 12 3 12 4.5V10C12 13 10 15 8 15Z\" fill=\"currentColor\"/></svg>TOR' : (formLabel(idx) || POS_TEXT[zustand.posi[idx]] || '–')) + '<i class=\"wechsel\" aria-hidden=\"true\">✎</i></button><button class=\"nrwahl\" type=\"button\" aria-label=\"Trikotnummer von ' + p.name + ' ändern\">#' + (zustand.nummern[idx] || '') + '</button>';
     const positionsanzeige = (sl.gastk !== undefined && sl.gastk !== -1) ? '<span class=\"posnur\">' + (POS_TEXT[zustand.posi[idx]] || '') + '</span>' : (sl.gastk === -1 ? '' : steuer);
     el.innerHTML =
-      '<div class=\"kopfband\">' + n + (p ? '<button type=\"button\" class=\"du-bearbeiten\" aria-label=\"' + (i === 0 || sl.gastk === -1 ? 'Eigenen Spieler bearbeiten' : 'KI-Spieler bearbeiten') + '\"><span>' + (i === 0 || sl.gastk === -1 ? '✎' : '🪄') + '</span> ÄNDERN</button>' : '') + '</div>' +
+      '<div class=\"kopfband\">' + n + (p ? '<button type=\"button\" class=\"du-bearbeiten\" aria-label=\"' + (i === 0 || sl.gastk === -1 ? 'Eigenen Spieler bearbeiten' : 'KI-Spieler bearbeiten') + '\"><span>' + '✎</span> ÄNDERN</button>' : '') + '</div>' +
       '<svg class=\"trikot\" viewBox=\"0 0 64 56\" fill=\"none\" stroke=\"#0b1430\" stroke-width=\"2.5\" stroke-dasharray=\"5 4\" stroke-linejoin=\"round\"><path d=\"M22 4 L10 9 L2 22 L12 28 L16 22 V52 H48 V22 L52 28 L62 22 L54 9 L42 4 C40 9 36 12 32 12 C28 12 24 9 22 4 Z\"/></svg>' +
       '<div class=\"frage\">' + (p ? p.rating : '?') + '</div>' +
       (p ? '<img src=\"' + BILDER[p.bild] + '\" alt=\"\">' + positionsanzeige + '<div class=\"pname\"><span>' + p.name + '</span><b class=\"poskurz ' + (zustand.torwart === i ? 'twkurz' : '') + '\" title=\"Position\">' + ((sl.gastk === undefined && zustand.torwart !== i && formLabel(idx)) || (POS_KURZ[sl.gastk === -1 ? (gastPos(idx) || 'STU') : zustand.torwart === i ? 'TW' : (zustand.posi[idx] || 'STU')] || 'ST')) + '</b></div>' : '');
