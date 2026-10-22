@@ -7897,7 +7897,7 @@ const SPIEL = (() => {
   const schwung = p => (p.team === 0 && s && s.schwungBis != null && s.zeit > s.schwungBis && !istStar(p)) ? 6 : 0;
   const W = (p, k) => effWert((p.w ? p.w[k] : p.rating) + schwung(p), p.team);
   const spezAn = (p, k) => false;   // V5.0: keine Spezialfähigkeiten
-  const kann = (p, f) => !!(p && p.fae && p.fae.includes(f));   // V5.3: realistische Fähigkeiten (FAEHIGKEIT)
+  const hatFae = (p, f) => !!(p && p.fae && p.fae.includes(f));   // V6.1: umbenannt (vorher 'kann' – kollidierte mit der Torwart-Variable 'kann' in paraden → Absturz)   // V5.3: realistische Fähigkeiten (FAEHIGKEIT)
   // Neon-Fußballschuhe: jeder Spieler hat seine feste Farbe, nie ähnlich wie Trikot oder Stutzen
   const NEON = [['#ff2fa0','#ffffff'],['#1e7bff','#ffffff'],['#ff7a00','#111'],['#f5ff1f','#111'],['#00e5d4','#111'],['#a54bff','#ffffff']];
   const neonRgb = c => { c = String(c || '#000').replace('#',''); if (c.length === 3) c = c.split('').map(x => x + x).join(''); const n = parseInt(c, 16) || 0; return [n >> 16 & 255, n >> 8 & 255, n & 255]; };
@@ -8640,13 +8640,13 @@ const SPIEL = (() => {
   function pst(p){ return p.st || (p.st = { tore: 0, vorlagen: 0, schuesse: 0, aufsTor: 0, paesse: 0, passOk: 0, ballGew: 0, paraden: 0, gegentore: 0, fouls: 0, gelb: 0, rot: 0 }); }
   function passen(p, m, hoch, kraft = 0){   // V5.4: kraft 0..1 = PASS gehalten -> schneller und weiter, etwas ungenauer
     const b = welt.ball, st = STUFE[s.stufe];
-    const genau = Math.min(1, (spezAn(p, 'pas') ? 1 : (p.team === 1 ? st.genau : .85) * (.85 + (W(p, 'pas') - 70) * .012)) * (kann(p, 'pass') ? 1.15 : 1));
+    const genau = Math.min(1, (spezAn(p, 'pas') ? 1 : (p.team === 1 ? st.genau : .85) * (.85 + (W(p, 'pas') - 70) * .012)) * (hatFae(p, 'pass') ? 1.15 : 1));
     const vor = Math.min(1.1, d2(p.p, m.p) / 11);
     const ziel = m.p.clone().addScaledVector(m.v, .45 + vor * .45);
     const weg = V(ziel.x - b.p.x, 0, ziel.z - b.p.z), dist = weg.length();
     {   // V5.8: Fehlpässe - Passwert, Entfernung und Gegnerdruck bestimmen die Streuung
       const skill = klemme((W(p, 'pas') - 50) / 40, 0, 1);                          // 0 = Passwert 50 (schwach), 1 = Passwert 90 (stark)
-      let maxW = spezAn(p, 'pas') ? 0 : (18 - 16.5 * skill) * Math.PI / 180 * (kann(p, 'pass') ? .45 : 1);          // schwach bis ca. 18 Grad, stark nur ca. 1,5 Grad
+      let maxW = spezAn(p, 'pas') ? 0 : (18 - 16.5 * skill) * Math.PI / 180 * (hatFae(p, 'pass') ? .45 : 1);          // schwach bis ca. 18 Grad, stark nur ca. 1,5 Grad
       if (p.team === 1) maxW *= (1.5 - st.genau * .67);                               // KI-Stufe: leicht ungenauer, stark genauer
       maxW *= 1 + klemme((dist - 10) / 20, 0, 1) * .6;                                // lange Pässe ungenauer
       let nahG = 99; for (const q of teamSp(1 - p.team)) nahG = Math.min(nahG, d2(q.p, p.p));
@@ -8686,15 +8686,15 @@ const SPIEL = (() => {
     // Weitschüsse: ab ca. 10 m vor dem Tor streut der Schuss seitlich und in der Höhe (mehr vorbei / drüber)
     const weit = klemme((Math.abs(gx - b.p.x) - 10) / 12, 0, 1);
     // V5.3: Finesse-Schuss – ohne eigenen Effet dreht er den Ball automatisch ins lange Eck
-    if (kann(p, 'finesse') && !effet && Math.abs(gx - b.p.x) > 8){ const lang = -(Math.sign(b.p.z) || 1); zielZ = lang * (TB - .55); effet = lang * 2.6; zeigeHinweis('🌀 FINESSE!', .9); }
+    if (hatFae(p, 'finesse') && !effet && Math.abs(gx - b.p.x) > 8){ const lang = -(Math.sign(b.p.z) || 1); zielZ = lang * (TB - .55); effet = lang * 2.6; zeigeHinweis('🌀 FINESSE!', .9); }
     if (weit > 0){
-      const ruhig = kann(p, 'schuss') || kann(p, 'finesse') ? .55 : 1;
+      const ruhig = hatFae(p, 'schuss') || hatFae(p, 'finesse') ? .55 : 1;
       zielZ += (Math.random() - .5) * weit * 7.5 * ruhig;
       zielY = Math.max(.1, zielY + (Math.random() - .35) * weit * 4.2 * ruhig);
     }
     b.schussX0 = b.p.x;
     const feuer = spezAn(p, 'sch');
-    const tempo = (12.5 + kraft * 12.5) * (.9 + (W(p, 'sch') - 70) * .01) * (feuer ? 1.3 : 1) * (kann(p, 'schuss') ? 1.1 : 1);
+    const tempo = (12.5 + kraft * 12.5) * (.9 + (W(p, 'sch') - 70) * .01) * (feuer ? 1.3 : 1) * (hatFae(p, 'schuss') ? 1.1 : 1);
     let weg = V(gx - b.p.x, 0, zielZ - b.p.z), dist = weg.length(), T = flugZeit(dist, tempo), drall = 0;
     if (effet && dist > 5){
       // V2.5: Angedrehter Schuss – Startrichtung geht am Ziel vorbei, der Drall holt den Ball zurück aufs Ziel
@@ -9503,7 +9503,7 @@ const SPIEL = (() => {
       for (const p of aktiv()){
         if (p.sperre > 0 || p.gefallen > 0) continue;
         const d = d2(p.p, b.p), istTW = p.rolle === 'TW' && imStrafraum(p.p, p.team);
-        const reich = istTW ? (b.flanke ? 1.1 : .85) : (b.passZiel === p ? .85 : .58) * (kann(p, 'welt') ? 1.18 : 1), hoehe = istTW ? 2.6 : .8;   // V4.1: Pass-Empfänger nimmt etwas weiter an
+        const reich = istTW ? (b.flanke ? 1.1 : .85) : (b.passZiel === p ? .85 : .58) * (hatFae(p, 'welt') ? 1.18 : 1), hoehe = istTW ? 2.6 : .8;   // V4.1: Pass-Empfänger nimmt etwas weiter an
         if (d < reich && b.p.y < hoehe){
           if (istTW && b.v.x * richt(p.team) < -6){ continue; }              // Schuss aufs Tor: Parade-Prüfung unten
           const rel = Math.hypot(b.v.x - p.v.x, b.v.z - p.v.z);
@@ -9521,7 +9521,7 @@ const SPIEL = (() => {
     // Kopfball nach Flanke
     if (!b.besitzer && b.flanke && b.p.y > .8 && b.p.y < 2.9){
       // V5.3: Spieler springen zum Ball – mehr Reichweite; wer am nächsten dran ist, gewinnt das Kopfballduell
-      const kopfKand = aktiv().filter(p => !(p.sperre > 0 || p.gefallen > 0 || p.rolle === 'TW') && d2(p.p, b.p) < (istMensch(p) ? 1.6 : 1.4) + (kann(p, 'kopf') ? .45 : 0)).sort((a, q) => d2(a.p, b.p) / (kann(a, 'kopf') ? 1.7 : 1) - d2(q.p, b.p) / (kann(q, 'kopf') ? 1.7 : 1));
+      const kopfKand = aktiv().filter(p => !(p.sperre > 0 || p.gefallen > 0 || p.rolle === 'TW') && d2(p.p, b.p) < (istMensch(p) ? 1.6 : 1.4) + (hatFae(p, 'kopf') ? .45 : 0)).sort((a, q) => d2(a.p, b.p) / (hatFae(a, 'kopf') ? 1.7 : 1) - d2(q.p, b.p) / (hatFae(q, 'kopf') ? 1.7 : 1));
       for (const p of kopfKand){
         {
           p.sprung = .5; b.flanke = false; b.letzter = p; b.letzteTeam = p.team; b.passZiel = null;
@@ -9535,7 +9535,7 @@ const SPIEL = (() => {
             musik.sfx && musik.sfx.schuss(.4);
             break;
           }
-          if (zumTor){ const kopfG = kann(p, 'kopf'), vol = kann(p, 'volley') && b.p.y < 1.5;
+          if (zumTor){ const kopfG = hatFae(p, 'kopf'), vol = hatFae(p, 'volley') && b.p.y < 1.5;
             const zz = kopfG || vol ? (Math.random() < .5 ? -1 : 1) * zufall(TB - 1.2, TB - .4) : klemme(zufall(-TB + .4, TB - .4), -TB, TB), w = V(gx - b.p.x, 0, zz - b.p.z).normalize();
             const vv = vol ? zufall(17, 21) : kopfG ? zufall(13, 16) : zufall(11, 14);
             b.v.set(w.x * vv, vol ? zufall(-.5, 1.5) : zufall(-2.5, .5), w.z * vv); if (vol) zeigeHinweis('🦶 VOLLEY!', 1); b.schussVon = p; b.schussX0 = b.p.x; s.stat.schuesse[p.team]++; zeigeHinweis('Kopfball!', 1); (typeof KOMMENTAR !== 'undefined') && !s.gast && KOMMENTAR.ereignis(b.ausEcke ? 'kopfball_ecke' : 'schuss', p.name, true); }
@@ -9554,7 +9554,7 @@ const SPIEL = (() => {
         if (p.sperre > 0 || p.gefallen > 0 || p.grae > 0) continue;
         if (d2(p.p, h.p) < .72){
           let rate = .85 * Math.pow(W(p, 'abw') / W(h, 'dri'), 3) * (p.team === 1 ? st.zweikampf : 1);
-          if (spezAn(p, 'abw')) rate *= 3; if (spezAn(h, 'dri')) rate *= .15; if (kann(p, 'zweikampf')) rate *= 1.5;
+          if (spezAn(p, 'abw')) rate *= 3; if (spezAn(h, 'dri')) rate *= .15; if (hatFae(p, 'zweikampf')) rate *= 1.5;
           if (istMensch(p)) rate *= 1.35;
           if (h.rolle === 'TW' && imStrafraum(h.p, h.team)) rate = 0;
           if (Math.random() < rate * dt){
@@ -9575,7 +9575,7 @@ const SPIEL = (() => {
       if (h && h.team !== p.team && d2(p.p, h.p) < 1.05){
         p.tackleT = 0;
         let chance = klemme(.55 + (W(p, 'abw') - W(h, 'dri')) * .02 + (s.stufe === 'leicht' ? .15 : s.stufe === 'stark' ? -.1 : 0), .25, .88);
-        if (spezAn(p, 'abw')) chance = .95; if (spezAn(h, 'dri')) chance = .12; if (kann(p, 'zweikampf')) chance = Math.min(.93, chance + .18);
+        if (spezAn(p, 'abw')) chance = .95; if (spezAn(h, 'dri')) chance = .12; if (hatFae(p, 'zweikampf')) chance = Math.min(.93, chance + .18);
         const vonHinten = p.blick.dot(h.blick) > .5;
         if (Math.random() < chance){
           ballLos(h); h.sperre = .55;
@@ -9715,7 +9715,7 @@ const SPIEL = (() => {
         const zKreuz = tLinie > 0 ? b.p.z + b.v.z * tLinie : b.p.z;
         const fehler = Math.abs(zKreuz - tw.p.z), hoch = Math.max(0, b.p.y - 1.6);
         const weitW = (b.schussVon && b.schussX0 != null) ? klemme((Math.abs(b.p.x - b.schussX0) - 10) / 12, 0, 1) : 0;   // Weitschuss: Torwart hat mehr Zeit
-        const chance = klemme(kann * (1.42 - tempo / 42) - fehler * .15 - hoch * .23 + weitW * (.22 + TW_TUNING.weitschuss) + .05 + TW_TUNING.chance, .2, TW_TUNING.deckel) * (b.feuer ? .45 : 1) * (kann(b.schussVon, 'schuss') ? .85 : 1) * (kann(b.schussVon, 'elfer') && s.so && s.so.an ? .65 : 1);   // Torwart stark, aber schlagbar
+        const chance = klemme(kann * (1.42 - tempo / 42) - fehler * .15 - hoch * .23 + weitW * (.22 + TW_TUNING.weitschuss) + .05 + TW_TUNING.chance, .2, TW_TUNING.deckel) * (b.feuer ? .45 : 1) * (hatFae(b.schussVon, 'schuss') ? .85 : 1) * (hatFae(b.schussVon, 'elfer') && s.so && s.so.an ? .65 : 1);   // Torwart stark, aber schlagbar
         tw.hecht = .6; tw.hechtSeite = Math.sign(b.p.z - tw.p.z) || 1;
         if (Math.random() < chance){
           s.stat.paraden[t]++; pst(tw).paraden++; if (b.schussVon && b.schussVon.team !== t) pst(b.schussVon).aufsTor++;
@@ -10849,7 +10849,7 @@ const SPIEL = (() => {
           p.blick.copy(s.std.ziel); wunsch = V();
         } else if (s.phase === 'spiel' || s.phase === 'standard'){
           const r = k.richtung(), m = Math.min(1, r.length());
-          const tempo = p.tempo * ausdauerFaktor(p) * (k.sprint ? sprintFaktor(p) : 1) * (k.lade >= 0 ? .75 : 1) * (s.stufe === 'leicht' ? 1.08 : 1) * (spezAn(p, 'tem') ? 1.35 : 1) * (k.sprint && kann(p, 'antritt') ? 1.08 : 1);
+          const tempo = p.tempo * ausdauerFaktor(p) * (k.sprint ? sprintFaktor(p) : 1) * (k.lade >= 0 ? .75 : 1) * (s.stufe === 'leicht' ? 1.08 : 1) * (spezAn(p, 'tem') ? 1.35 : 1) * (k.sprint && hatFae(p, 'antritt') ? 1.08 : 1);
           wunsch = m > .12 ? r.normalize().multiplyScalar(tempo * m) : V();
           // V4.1: Lässt du den Stick los, läuft der Pass-Empfänger von selbst dem Ball entgegen
           if (m <= .12 && s.phase === 'spiel' && !b.besitzer && b.passZiel === p){ try { wunsch = kiWunsch(p, kiZiel(p, dt)); } catch (e) {} }
@@ -12824,7 +12824,7 @@ const SPIEL = (() => {
   function soKiZiel(){
     const so = s.so, b = welt.ball, dir = richt(so.team), gx = dir * HL, sh = so.schuetze;
     const w = (sh && sh.daten && sh.daten.rating) || 70;
-    const vorbei = Math.random() < klemme(.13 - (w - 70) * .004, .04, .2) * (kann(sh, 'elfer') ? .25 : 1);
+    const vorbei = Math.random() < klemme(.13 - (w - 70) * .004, .04, .2) * (hatFae(sh, 'elfer') ? .25 : 1);
     const seite = Math.random() < .5 ? -1 : 1;
     const zt = seite * (vorbei ? TB + .7 : TB - .55 - Math.random() * .5);
     const yt = (vorbei && Math.random() < .5) ? TH + .6 : .35 + Math.random() * Math.max(.2, TH - .8);
