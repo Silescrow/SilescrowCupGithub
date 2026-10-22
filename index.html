@@ -1601,7 +1601,12 @@ body::before{
 #spielerEditWahl .se-actions .se-entf{flex:0 0 auto;background:#ff6b6b !important;color:#fff !important;border:2px solid #000;border-radius:10px;font:900 13px var(--text,Arial);padding:0 10px;cursor:pointer}
 #spielerEditWahl .se-actions .se-close{flex:1 1 auto}
 #menue #plaetze .platz .du-bearbeiten{display:grid !important;place-items:center;transform:none !important;position:absolute !important;right:2px !important;top:2px !important;left:auto !important;width:17px !important;height:17px !important;min-width:0 !important;padding:0 !important;border:1.5px solid #0b1430 !important;border-radius:50% !important;background:#ffe234 !important;font-size:0 !important;line-height:1 !important;animation:none !important;box-shadow:1px 1px 0 rgba(0,0,0,.4) !important;z-index:9}
-#menue #plaetze .platz .du-bearbeiten span{font-size:11px !important;line-height:1;color:#0b1430}   /* V6.0: kleines ✎ zeigt: antippen = Nummer/Position ändern */
+#menue #plaetze .platz .du-bearbeiten span{font-size:11px !important;line-height:1;color:#0b1430}
+/* V6.0: leuchtender Rand mit laufender Schlange um den Stift */
+#menue #plaetze .platz .du-bearbeiten{overflow:hidden !important;isolation:isolate;border:0 !important;background:#0b1430 !important;box-shadow:0 0 5px 1px rgba(255,226,52,.75) !important}
+#menue #plaetze .platz .du-bearbeiten::before{content:'';position:absolute;left:50%;top:50%;width:300%;aspect-ratio:1;transform:translate(-50%,-50%) rotate(0deg);z-index:-2;background:conic-gradient(from 0deg,transparent 0deg 210deg,#ffe234 280deg,#fff 315deg,#ffe234 335deg,transparent 360deg);animation:stSchlange 1.6s linear infinite}
+#menue #plaetze .platz .du-bearbeiten::after{content:'';position:absolute;inset:2px;border-radius:50%;z-index:-1;background:#ffe234}
+#menue #plaetze .platz .du-bearbeiten span{position:relative;z-index:1}   /* V6.0: kleines ✎ zeigt: antippen = Nummer/Position ändern */
 #menue #plaetze .platz.belegt{cursor:pointer}
 #spielerEditWahl .se-more{grid-column:1/-1;background:#1e3268}
 #spielerEditWahl .se-moregrid{display:grid;grid-template-columns:repeat(8,1fr);gap:4px;margin-top:6px}
