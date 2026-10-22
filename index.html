@@ -4707,6 +4707,8 @@ function positionSetzen(i, ziel, ruhig){
   aktualisiere();
 }
 function positionWaehlen(i, knopf){
+  // V6.0: Positions-Kästchen zeigt nur die aktuelle Position (Spieler-Fenster) – erst der Tipp darauf öffnet die Aufstellung
+  if (!istGastModus() && zustand.squad[i] != null){ try { spielerEditWahl(i, knopf); } catch (e) {} return; }
   const idx = zustand.squad[i]; if (idx == null) return;
   let el = document.getElementById('posWahl');
   if (!el){ el = document.createElement('div'); el.id = 'posWahl'; document.getElementById('flaeche').appendChild(el); }
