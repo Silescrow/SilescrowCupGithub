@@ -1598,6 +1598,11 @@ body::before{
 #spielerEditWahl .se-actions button{flex:1;background:#fff;color:#0b1430}
 #spielerEditWahl .se-actions .se-close{background:#ffe234}
 #spielerEditWahl .se-actions{display:flex;gap:8px}
+#spielerEditWahl .se-pos1{display:block !important}
+#spielerEditWahl .se-pos1 button{width:100%;min-height:44px;font-size:15px !important}
+#spielerEditWahl .se-pos1 button i{display:block;font-style:normal;font-size:10px;opacity:.85;margin-top:2px}
+#spielerEditWahl .se-hinw{display:block;margin-top:5px;font:700 10px/1.25 var(--text,Arial);color:#c9d6f5}
+#formEditor[data-ziel=DF] .fe-tok.DF:not(.sel),#formEditor[data-ziel=MF] .fe-tok.MF:not(.sel),#formEditor[data-ziel=ST] .fe-tok.ST:not(.sel){box-shadow:0 0 0 3px #ffe234,0 0 12px 3px rgba(255,226,52,.8) !important;border-radius:12px}
 #spielerEditWahl .se-actions .se-entf{flex:0 0 auto;background:#ff6b6b !important;color:#fff !important;border:2px solid #000;border-radius:10px;font:900 13px var(--text,Arial);padding:0 10px;cursor:pointer}
 #spielerEditWahl .se-actions .se-close{flex:1 1 auto}
 #menue #plaetze .platz .du-bearbeiten{display:grid !important;place-items:center;transform:none !important;position:absolute !important;right:2px !important;top:2px !important;left:auto !important;width:17px !important;height:17px !important;min-width:0 !important;padding:0 !important;border:1.5px solid #0b1430 !important;border-radius:50% !important;background:#ffe234 !important;font-size:0 !important;line-height:1 !important;animation:none !important;box-shadow:1px 1px 0 rgba(0,0,0,.4) !important;z-index:9}
@@ -4479,6 +4484,7 @@ const TEST_11 = true;
 const POS_NAMEN = ['AL', 'AR', 'MIT', 'STU'], POS_ROLLE = { AL: 'DF', AR: 'DF', MIT: 'MF', STU: 'ST' }, POS_RANG = { AL: 0, AR: 0, MIT: 1, STU: 2 }, POS_SEITE = { AL: -1, AR: 1 };
 const POS_TEXT = { AL: 'ABW L', AR: 'ABW R', MIT: 'MITTE', STU: 'STURM', TW: 'TOR' };
 const POS_KURZ = { AL: 'LV', AR: 'RV', MIT: 'ZM', STU: 'ST', TW: 'TW' };
+const EINFACH_TEXT = { TW: 'TORWART', DF: 'ABWEHR', MF: 'MITTELFELD', ST: 'STURM' };   // V6.0
 function positionenVerteilen(feld, wunsch){
   const erg = {}, frei = new Set(POS_NAMEN);
   feld.forEach(i => { const w = wunsch && wunsch[i]; if (w && frei.has(w)){ erg[i] = w; frei.delete(w); } });
@@ -4551,7 +4557,7 @@ function formLabel(idx){
   return sl == null ? '' : formSlots(zustand.formation)[sl].label;
 }
 function formKnopfAktualisieren(){ const a = document.getElementById('formAnz'); if (a) a.textContent = zustand.formation; }
-function formEditorOeffnen(){
+function formEditorOeffnen(vor){
   let ov = document.getElementById('formEditor');
   if (!ov){ ov = document.createElement('div'); ov.id = 'formEditor'; document.getElementById('flaeche').appendChild(ov); }
   ov.style.display = 'flex';
@@ -4659,6 +4665,11 @@ function formEditorOeffnen(){
     ov.querySelector('.fe-ok').addEventListener('click', () => { ov.style.display = 'none'; });
   }
   ov.onclick = e => { if (e.target === ov) ov.style.display = 'none'; };
+  // V6.0: aus dem Bearbeiten-Fenster kommend – Spieler ist schon ausgewählt, passende Plätze leuchten
+  if (vor && typeof vor.idx === 'number'){
+    try { const sl = formZuweisen(formFeld(), zustand.formation, zustand.formSlot).get(vor.idx);
+      if (sl != null){ sel = { t: 's', k: sl }; msg = '👉 ' + PLAYER_DATABASE[vor.idx].name + ' ist gewählt – tippe den Platz, auf dem er spielen soll.'; ov.dataset.ziel = ''; } } catch (e) {}
+  } else ov.dataset.ziel = '';
   zeichne();
 }
 zustand.steuer = 'fest'; try { LS81.setItem('sc_steuer', 'fest'); } catch(e){typeof __scWarn==='function'&&__scWarn(e)}
@@ -5050,6 +5061,8 @@ function spielerEditWahl(i, knopf){
   const belegt = gastE ? (n => Object.keys(htm.nr || {}).some(x => +x !== idx && Number(htm.nr[x]) === n)) : (n => zustand.squad.some(x => x !== idx && Number(zustand.nummern[x]) === n));
   const jetzt = gastE ? (gastPos(idx) || 'STU') : (zustand.torwart === i ? 'TW' : (zustand.posi[idx] || zustand.posManuell?.[idx] || 'STU'));
   const posReihe = ['STU','MIT','AL','AR','TW'];
+  // V6.0: einfache Position (Torwart / Abwehr / Mittelfeld / Sturm) aus der Aufstellung
+  const einfachJetzt = gastE ? null : (zustand.torwart === i ? 'TW' : (() => { try { const sl = formZuweisen(formFeld(), zustand.formation, zustand.formSlot).get(idx); const r = sl != null ? formSlots(zustand.formation)[sl].rolle : null; return r === 'DF' || r === 'MF' || r === 'ST' ? r : 'MF'; } catch (e) { return 'MF'; } })());
   // V5.4: Besetzte Nummer antippen = Nummern tauschen (nur im eigenen Team; online beim Gast bleibt sie gesperrt)
   const tauschbar = !gastE;
   const nrKnopf = n => '<button type="button" data-nr="'+n+'" class="'+(belegt(n)?'belegt ':'')+(n===aktuell?'an':'')+'" '+(belegt(n) && !tauschbar?'disabled':'')+(belegt(n) && tauschbar?' title="tauschen"':'')+'>'+n+'</button>';
@@ -5060,7 +5073,8 @@ function spielerEditWahl(i, knopf){
   el.innerHTML = '<div class="se-title">' + editorTitel + '</div><div class="se-sub">Trikotnummer und Position hier gemeinsam ändern.</div><div class="se-vor"></div>'+
     '<div class="se-grid">'+
     '<section class="se-block"><span class="se-label">🔢 TRIKOTNUMMER</span><div class="se-number-grid">'+schnell+'</div><button type="button" class="se-more">ERWEITERTE NUMMERN · 12–99</button><div class="se-moregrid" hidden>'+erweitert+'</div></section>'+
-    '<section class="se-block"><span class="se-label">📍 POSITION <small style="display:block;color:#ffe234;margin-top:4px;font-size:10px">aktuell: '+(POS_TEXT[jetzt]||'STÜRMER')+'</small></span><div class="se-pos">'+posReihe.map(pos => '<button type="button" data-p="'+pos+'" class="pw-'+pos.toLowerCase()+' '+(pos===jetzt?'an':'')+'">'+POS_TEXT[pos]+'</button>').join('')+'</div></section></div>'+
+    (gastE ? '<section class="se-block"><span class="se-label">📍 POSITION <small style="display:block;color:#ffe234;margin-top:4px;font-size:10px">aktuell: '+(POS_TEXT[jetzt]||'STÜRMER')+'</small></span><div class="se-pos">'+posReihe.map(pos => '<button type="button" data-p="'+pos+'" class="pw-'+pos.toLowerCase()+' '+(pos===jetzt?'an':'')+'">'+POS_TEXT[pos]+'</button>').join('')+'</div></section>'
+     : '<section class="se-block"><span class="se-label">📍 POSITION <small style="display:block;color:#ffe234;margin-top:4px;font-size:10px">aktuell: '+EINFACH_TEXT[einfachJetzt]+'</small></span><div class="se-pos se-pos1"><button type="button" data-r="'+einfachJetzt+'" class="an pw-'+({TW:'tw',DF:'al',MF:'mit',ST:'stu'}[einfachJetzt])+'">'+EINFACH_TEXT[einfachJetzt]+' <i>📋 ändern</i></button></div><small class="se-hinw">Antippen: In der Aufstellung den neuen Platz wählen.</small></section>')+'</div>'+
     '<div class="se-actions"><button type="button" class="se-entf">✕ AUS DEM TEAM</button><button type="button" class="se-close">✓ FERTIG</button></div>';
 
   const f=document.getElementById('flaeche').getBoundingClientRect(), b=knopf.getBoundingClientRect(), sk=f.width/1120;
@@ -5117,6 +5131,13 @@ function spielerEditWahl(i, knopf){
     e.stopPropagation();
   }));
 
+  // V6.0: TORWART direkt setzen – Abwehr/Mittelfeld/Sturm öffnen die Aufstellung mit diesem Spieler ausgewählt
+  el.querySelectorAll('[data-r]').forEach(q=>q.addEventListener('click',e=>{
+    e.preventDefault(); e.stopPropagation();
+    const r = q.dataset.r;
+    el.hidden = true; aktualisiere();
+    formEditorOeffnen({ idx, rolle: r });
+  }));
   el.querySelector('.se-close').addEventListener('click',e=>{e.preventDefault();e.stopPropagation();el.hidden=true;aktualisiere();});
   // V5.4: Spieler antippen öffnet dieses Fenster – rausnehmen geht jetzt hier
   el.querySelector('.se-entf').addEventListener('click',e=>{e.preventDefault();e.stopPropagation();el.hidden=true; if (gastE){ NETZ.waehle(null); aktualisiere(); } else entferne(i);});
