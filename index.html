@@ -36,7 +36,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>SILESCROW CUP · V 8.0</title>
-<meta name="sc-build" content="20261023123715">
+<meta name="sc-build" content="20261023124917">
 <script>
 // V7.1: Beim Start immer die neueste Version laden. Prüft (nur online auf der Spielseite) die Versionsnummer
 // der veröffentlichten Seite ohne Zwischenspeicher; ist sie neuer, wird einmal automatisch neu geladen.
@@ -7374,7 +7374,8 @@ function skaliere(){
   const W = Math.max(1120, Math.round(600 * innerWidth / Math.max(1, innerHeight)));
   flaeche.style.width = W + 'px'; flaeche.style.setProperty('--fw', W + 'px');
   // bei schmaleren Bildschirmen (z. B. 16:9) leicht in der Höhe strecken, damit oben/unten kein Rand bleibt
-  const sx = innerWidth / W, sy = innerHeight / 600;
+  // höchstens 8 % Streckung (Tablets bekommen sonst oben/unten einen schmalen Rand statt Verzerrung)
+  const sx = innerWidth / W, sy = Math.min(innerHeight / 600, sx * 1.08);
   flaeche.style.transform = 'translate(-50%,-50%) scale(' + sx + ',' + sy + ')';
 }
 addEventListener('resize', skaliere);
