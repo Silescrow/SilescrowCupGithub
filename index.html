@@ -36,7 +36,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>SILESCROW CUP · V 8.0</title>
-<meta name="sc-build" content="20261023124917">
+<meta name="sc-build" content="20261023132436">
 <script>
 // V7.1: Beim Start immer die neueste Version laden. Prüft (nur online auf der Spielseite) die Versionsnummer
 // der veröffentlichten Seite ohne Zwischenspeicher; ist sie neuer, wird einmal automatisch neu geladen.
@@ -7370,12 +7370,15 @@ $('#mpEingabe').addEventListener('keydown', e => { if (e.key === 'Enter') mpBeit
 // ---------- Zeichenfläche passend skalieren ----------
 const flaeche = $('#flaeche');
 function skaliere(){
-  // V8.0: Menü füllt jedes Seitenverhältnis komplett aus – die Fläche wird breiter statt schwarzer Ränder
-  const W = Math.max(1120, Math.round(600 * innerWidth / Math.max(1, innerHeight)));
+  // V8.0: oben/unten immer voll; breite Handys: Menü halb so viel breiter wie möglich (schmale Seitenränder);
+  // 16:9: max. 8 % Höhenstreckung; Tablets: unverzerrt mit Rand oben/unten
+  const voll = Math.max(1120, Math.round(600 * innerWidth / Math.max(1, innerHeight)));
+  const W = Math.round(1120 + (voll - 1120) * .5);
   flaeche.style.width = W + 'px'; flaeche.style.setProperty('--fw', W + 'px');
-  // bei schmaleren Bildschirmen (z. B. 16:9) leicht in der Höhe strecken, damit oben/unten kein Rand bleibt
-  // höchstens 8 % Streckung (Tablets bekommen sonst oben/unten einen schmalen Rand statt Verzerrung)
-  const sx = innerWidth / W, sy = Math.min(innerHeight / 600, sx * 1.08);
+  const sh = innerHeight / 600;
+  let sx, sy;
+  if (W * sh <= innerWidth){ sx = sy = sh; }
+  else { sx = innerWidth / W; sy = Math.min(sh, sx * 1.08); }
   flaeche.style.transform = 'translate(-50%,-50%) scale(' + sx + ',' + sy + ')';
 }
 addEventListener('resize', skaliere);
