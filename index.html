@@ -1913,6 +1913,13 @@ body::before{
 #einstUeber button:active{transform:translate(2px,2px);box-shadow:1px 1px 0 #000}
 #einstUeber button.e-rot{background:linear-gradient(180deg,#ff6b6b,#d62828);color:#fff}
 #einstUeber button.e-zu{background:#4b5878;color:#fff}
+#einstUeber .e-grafik{margin:8px 0 2px;padding:8px;border-radius:12px;background:rgba(0,0,0,.25);border:2px solid rgba(255,255,255,.12)}
+#einstUeber .e-gt{font:400 18px var(--display,Impact);color:#ffe234;letter-spacing:.5px;margin-bottom:6px}
+#einstUeber .e-gw{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:4px}
+#einstUeber .e-gw button{margin:0 !important;min-height:44px !important;padding:3px 1px !important;font:900 12px/1.05 var(--text,Arial) !important;letter-spacing:0 !important;box-shadow:2px 2px 0 #000 !important;border-width:2px !important}
+#einstUeber .e-gw button small{display:block;font:700 9px/1.1 var(--text,Arial);opacity:.75;margin-top:2px}
+#einstUeber .e-gw button.an{background:#ffe234 !important;color:#0b1430 !important}
+#einstUeber .e-gh{margin-top:6px;font:700 11px/1.3 var(--text,Arial);color:#c9d6f5;min-height:14px}
 #einstUeber .e-msg{min-height:18px;margin-top:10px;font:800 13px var(--text,Arial);color:#8dff9a}
 </style>
 
@@ -13890,7 +13897,7 @@ const SPIEL = (() => {
     if (insMenue) try { ligaStufeInsMenue(); } catch (e) {}   // V4.6
   }
 
-  return { get grafikStufe(){ return fps.stufe; }, get rechenzeit(){ return fps.letzteArbeit || 0; }, get fans(){ return welt.fans; }, testElf: () => elfmeterschiessenStart(), testStandard: (t, team, x, z) => standard(t, team, V(x, 0, z)), testFoul: (t, o) => foul(t, o, true), stadionTest: () => { const f = stadionFans(); return f ? [f.haupt.heim[3].bilder[0].toDataURL(), f.haupt.heim[3].bilder[1].toDataURL()] : null; }, set testPhase(p){ if (s) s.phase = p; }, get ball(){ return welt.ball; }, bildschirm: q => aufBildschirm(q), hinweis: (t, d) => zeigeHinweis(t, d), starte, beenden, starteGast, gastEmpfang, fernEingabe, fernWeg, fernZurueck, get laeuft(){ return laeuft; }, get gast(){ return !!(s && s.gast); }, get zustand(){ return s; }, set tempo(f){ tempoFaktor = f; }, set autopilot(a){ autopilot = a; } };
+  return { grafikSetzen: m => grafikSetzen(m), get grafikModus(){ return grafik.modus; }, get grafikStufe(){ return fps.stufe; }, get rechenzeit(){ return fps.letzteArbeit || 0; }, get fans(){ return welt.fans; }, testElf: () => elfmeterschiessenStart(), testStandard: (t, team, x, z) => standard(t, team, V(x, 0, z)), testFoul: (t, o) => foul(t, o, true), stadionTest: () => { const f = stadionFans(); return f ? [f.haupt.heim[3].bilder[0].toDataURL(), f.haupt.heim[3].bilder[1].toDataURL()] : null; }, set testPhase(p){ if (s) s.phase = p; }, get ball(){ return welt.ball; }, bildschirm: q => aufBildschirm(q), hinweis: (t, d) => zeigeHinweis(t, d), starte, beenden, starteGast, gastEmpfang, fernEingabe, fernWeg, fernZurueck, get laeuft(){ return laeuft; }, get gast(){ return !!(s && s.gast); }, get zustand(){ return s; }, set tempo(f){ tempoFaktor = f; }, set autopilot(a){ autopilot = a; } };
 })();
 
 </script>
@@ -14615,7 +14622,8 @@ const SPIEL = (() => {
 <div id="einstUeber" hidden>
   <div class="e-box" role="dialog" aria-modal="true" aria-labelledby="eTitel">
     <h2 id="eTitel">⚙ EINSTELLUNGEN</h2>
-    <p>FPS-Anzeige ein- und ausschalten oder Spielstände löschen. Löschen lässt sich nicht rückgängig machen.</p>
+    <p>Grafik, FPS-Anzeige oder Spielstände löschen. Löschen lässt sich nicht rückgängig machen.</p>
+    <div class="e-grafik"><div class="e-gt">🖥️ GRAFIK</div><div class="e-gw"><button type="button" data-mgrafik="auto">AUTO<small>empfohlen</small></button><button type="button" data-mgrafik="low">NIEDRIG<small>480p</small></button><button type="button" data-mgrafik="medium">MITTEL<small>540p</small></button><button type="button" data-mgrafik="high">HOCH<small>720p</small></button><button type="button" data-mgrafik="ultra">ULTRA<small>1080p</small></button></div><div class="e-gh" id="eGrafikHinweis"></div></div>
     <button type="button" class="e-zu fpsSchalter" id="eFps">📊 FPS ANZEIGEN: AUS</button>
     <button type="button" class="e-zu" id="eKomTest">🎙️ KOMMENTATOR-TEST</button>
     <button type="button" class="e-rot" id="eAlles">🔄 ALLES ZURÜCKSETZEN</button>
@@ -14629,7 +14637,18 @@ const SPIEL = (() => {
   var o=document.getElementById('einstUeber'), msg=document.getElementById('eMsg');
   if(!o) return;
   function sag(t){ msg.textContent=t; clearTimeout(sag._t); sag._t=setTimeout(function(){msg.textContent='';},3000); }
-  document.getElementById('mEinst').addEventListener('click',function(){ msg.textContent=''; o.hidden=false; });
+  // V8.0: Grafik auch im Hauptmenü – nutzt dieselben Einstellungen wie im Spiel
+  function grafikAnzeigen(){
+    var m=null; try{ m=SPIEL.grafikModus; }catch(e){}
+    if(!m){ try{ m=LS81.getItem('silescrowGrafik')||'auto'; }catch(e){ m='auto'; } }
+    o.querySelectorAll('[data-mgrafik]').forEach(function(b){ b.classList.toggle('an', b.dataset.mgrafik===m); });
+    var h=document.getElementById('grafikHinweis'), eh=document.getElementById('eGrafikHinweis'); if(eh) eh.textContent=h?h.textContent:'';
+  }
+  o.querySelectorAll('[data-mgrafik]').forEach(function(b){ b.addEventListener('click',function(){
+    try{ SPIEL.grafikSetzen(b.dataset.mgrafik); }catch(e){ try{ LS81.setItem('silescrowGrafik', b.dataset.mgrafik); }catch(e2){} }
+    grafikAnzeigen(); sag('Grafik: '+b.textContent.replace(/(empfohlen|\d+p)$/,'').trim());
+  }); });
+  document.getElementById('mEinst').addEventListener('click',function(){ msg.textContent=''; grafikAnzeigen(); o.hidden=false; });
   document.getElementById('eZu').addEventListener('click',function(){ o.hidden=true; });
   o.addEventListener('click',function(e){ if(e.target===o) o.hidden=true; });
   document.getElementById('eAlles').addEventListener('click',function(){
