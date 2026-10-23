@@ -36,7 +36,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>SILESCROW CUP · V 8.0</title>
-<meta name="sc-build" content="20261023123405">
+<meta name="sc-build" content="20261023123715">
 <script>
 // V7.1: Beim Start immer die neueste Version laden. Prüft (nur online auf der Spielseite) die Versionsnummer
 // der veröffentlichten Seite ohne Zwischenspeicher; ist sie neuer, wird einmal automatisch neu geladen.
@@ -1978,6 +1978,9 @@ body::before{
 #mpTeamG[hidden]{display:none}
 </style>
 <style>
+/* V8.0: Menü auf volle Bildschirmbreite – rechte Spalte rechts verankert, Kartenfenster wächst mit */
+#menue .rechts{left:auto !important;right:14px !important}
+#menue .kartenfenster{width:calc(var(--fw, 1120px) - 378px) !important}
 /* V1.2 Menü-Fix: rechte Spalte passt in die 1120x600-Fläche */
 .rechts{grid-template-columns:minmax(0,1fr) !important;gap:8px !important}
 .teamfenster,.einstellungen{min-width:0 !important;box-sizing:border-box !important}
@@ -4747,11 +4750,11 @@ function positionWaehlen(i, knopf){
   const jetzt = zustand.torwart === i ? 'TW' : zustand.posi[idx];
   el.innerHTML = '<b>🪄 POSITION WÄHLEN</b>' + ['TW', 'AL', 'AR', 'MIT', 'STU'].map(p =>
     '<button type="button" data-p="' + p + '" class="' + (p === jetzt ? 'an ' : '') + 'pw-' + p.toLowerCase() + '">' + POS_TEXT[p] + '</button>').join('') + '<button type="button" class="zu">✕ SCHLIESSEN</button>';
-  const f = document.getElementById('flaeche').getBoundingClientRect(), b = knopf.getBoundingClientRect(), sk = f.width / 1120;
+  const f = document.getElementById('flaeche').getBoundingClientRect(), b = knopf.getBoundingClientRect(), sk = f.height / 600;
   const popupW = 260;
   const rawLeft = (b.left - f.left) / sk - 20;
   const rawTop = (b.bottom - f.top) / sk + 10;
-  el.style.left = Math.max(6, Math.min(1120 - popupW - 6, rawLeft)) + 'px';
+  el.style.left = Math.max(6, Math.min(f.width / sk - popupW - 6, rawLeft)) + 'px';
   el.style.top = Math.max(8, Math.min(600 - 250, rawTop)) + 'px';
   el.hidden = false;
   el.onclick = e => { const q = e.target.closest('button'); if (!q) return; el.hidden = true; if (q.dataset.p){ musik.klick && musik.klick(); positionSetzen(i, q.dataset.p); } };
@@ -5111,9 +5114,9 @@ function spielerEditWahl(i, knopf){
      : '<section class="se-block"><span class="se-label">📍 POSITION <small style="display:block;color:#ffe234;margin-top:4px;font-size:10px">aktuell: '+EINFACH_TEXT[einfachJetzt]+'</small></span><div class="se-pos se-pos1"><button type="button" data-r="'+einfachJetzt+'" class="an pw-'+({TW:'tw',DF:'al',MF:'mit',ST:'stu'}[einfachJetzt])+'">'+EINFACH_TEXT[einfachJetzt]+' <i>📋 ändern</i></button></div><small class="se-hinw">Antippen: In der Aufstellung den neuen Platz wählen.</small></section>')+'</div>'+
     '<div class="se-actions"><button type="button" class="se-entf">✕ AUS DEM TEAM</button><button type="button" class="se-close">✓ FERTIG</button></div>';
 
-  const f=document.getElementById('flaeche').getBoundingClientRect(), b=knopf.getBoundingClientRect(), sk=f.width/1120;
+  const f=document.getElementById('flaeche').getBoundingClientRect(), b=knopf.getBoundingClientRect(), sk=f.height/600;
   const popupW=430, rawLeft=(b.right-f.left)/sk+10;
-  el.style.left=Math.max(6,Math.min(1120-popupW-6,rawLeft))+'px';
+  el.style.left=Math.max(6,Math.min(f.width/sk-popupW-6,rawLeft))+'px';
   const wunschTop=(b.top-f.top)/sk-8;
   const platz=()=>{ const h=el.offsetHeight||330; el.style.top=Math.max(6,Math.min(600-h-6,wunschTop))+'px'; };
   el.hidden=false; platz();
@@ -5195,8 +5198,8 @@ function nummerWaehlen(i, knopf){
     '<button type="button" class="nr-erweitert">ERWEITERTE NUMMERN · 12–99</button>'+
     '<div class="nr-erweitert-grid" hidden>'+erweitert+'</div>'+
     '<button type="button" class="nr-abbrechen">ABBRECHEN</button>';
-  const f = document.getElementById('flaeche').getBoundingClientRect(), b = knopf.getBoundingClientRect(), sk = f.width / 1120;
-  el.style.left = Math.min(1120 - 252, Math.max(4, (b.left - f.left) / sk - 170)) + 'px';
+  const f = document.getElementById('flaeche').getBoundingClientRect(), b = knopf.getBoundingClientRect(), sk = f.height / 600;
+  el.style.left = Math.min(f.width / sk - 252, Math.max(4, (b.left - f.left) / sk - 170)) + 'px';
   el.style.top = Math.min(600 - 260, (b.bottom - f.top) / sk + 5) + 'px';
   el.hidden = false;
   const extBtn = el.querySelector('.nr-erweitert'), extGrid = el.querySelector('.nr-erweitert-grid');
@@ -7367,8 +7370,12 @@ $('#mpEingabe').addEventListener('keydown', e => { if (e.key === 'Enter') mpBeit
 // ---------- Zeichenfläche passend skalieren ----------
 const flaeche = $('#flaeche');
 function skaliere(){
-  const s = Math.min(innerWidth / 1120, innerHeight / 600);
-  flaeche.style.transform = 'translate(-50%,-50%) scale(' + s + ')';
+  // V8.0: Menü füllt jedes Seitenverhältnis komplett aus – die Fläche wird breiter statt schwarzer Ränder
+  const W = Math.max(1120, Math.round(600 * innerWidth / Math.max(1, innerHeight)));
+  flaeche.style.width = W + 'px'; flaeche.style.setProperty('--fw', W + 'px');
+  // bei schmaleren Bildschirmen (z. B. 16:9) leicht in der Höhe strecken, damit oben/unten kein Rand bleibt
+  const sx = innerWidth / W, sy = innerHeight / 600;
+  flaeche.style.transform = 'translate(-50%,-50%) scale(' + sx + ',' + sy + ')';
 }
 addEventListener('resize', skaliere);
 
