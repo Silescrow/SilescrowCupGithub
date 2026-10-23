@@ -37,7 +37,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>SILESCROW CUP · V 9.4</title>
-<meta name="sc-build" content="20261023213152">
+<meta name="sc-build" content="20261023214216">
 <script>
 // V7.1: Beim Start immer die neueste Version laden. Prüft (nur online auf der Spielseite) die Versionsnummer
 // der veröffentlichten Seite ohne Zwischenspeicher; ist sie neuer, wird einmal automatisch neu geladen.
@@ -6553,8 +6553,8 @@ const TURNIER = (() => {
   function konferenzPlanen(paare){
     return paare.map(([i, j]) => {
       const e = simulieren(i, j), tore = [];
-      for (let n = 0; n < e.a; n++) tore.push({ t: 8 + Math.random() * (SPIELZEIT - 16), team: 0 });
-      for (let n = 0; n < e.b; n++) tore.push({ t: 8 + Math.random() * (SPIELZEIT - 16), team: 1 });
+      for (let n = 0; n < e.a; n++) tore.push({ t: 8 + Math.random() * (240 - 16), team: 0 });
+      for (let n = 0; n < e.b; n++) tore.push({ t: 8 + Math.random() * (240 - 16), team: 1 });
       tore.sort((x, y) => x.t - y.t);
       return { i, j, e, a: t.teams[i], b: t.teams[j], tore };
     });
