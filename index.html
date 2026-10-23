@@ -37,7 +37,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>SILESCROW CUP · V 9.2</title>
-<meta name="sc-build" content="20261023175249">
+<meta name="sc-build" content="20261023194345">
 <script>
 // V7.1: Beim Start immer die neueste Version laden. Prüft (nur online auf der Spielseite) die Versionsnummer
 // der veröffentlichten Seite ohne Zwischenspeicher; ist sie neuer, wird einmal automatisch neu geladen.
@@ -664,9 +664,9 @@ body::before{
   display:grid;place-items:center;cursor:pointer;padding:0}
 .k-hud svg{width:20px;height:20px}
 #pauseKnopf{left:calc(10px + env(safe-area-inset-left,0px));display:none !important}   /* V6.1: kein Pause-Knopf mehr – Einstellungen pausiert */
-#hud .tafel{left:calc(30px + env(safe-area-inset-left,0px))}
+#hud .tafel{left:calc(44px + env(safe-area-inset-left,0px))}
 /* V9.0: Online-Leiste unter der Anzeigetafel: WLAN · ● MAX vs ● LEON */
-#hud .on-namen{position:absolute;left:calc(30px + env(safe-area-inset-left,0px));top:calc(5px + var(--tafelH) + 4px + env(safe-area-inset-top,0px));display:flex;align-items:center;gap:6px;background:rgba(11,20,48,.92);border:2px solid #000;border-radius:8px;padding:3px 9px;pointer-events:none;z-index:4}
+#hud .on-namen{position:absolute;left:calc(44px + env(safe-area-inset-left,0px));top:calc(5px + var(--tafelH) + 4px + env(safe-area-inset-top,0px));display:flex;align-items:center;gap:6px;background:rgba(11,20,48,.92);border:2px solid #000;border-radius:8px;padding:3px 9px;pointer-events:none;z-index:4}
 #hud .on-namen[hidden]{display:none}
 #hud .on-namen span{font:900 11px/1 system-ui,sans-serif;color:#fff;white-space:nowrap;max-width:100px;overflow:hidden;text-overflow:ellipsis}
 #hud .on-namen span::before{content:'●';margin-right:4px}
@@ -13790,14 +13790,17 @@ const SPIEL = (() => {
       const farbe = (s.kits && s.kits[team] && s.kits[team].t) || '#ffe234';
       let bx, by, sx, sy, mini = false;
       if (sichtbar){ bx = klemme(k.x - bw / 2 + (team === 0 ? -bw * .25 : bw * .25), 6, W - bw - 6); by = Math.max(54, k.y - bh - 14); sx = k.x; sy = k.y - 2; }
-      else if (true){ mini = true; bx = (hp && hp.mitte ? hp.mitte[0] + 4 : 380) + 2 * r0 + 8; by = hp ? Math.max(4, hp.oben - 2) : 8; }   // V6.1: Trainer-Blase oben rechts neben der Tafel
+      else if (true){ mini = true; { const lmin = (hp && hp.mitte ? hp.mitte[0] + 4 : 380) + 2 * r0 + 8, rmax = (hp && hp.mitte ? hp.mitte[1] : W - 8) - bw; bx = Math.max(lmin, Math.min(rmax, W / 2 - bw / 2 + r0 + 4)); }   // V9.2: Trainer-Spruch in der Mitte
+        by = hp ? Math.max(4, hp.oben - 2) : 8; }   // V6.1: Trainer-Blase oben rechts neben der Tafel
       else { mini = true; bx = team === 0 ? 48 : W - bw - 48; by = 56; sx = team === 0 ? bx + 6 : bx + bw - 6; sy = by + bh + 6; }
       g.fillStyle = 'rgba(0,0,0,.35)'; g.beginPath(); g.roundRect ? g.roundRect(bx + 2, by + 3, bw, bh, 9) : g.rect(bx + 2, by + 3, bw, bh); g.fill();
-      g.fillStyle = '#fff'; g.strokeStyle = farbe; g.lineWidth = 2.5;
-      g.beginPath(); g.roundRect ? g.roundRect(bx, by, bw, bh, 9) : g.rect(bx, by, bw, bh); g.fill(); g.stroke();
+      { const gr = g.createLinearGradient(0, by, 0, by + bh); gr.addColorStop(0, '#2f86ff'); gr.addColorStop(1, '#1550d6'); g.fillStyle = gr; }   // V9.2: moderne blaue Blase, weiße Schrift
+      g.strokeStyle = 'rgba(255,255,255,.85)'; g.lineWidth = 1.6;
+      g.beginPath(); g.roundRect ? g.roundRect(bx, by, bw, bh, Math.min(14, bh / 2)) : g.rect(bx, by, bw, bh); g.fill(); g.stroke();
+      g.fillStyle = 'rgba(255,255,255,.18)'; g.beginPath(); g.roundRect ? g.roundRect(bx + 3, by + 2, bw - 6, bh * .42, Math.min(11, bh / 2)) : g.rect(bx + 3, by + 2, bw - 6, bh * .42); g.fill();
       // Zipfel zum Trainer
       if (!mini){ const tx = klemme(sx, bx + 12, bx + bw - 12); g.beginPath(); g.moveTo(tx - 6, by + bh - 1); g.lineTo(sx, sy); g.lineTo(tx + 6, by + bh - 1); g.closePath(); g.fillStyle = '#fff'; g.fill(); g.stroke(); g.fillRect(tx - 5, by + bh - 3, 10, 3); }
-      g.fillStyle = '#0b1430'; g.textAlign = 'left'; g.textBaseline = 'top';
+      g.fillStyle = '#fff'; g.textAlign = 'left'; g.textBaseline = 'top';
       zeilen.forEach((z, i) => g.fillText(z, bx + 8, by + 6 + i * (fs + 3)));
       // kleiner Trainerkopf, wenn er gerade nicht im Bild ist
       if (mini && tr.bild && tr.bild.complete && tr.bild.naturalWidth){
@@ -13807,7 +13810,7 @@ const SPIEL = (() => {
         if (kv && kv.width){ const hd = r0 * 2.15, wd = hd * kv.width / kv.height; g.drawImage(kv, cx - wd / 2, cy - r0 * 1.05, wd, hd); }   // V4.2: ganzer Kopf
         else g.drawImage(im, nw * .18, 0, nw * .64, nh * .34, cx - r0, cy - r0 * .9, r0 * 2, r0 * 2 * (nh * .34) / (nw * .64));
         g.restore();
-        g.beginPath(); g.arc(cx, cy, r0, 0, Math.PI * 2); g.strokeStyle = '#000'; g.lineWidth = 2.5; g.stroke();
+        g.beginPath(); g.arc(cx, cy, r0, 0, Math.PI * 2); g.strokeStyle = '#fff'; g.lineWidth = 2; g.stroke();
       }
       g.restore();
     });
