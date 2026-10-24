@@ -15901,6 +15901,14 @@ html body #menue #flaeche .rechts .pl-nav:disabled::before{animation:none;backgr
 html body #menue #flaeche .rechts .pl-nav:not(:disabled):active{transform:scale(.92)}
 html body #menue #flaeche .rechts .pl-zurueck{left:8px !important}
 html body #menue #flaeche .rechts .pl-vor{right:8px !important}
+/* V10.8: Blätter-Pfeile über dem Team-Fenster, mittig nebeneinander */
+html body #menue #flaeche .rechts .teamfenster{z-index:6}
+html body #menue #flaeche .rechts .teamtitel{padding-left:0 !important;padding-right:0 !important}
+html body #menue #flaeche .rechts .pl-nav{width:30px !important;height:30px !important;top:-40px !important}
+html body #menue #flaeche .rechts .pl-nav::after{inset:2.5px}
+html body #menue #flaeche .rechts .pl-nav svg{width:17px;height:17px}
+html body #menue #flaeche .rechts .pl-zurueck{left:calc(50% - 36px) !important;right:auto !important}
+html body #menue #flaeche .rechts .pl-vor{left:calc(50% + 6px) !important;right:auto !important}
 </style>
 <div id="htUeber" hidden><div class="htbox" role="dialog" aria-modal="true"></div></div>
 <script id="hallenturnierJS">
