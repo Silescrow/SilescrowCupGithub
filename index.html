@@ -59,7 +59,7 @@ html body #menue #flaeche .rechts .platz.kaderkachel .kk-staerke b{font-size:22p
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <title>SILESCROW CUP · V 11.30</title>
-<meta name="sc-build" content="20261026211355">
+<meta name="sc-build" content="20261026211717">
 <script>
 // V7.1: Beim Start immer die neueste Version laden. Prüft (nur online auf der Spielseite) die Versionsnummer
 // der veröffentlichten Seite ohne Zwischenspeicher; ist sie neuer, wird einmal automatisch neu geladen.
@@ -5966,7 +5966,7 @@ function aktualisiere(){
   // Teamtitel: Land, sobald gewählt
   const land = zustand.land;
   const tt = $('#teamtitel');
-  tt.innerHTML = istGastModus() ? 'DU BIST GAST' : land ? flaggeHTML(land[0]) + ' SUPER TEAM ' + land[0].toUpperCase() : 'DEIN TEAM';
+  tt.innerHTML = istGastModus() ? 'DU BIST GAST' : land ? flaggeHTML(land[0]) + ' (S) ' + land[0].toUpperCase() : 'DEIN TEAM';
   tt.style.transform = 'skewX(6deg)';
   const verf = tt.parentElement.clientWidth - 16;
   if (tt.scrollWidth > verf) tt.style.transform = 'skewX(6deg) scaleX(' + (verf / tt.scrollWidth).toFixed(3) + ')';
@@ -6090,13 +6090,14 @@ function fwZeichnen(){
   const su = fwSuper(), superLand = su ? su.land[0] : (zustand.land ? zustand.land[0] : null);
   if (FW.schritt === 1){
     $('#fwSchritt').textContent = '1/2 · WÄHLE DEIN TEAM';
-    zelle('<i class="fw-krone">' + (window.HALLE_ICON || '👑') + '</i>' + (su ? flaggeHTML(su.land[0]) : '<b>⭐</b>') + '<span>MEIN SUPERTEAM</span><small>' + (su ? 'STÄRKE ' + fwSuperStaerke(su) : 'Superteam noch nicht erstellt') + '</small>', 'fw-super' + (su ? '' : ' fw-aus'), FW.mein === 'super', () => {
+    const ligaFlagge = FW.einseitig === 'liga';   // V11.30: LEAGUE nur mit Superteam – hier wählst du nur die Flagge
+    if (!ligaFlagge) zelle('<i class="fw-krone">' + (window.HALLE_ICON || '👑') + '</i>' + (su ? flaggeHTML(su.land[0]) : '<b>⭐</b>') + '<span>MEIN SUPERTEAM</span><small>' + (su ? 'STÄRKE ' + fwSuperStaerke(su) : 'Superteam noch nicht erstellt') + '</small>', 'fw-super' + (su ? '' : ' fw-aus'), FW.mein === 'super', () => {
       if (!fwSuper()){ toast('Dein Superteam ist noch nicht erstellt – wähle im Hauptmenü ' + TEAM_GROESSE + ' Spieler, oder nimm eine Nation.'); return; }
       FW.mein = 'super'; if (FW.einseitig){ fwEinseitigFertig(); return; }
       FW.schritt = 2; if (FW.gegner != null && FW.gegner !== 'zufall' && COUNTRY_DATABASE[FW.gegner][0] === fwMeinLand()) FW.gegner = null; fwZeichnen();
     });
     // V4.9: alle 32 Nationen wählbar
-    COUNTRY_DATABASE.forEach((l, i) => { zelle(flaggeHTML(l[0]) + '<span>' + l[0] + '</span><small>' + fwSterne(l[0]) + '</small>', '', FW.mein === i, () => {
+    COUNTRY_DATABASE.forEach((l, i) => { zelle(flaggeHTML(l[0]) + '<span>' + l[0] + '</span><small>' + (ligaFlagge ? '⭐ SUPERTEAM' : fwSterne(l[0])) + '</small>', '', FW.mein === i, () => {
       FW.mein = i; if (FW.einseitig){ fwEinseitigFertig(); return; }
       FW.schritt = 2; if (FW.gegner === i) FW.gegner = null; fwZeichnen();
     }); });
@@ -6112,7 +6113,7 @@ function fwZeichnen(){
   $('#fwLos').disabled = !(FW.mein != null && FW.gegner != null);
   $('#fwLos').hidden = !!FW.einseitig;
   { const fa = $('#fwAuf'); if (fa){ fa.disabled = $('#fwLos').disabled; fa.hidden = !(!FW.online && !FW.einseitig); } }   // V11.4: AUFSTELLUNG nur im Hall-of-Fame-Freundschaftsspiel (nicht online)
-  if (FW.einseitig){ $('#fwSchritt').textContent = (FW.einseitig === 'pokal' ? 'SILESCROW CUP' : FW.einseitig === 'liga' ? 'LEAGUE' : FW.einseitig === 'hallenturnier' ? 'HALLENTURNIER' : 'ONLINE') + ' · WÄHLE DEIN TEAM'; $('#fwPaar').innerHTML = ''; }
+  if (FW.einseitig){ $('#fwSchritt').textContent = (FW.einseitig === 'pokal' ? 'SILESCROW CUP' : FW.einseitig === 'liga' ? 'LEAGUE' : FW.einseitig === 'hallenturnier' ? 'HALLENTURNIER' : 'ONLINE') + (FW.einseitig === 'liga' ? ' · WÄHLE DEINE FLAGGE (dein Superteam spielt dafür)' : ' · WÄHLE DEIN TEAM'); $('#fwPaar').innerHTML = ''; }
   $('#fwZurueck').textContent = FW.schritt === 2 && !FW.online ? '◀ DEIN TEAM' : 'ZURÜCK';
   if (FW.online) $('#fwSchritt').textContent = 'ONLINE · WÄHLE DEN GEGNER';
   { const ow = $('#fwOrt'); if (ow) ow.hidden = true; }   // HALL OF FAME hat jetzt einen eigenen Knopf im Hauptmenü
@@ -7231,19 +7232,29 @@ function ligaTeamWahl(){   // V11.10: LEAGUE wie alle Modi – erst Stärke, dan
   fwZeichnen(); $('#fwUeber').hidden = false;
 }
 function ligaMitWahl(){
+  // V11.30: Neue LEAGUE – immer mit deinen eigenen Spielern. Erst Hinweis „Wähle deine 13 Spieler“, dann wählst du im Hauptmenü 11 + 2, dann LEAGUE STARTEN.
   const m = FW.mein;
   $('#fwUeber').hidden = true; FW.einseitig = null;
-  if (m === 'super'){
-    const su = fwSuper(); if (!su){ toast('Wähle zuerst ' + TEAM_GROESSE + ' Spieler im Menü.'); return; }
-    zustand.teamArt = 'super';
-    if (su.quelle === 'liga'){ const st = zustand.stufe; ligaTeamInsMenue(); stufeMarkieren(st); }
-    zustand.land = su.land; try { $('#landAnz').innerHTML = flaggeHTML(su.land[0]) + ' ' + su.land[0]; $('#landKnopf').classList.remove('leer'); aktualisiere(); } catch (e) {}
-  } else {   // V11.30: in der LEAGUE spielst du immer mit deinen eigenen Spielern – die gewählte Nation ist nur dein Land (keine fremden, gesperrten Nationalspieler)
-    if (!fwMenueBereit()){ toast('Wähle zuerst im Hauptmenü ' + TEAM_GROESSE + ' Spieler + ' + BANK_GROESSE + ' Bankspieler.'); return; }
-    zustand.teamArt = 'super'; zustand.land = COUNTRY_DATABASE[m];
-    try { $('#landAnz').innerHTML = flaggeHTML(zustand.land[0]) + ' ' + zustand.land[0]; $('#landKnopf').classList.remove('leer'); aktualisiere(); } catch (e) {}
-  }
-  ligaNeuStarten();
+  let land = null;
+  if (m === 'super'){ const su = fwSuper(); land = (su && su.land) || zustand.land || COUNTRY_DATABASE[0]; }
+  else land = COUNTRY_DATABASE[m];
+  zustand.teamArt = 'super'; zustand.land = land;
+  try { $('#landAnz').innerHTML = flaggeHTML(land[0]) + ' ' + land[0]; $('#landKnopf').classList.remove('leer'); } catch (e) {}
+  window.__ligaNeuWahl = true;
+  zustand.squad = []; zustand.ersatz = []; zustand.torwart = -1; zustand.formSlot = {};
+  try { ersatzSpeichern(); formSpeichern(); } catch (e) {}
+  zustand.seite = 1;
+  try { zeichneKarten(); aktualisiere(); } catch (e) {}
+  window.__ligaWartet = true; ligaStartKnopf();
+  try { wahlDialog('👥 WÄHLE DEINE 13 SPIELER', 'Tippe im Hauptmenü <b>' + TEAM_GROESSE + ' Spieler für die Startelf</b> und <b>' + BANK_GROESSE + ' für die Bank</b> an. Danach erscheint rechts der Knopf <b>⚽ LEAGUE STARTEN</b>.', 'OK, LOS GEHT\'S', 'ABBRECHEN', () => {}, () => { window.__ligaWartet = false; ligaStartKnopf(); }); } catch (e) { toast('Wähle deine 13 Spieler (11 + 2 Bank).'); }
+}
+function ligaStartKnopf(){
+  let b = document.getElementById('ligaStartJetzt');
+  if (!b){ b = document.createElement('button'); b.type = 'button'; b.id = 'ligaStartJetzt'; b.textContent = '⚽ LEAGUE STARTEN';
+    b.style.cssText = 'position:fixed;right:5.5%;bottom:13%;z-index:9000;padding:12px 18px;border:3px solid #000;border-radius:14px;background:linear-gradient(180deg,#ff6fb0,#e0267a);color:#fff;font:900 20px/1 var(--display,Impact),sans-serif;letter-spacing:1px;box-shadow:4px 4px 0 #000;cursor:pointer;display:none';
+    b.addEventListener('click', () => { window.__ligaWartet = false; b.style.display = 'none'; ligaNeuStarten(); });
+    document.body.appendChild(b);
+    setInterval(() => { const menu = document.getElementById('menue'); const zeig = !!window.__ligaWartet && menu && !menu.hidden && fwMenueBereit(); b.style.display = zeig ? 'block' : 'none'; }, 400); }
 }
 window.wahlDialog = wahlDialog;   // V10.0: eigener Dialog statt confirm() – das native Fenster wirft das Handy aus dem Quermodus
 $('#hofNeu').addEventListener('click', () => {   // V10.0: neues Turnier mit neuer Teamwahl (altes wird erst nach der Wahl ersetzt)
