@@ -59,7 +59,7 @@ html body #menue #flaeche .rechts .platz.kaderkachel .kk-staerke b{font-size:22p
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <title>SILESCROW CUP · V 11.1</title>
-<meta name="sc-build" content="20261026081537">
+<meta name="sc-build" content="20261026081603">
 <script>
 // V7.1: Beim Start immer die neueste Version laden. Prüft (nur online auf der Spielseite) die Versionsnummer
 // der veröffentlichten Seite ohne Zwischenspeicher; ist sie neuer, wird einmal automatisch neu geladen.
@@ -474,9 +474,9 @@ body::before{
 @media (prefers-reduced-motion:reduce){#raster .karte.gewaehlt{animation:none;box-shadow:0 0 0 3px #0a1230,0 0 0 7px var(--gelb),0 0 20px 8px rgba(255,226,52,.8)}}
 .karte.gewaehlt .marke,.karte.gastsicht .marke{display:block}
  /* V10.8: Umrandung der Spielerkarten im Hauptmenü blau (alle Kader-Spieler + Startelf/Bank) */
- /* V10.8: Neonröhren-Rand: heller Kern + hellblaue Röhre + Leuchthof */
- html body #menue #raster .karte.gewaehlt, html body #menue #raster .karte.besessen{outline:none !important;box-shadow:0 0 0 2px #eafcff,0 0 0 5px #35c4ff,0 0 9px 5px rgba(53,196,255,.95),0 0 22px 9px rgba(53,196,255,.55),inset 0 0 9px 2px rgba(53,196,255,.55) !important;animation:neonRohr 2.4s ease-in-out infinite !important}
- @keyframes neonRohr{0%,100%{box-shadow:0 0 0 2px #eafcff,0 0 0 5px #35c4ff,0 0 9px 5px rgba(53,196,255,.95),0 0 22px 9px rgba(53,196,255,.55),inset 0 0 9px 2px rgba(53,196,255,.55)}46%{box-shadow:0 0 0 2px #eafcff,0 0 0 5px #35c4ff,0 0 7px 4px rgba(53,196,255,.8),0 0 16px 6px rgba(53,196,255,.4),inset 0 0 7px 1px rgba(53,196,255,.4)}50%{box-shadow:0 0 0 2px #f6feff,0 0 0 5px #5ad2ff,0 0 12px 6px rgba(53,196,255,1),0 0 28px 12px rgba(53,196,255,.7),inset 0 0 11px 3px rgba(53,196,255,.65)}}
+ /* V11.1: Neonröhren-Rand: weiß (Pack-Spieler leuchten in Gold/Silber/Bronze) */
+ html body #menue #raster .karte.gewaehlt, html body #menue #raster .karte.besessen{outline:none !important;box-shadow:0 0 0 2px #cfd8e6,0 0 0 5px #ffffff,0 0 9px 5px rgba(255,255,255,.95),0 0 22px 9px rgba(255,255,255,.55),inset 0 0 9px 2px rgba(255,255,255,.55) !important;animation:neonRohr 2.4s ease-in-out infinite !important}
+ @keyframes neonRohr{0%,100%{box-shadow:0 0 0 2px #cfd8e6,0 0 0 5px #ffffff,0 0 9px 5px rgba(255,255,255,.95),0 0 22px 9px rgba(255,255,255,.55),inset 0 0 9px 2px rgba(255,255,255,.55)}46%{box-shadow:0 0 0 2px #cfd8e6,0 0 0 5px #ffffff,0 0 7px 4px rgba(255,255,255,.8),0 0 16px 6px rgba(255,255,255,.4),inset 0 0 7px 1px rgba(255,255,255,.4)}50%{box-shadow:0 0 0 2px #ffffff,0 0 0 5px #ffffff,0 0 12px 6px rgba(255,255,255,1),0 0 28px 12px rgba(255,255,255,.7),inset 0 0 11px 3px rgba(255,255,255,.65)}}
  @media (prefers-reduced-motion:reduce){html body #menue #raster .karte.gewaehlt, html body #menue #raster .karte.besessen{animation:none !important}}
 /* V11.1: Pack-Spieler leuchten in ihrer Stufe statt hellblau – Gold, Silber, Bronze */
 @keyframes neonGold{0%,100%{box-shadow:0 0 0 2px #fff6c2,0 0 0 6px #ffc21a,0 0 0 8px #7a5200,0 0 12px 6px rgba(255,190,20,.95),0 0 26px 10px rgba(255,190,20,.6),inset 0 0 10px 3px rgba(255,190,20,.55)}46%{box-shadow:0 0 0 2px #fff6c2,0 0 0 6px #ffc21a,0 0 0 8px #7a5200,0 0 8px 4px rgba(255,190,20,.8),0 0 18px 7px rgba(255,190,20,.4),inset 0 0 7px 2px rgba(255,190,20,.4)}50%{box-shadow:0 0 0 2px #fff,0 0 0 6px #ffc21a,0 0 0 8px #7a5200,0 0 16px 8px rgba(255,190,20,1),0 0 34px 14px rgba(255,190,20,.75),inset 0 0 13px 4px rgba(255,190,20,.65)}}
