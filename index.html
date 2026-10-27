@@ -63,7 +63,7 @@ html body #menue #flaeche .rechts .platz.kaderkachel .kk-staerke b{font-size:22p
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <title>SILESCROW CUP · V 3.0</title>
-<meta name="sc-build" content="20261027121200">
+<meta name="sc-build" content="20261027121800">
 <script>
 // V7.1: Beim Start immer die neueste Version laden. Prüft (nur online auf der Spielseite) die Versionsnummer
 // der veröffentlichten Seite ohne Zwischenspeicher; ist sie neuer, wird einmal automatisch neu geladen.
@@ -4795,6 +4795,7 @@ function namePassen(el){
 function hinweisRolle(){
   try {
     if (gastHostAnsicht()) return null;
+    if ((zustand.squad || []).filter(x => x != null).length >= TEAM_GROESSE) return null;   // V3.1: Startelf voll – keine Sperre mehr
     if (zustand.torwart == null || zustand.torwart < 0) return 'TW';
     const cnt = { DF: 0, MF: 0, ST: 0 };
     (zustand.squad || []).forEach((i, k) => { if (i == null || k === zustand.torwart) return; const r = PLAYER_DATABASE[i] && PLAYER_DATABASE[i].role; if (cnt[r] != null) cnt[r]++; });
@@ -4827,7 +4828,7 @@ function zeichneKarten(){
       '<span class="name"><span>' + p.name + '</span></span>';
     // V2.79: Die Markierung wird ausschließlich aus dem echten Team-Zustand gesetzt.
     // So gibt es keine Doppelreaktion von pointerdown + click und kein Flackern.
-    b.addEventListener('click', () => { karteGetippt(idx, b); });   // V2.6: Ton kommt in karteGetippt (an/ab)
+    b.addEventListener('click', () => { if (b.classList.contains('aus') && !gastHostAnsicht()){ const n = { TW: 'einen Torwart', DF: 'einen Abwehrspieler', MF: 'einen Mittelfeldspieler', ST: 'einen Stürmer' }[hinweis] || 'die markierte Position'; toast('Wähle zuerst ' + n + ' – die Karten mit 🧤 sind dran.'); return; } karteGetippt(idx, b); });   // V3.1: nur die markierte Position ist wählbar
     raster.appendChild(b);
   }
   raster.classList.toggle('mitte13', raster.children.length === 13);
