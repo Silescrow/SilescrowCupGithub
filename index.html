@@ -63,7 +63,7 @@ html body #menue #flaeche .rechts .platz.kaderkachel .kk-staerke b{font-size:22p
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <title>SILESCROW CUP · V 3.0</title>
-<meta name="sc-build" content="20261027122300">
+<meta name="sc-build" content="20261027123000">
 <script>
 // V7.1: Beim Start immer die neueste Version laden. Prüft (nur online auf der Spielseite) die Versionsnummer
 // der veröffentlichten Seite ohne Zwischenspeicher; ist sie neuer, wird einmal automatisch neu geladen.
@@ -436,8 +436,8 @@ body::before{
   border:5px solid var(--gelb);border-radius:14px;box-shadow:0 0 0 3px var(--navy-rand),6px 8px 0 rgba(0,0,0,.25);
   padding:12px 12px 0}
 .raster{display:grid;grid-template-columns:repeat(5,1fr);grid-template-rows:repeat(3,1fr);gap:10px;height:412px}
-/* 13. Karte: letzte Reihe mittig (Spalten 2–4) */
-.raster.mitte13 .karte:nth-child(11){grid-column-start:2}
+/* V3.1: Karten füllen das Raster immer von links oben (keine Lücke mehr) */
+.raster{grid-auto-flow:row}
 
 .karte{
   position:relative;border:0;padding:0;margin:0;cursor:pointer;border-radius:9px;overflow:hidden;
