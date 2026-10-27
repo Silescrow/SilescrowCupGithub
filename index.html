@@ -59,7 +59,7 @@ html body #menue #flaeche .rechts .platz.kaderkachel .kk-staerke b{font-size:22p
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
-<title>SILESCROW CUP · V 2.07</title>
+<title>SILESCROW CUP · V 2.08</title>
 <meta name="sc-build" content="20261027105000">
 <script>
 // V7.1: Beim Start immer die neueste Version laden. Prüft (nur online auf der Spielseite) die Versionsnummer
@@ -7229,9 +7229,10 @@ function hofTurnierWahl(){   // V10.0: Teamwahl wie überall – MEIN SUPERTEAM 
   fwZeichnen(); $('#fwUeber').hidden = false;
 }
 window.hofTurnierWahl = hofTurnierWahl;
-function ligaTeamWahl(){   // V11.10: LEAGUE wie alle Modi – erst Stärke, dann WÄHLE DEIN TEAM (MEIN SUPERTEAM oder 32 Nationen)
-  FW.online = false; FW.einseitig = 'liga'; fwHalle = false; FW.mein = null; FW.gegner = null; FW.zurueckVS = false; FW.schritt = 1;
-  fwZeichnen(); $('#fwUeber').hidden = false;
+function ligaTeamWahl(){   // V2.08: LEAGUE nur mit deinem Superteam – keine erneute Länderwahl mehr (Land kommt aus der Einführung)
+  if (!fwSuper()){ toast('Dein Superteam fehlt – wähle im Hauptmenü erst ' + TEAM_GROESSE + ' Spieler.'); return; }
+  FW.online = false; FW.einseitig = 'liga'; fwHalle = false; FW.mein = 'super'; FW.gegner = null; FW.zurueckVS = false; FW.schritt = 1;
+  ligaMitWahl();
 }
 function ligaMitWahl(){
   // V11.30: Neue LEAGUE – immer mit deinen eigenen Spielern. Erst Hinweis „Wähle deine 13 Spieler“, dann wählst du im Hauptmenü 11 + 2, dann LEAGUE STARTEN.
