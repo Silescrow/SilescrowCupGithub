@@ -63,7 +63,7 @@ html body #menue #flaeche .rechts .platz.kaderkachel .kk-staerke b{font-size:22p
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <title>SILESCROW CUP · V 3.0</title>
-<meta name="sc-build" content="20261027121900">
+<meta name="sc-build" content="20261027122300">
 <script>
 // V7.1: Beim Start immer die neueste Version laden. Prüft (nur online auf der Spielseite) die Versionsnummer
 // der veröffentlichten Seite ohne Zwischenspeicher; ist sie neuer, wird einmal automatisch neu geladen.
@@ -17586,7 +17586,6 @@ html body #menue .karte.stufe-gold .stern{color:#ffd21f}html body #menue .karte.
     <div class="fz" id="scFuehrungZahl">0 von 11 · Torwart fehlt · 0 von 2 Ersatz</div>
   </div>
   <button type="button" class="fb" id="scFuehrungBtn" disabled>WEITER</button>
-  <button type="button" class="fw" id="scFuehrungWeg">Überspringen</button>
 </div>
 <script id="scFuehrungJs">
 (function(){
@@ -17665,7 +17664,6 @@ html body #menue .karte.stufe-gold .stern{color:#ffd21f}html body #menue .karte.
     btn.textContent = 'WEITER';
   }
   btn.addEventListener('click', function(){ if (!btn.disabled) ende(); });
-  document.getElementById('scFuehrungWeg').addEventListener('click', ende);
   var schon = false;
   try { schon = localStorage.getItem(KEY) === resetMarke(); } catch(e) {}
   if (!schon) { setInterval(pruefe, 300); pruefe(); }
