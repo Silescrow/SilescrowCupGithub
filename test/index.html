@@ -63,7 +63,7 @@ html body #menue #flaeche .rechts .platz.kaderkachel .kk-staerke b{font-size:22p
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <title>SILESCROW CUP · V 3.0</title>
-<meta name="sc-build" content="20261027121800">
+<meta name="sc-build" content="20261027121900">
 <script>
 // V7.1: Beim Start immer die neueste Version laden. Prüft (nur online auf der Spielseite) die Versionsnummer
 // der veröffentlichten Seite ohne Zwischenspeicher; ist sie neuer, wird einmal automatisch neu geladen.
@@ -4781,7 +4781,10 @@ function aktuelleSeitenSpieler(){
   if (gastHostAnsicht()){ const t = NETZ.hostTeam; return t && t.sq ? t.sq.map(i => [i, PLAYER_DATABASE[i]]).filter(x => x[1]) : []; }
   if (zustand.seite > seitenAnzahl()) zustand.seite = seitenAnzahl();
   const a = (zustand.seite - 1) * PLAYERS_PER_PAGE;
-  return sichtbareAuswahl().slice(a, a + PLAYERS_PER_PAGE).map(i => [i, PLAYER_DATABASE[i]]);
+  let alle = sichtbareAuswahl();
+  const need = hinweisRolle();   // V3.1: benötigte Position zuerst, damit sie immer auf der ersten Seite steht
+  if (need){ const ja = alle.filter(i => PLAYER_DATABASE[i] && PLAYER_DATABASE[i].role === need), nein = alle.filter(i => !(PLAYER_DATABASE[i] && PLAYER_DATABASE[i].role === need)); alle = ja.concat(nein); }
+  return alle.slice(a, a + PLAYERS_PER_PAGE).map(i => [i, PLAYER_DATABASE[i]]);
 }
 
 // Schrift im Namensschild verkleinern, bis der Name passt
