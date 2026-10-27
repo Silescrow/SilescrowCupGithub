@@ -54,7 +54,7 @@ html body #menue #flaeche .rechts .platz.kaderkachel .kk-staerke b{font-size:22p
 .st-trenn.rk{font-size:24px;padding:6px 0;background:transparent}
 </style>
 <style>.scOk{color:#3ddc5c;font-weight:900;text-shadow:0 0 3px #000}</style>
-<style>.karte.aus{filter:grayscale(.85) brightness(.6);opacity:.55}.karte.hinweis{box-shadow:0 0 0 3px #3ddc5c,0 0 16px #3ddc5c !important}.hand-ico{position:absolute;left:2px;top:2px;font-size:18px;z-index:6;filter:drop-shadow(0 0 2px #000);pointer-events:none}</style>
+<style>.karte.aus{filter:grayscale(.85) brightness(.6);opacity:.55}.karte.hinweis{box-shadow:0 0 0 3px #3ddc5c,0 0 16px #3ddc5c !important}.hand-ico{position:absolute;left:-26px;top:22px;width:130px;transform:rotate(-38deg);background:#3ddc5c;color:#06210f;font:900 12px/1.2 var(--display,Impact),sans-serif;text-align:center;padding:3px 0;box-shadow:0 0 6px #000;z-index:6;pointer-events:none;overflow:hidden;white-space:nowrap}</style>
 </head><style>#menue .modi81 .m81.grau,#halleKnopf.grau{filter:grayscale(1) brightness(.7) !important;opacity:.6;pointer-events:none;cursor:not-allowed}</style><body>
 <!DOCTYPE html>
 <html lang="de">
@@ -62,7 +62,7 @@ html body #menue #flaeche .rechts .platz.kaderkachel .kk-staerke b{font-size:22p
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <title>SILESCROW CUP · V 3.0</title>
-<meta name="sc-build" content="20261027115200">
+<meta name="sc-build" content="20261027120300">
 <script>
 // V7.1: Beim Start immer die neueste Version laden. Prüft (nur online auf der Spielseite) die Versionsnummer
 // der veröffentlichten Seite ohne Zwischenspeicher; ist sie neuer, wird einmal automatisch neu geladen.
@@ -4819,7 +4819,7 @@ function zeichneKarten(){
     b.setAttribute('aria-label', p.name + ', Wert ' + p.rating);
     b.innerHTML =
       '<img src="' + BILDER[p.bild] + '" alt="">' +
-      (!gastHostAnsicht() && hinweis && p.role === hinweis ? '<span class="hand-ico" aria-label="Empfehlung">🧤</span>' : '') +
+      (!gastHostAnsicht() && hinweis && p.role === hinweis ? '<span class="hand-ico" aria-label="Gebraucht">🧤 GEBRAUCHT</span>' : '') +
       (p.stufe ? '<span class="tier-badge ' + p.stufe + '" aria-label="' + (p.stufe === 'gold' ? 'Gold' : p.stufe === 'silber' ? 'Silber' : 'Bronze') + '">' + (p.stufe === 'gold' || p.stufe === 'silber' ? '★' : '●') + '</span>' : '') +
       '<span class="wert">' + (gt && gt.w ? gt.w[gpos] : (ISTTRAIN(p) || (p.stufe && STAND.hatKarte(idx))) ? STAND.gesamt(idx) : p.rating) + '</span>' + (!frei && !gt ? '<span class="schloss">🔒</span>' : '') + (p.stufe ? '<span class="stern">★</span>' : '') + (faehigkeiten(p).length ? '<span class="fae">' + faeIcons(p) + '</span>' : '') +
       (p.pos ? '<span class="pos-kurz pk-' + p.role + '">' + p.pos + '</span>' : '') + '<span class="marke"></span><span class="neon"></span>' + (p.stufe ? '<span class="kauf-ico" title="Pack-Spieler (gekauft)">🛒</span>' : '') +
@@ -17622,6 +17622,7 @@ html body #menue .karte.stufe-gold .stern{color:#ffd21f}html body #menue .karte.
     ziele.forEach(function(z){ zeile += ' · ' + z[1] + ' ' + Math.min(rolleZahl[z[0]], z[2]) + '/' + z[2] + haken(rolleZahl[z[0]] >= z[2]); });
     zahl.innerHTML = zeile;
     var fehltRolle = ziele.filter(function(z){ return rolleZahl[z[0]] < z[2]; }).map(function(z){ return (z[2] - rolleZahl[z[0]]) + ' ' + ({ DF: 'Abwehrspieler', MF: 'Mittelfeldspieler', ST: 'Stürmer' })[z[0]]; });
+    if (!tw) fehltRolle.unshift('1 Torwart');   // V3.1: Torwart zuerst nennen
     if (!ok1) { txt.textContent = 'Wähle noch ' + (11 - sq) + ' Spieler für die Startelf' + (fehltRolle.length ? ' · dir fehlen noch ' + fehltRolle.join(', ') : ''); }
     else if (!ok2) { txt.textContent = 'Wähle einen Torwart'; }
     else if (!ok3) { txt.textContent = 'Wähle noch ' + (2 - er) + ' Ersatzspieler'; }
