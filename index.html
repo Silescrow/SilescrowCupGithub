@@ -54,7 +54,7 @@ html body #menue #flaeche .rechts .platz.kaderkachel .kk-staerke b{font-size:22p
 .st-trenn.rk{font-size:24px;padding:6px 0;background:transparent}
 </style>
 <style>.scOk{color:#3ddc5c;font-weight:900;text-shadow:0 0 3px #000}</style>
-<style>.karte.aus{filter:grayscale(.85) brightness(.6);opacity:.55}.karte.hinweis{box-shadow:0 0 0 3px #3ddc5c,0 0 16px #3ddc5c !important}.hand-ico{position:absolute;left:-26px;top:22px;width:130px;transform:rotate(-38deg);background:#3ddc5c;color:#06210f;font:900 12px/1.2 var(--display,Impact),sans-serif;text-align:center;padding:3px 0;box-shadow:0 0 6px #000;z-index:6;pointer-events:none;overflow:hidden;white-space:nowrap}</style>
+<style>.karte.sc-aus{filter:grayscale(.85) brightness(.6);opacity:.55}.karte.sc-dran{box-shadow:0 0 0 3px #3ddc5c,0 0 16px #3ddc5c !important}.hand-ico{position:absolute;right:-40px;top:22px;width:150px;transform:rotate(40deg);background:#3ddc5c;color:#06210f;font:900 12px/1.25 var(--display,Impact),sans-serif;text-align:center;padding:3px 0;box-shadow:0 0 6px #000;z-index:6;pointer-events:none;white-space:nowrap}.karte.sc-dran{overflow:hidden}</style>
 <style>.pu-box{background:#0e1b47;border:3px solid #ffe234;border-radius:14px;padding:10px;width:min(560px,96vw);max-height:92vh;overflow:auto;color:#fff;font-family:system-ui,sans-serif;text-align:center}.pu-titel{margin:4px 0 8px;font-size:20px;color:#ffe234}.pu-raster{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}.pu-karte{position:relative;border-radius:8px;background:#22305e;padding:4px;border:3px solid #888}.pu-karte.stufe-gold{border-color:#ffc21a}.pu-karte.stufe-silber{border-color:#d7dfeb}.pu-karte.stufe-bronze{border-color:#cd7f32}.pu-karte img{width:100%;aspect-ratio:3/4;object-fit:contain}.pu-wert{position:absolute;left:4px;top:4px;font-weight:900;background:#000a;border-radius:4px;padding:0 4px}.pu-name{display:block;font-size:11px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.pu-nav{display:flex;align-items:center;justify-content:center;gap:12px;margin:10px 0}.pu-nav button{font-weight:900;font-size:22px;width:52px;height:44px;border-radius:12px;border:3px solid #fff;background:#ff3fa4;color:#fff;box-shadow:0 0 10px #ff3fa4;cursor:pointer}.pu-nav button:disabled{opacity:.35;box-shadow:none}.pu-zu{font-weight:900;padding:6px 12px;border-radius:8px;border:2px solid #000;background:#ffe234;cursor:pointer;margin-top:6px}</style>
 </head><style>#menue .modi81 .m81.grau,#halleKnopf.grau{filter:grayscale(1) brightness(.7) !important;opacity:.6;pointer-events:none;cursor:not-allowed}</style><body>
 <!DOCTYPE html>
@@ -63,7 +63,7 @@ html body #menue #flaeche .rechts .platz.kaderkachel .kk-staerke b{font-size:22p
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <title>SILESCROW CUP · V 3.0</title>
-<meta name="sc-build" content="20261027123000">
+<meta name="sc-build" content="20261027123300">
 <script>
 // V7.1: Beim Start immer die neueste Version laden. Prüft (nur online auf der Spielseite) die Versionsnummer
 // der veröffentlichten Seite ohne Zwischenspeicher; ist sie neuer, wird einmal automatisch neu geladen.
@@ -4798,10 +4798,13 @@ function namePassen(el){
 function hinweisRolle(){
   try {
     if (gastHostAnsicht()) return null;
-    if ((zustand.squad || []).filter(x => x != null).length >= TEAM_GROESSE) return null;   // V3.1: Startelf voll – keine Sperre mehr
-    if (zustand.torwart == null || zustand.torwart < 0) return 'TW';
+    const sq = (zustand.squad || []).filter(x => x != null && PLAYER_DATABASE[x]);
+    if (sq.length >= TEAM_GROESSE) return null;   // V3.1: Startelf voll – keine Sperre mehr
+    // V3.1: Das Spiel setzt den Torwart erst bei voller Elf – vorher zählt ein Spieler mit Torwart-Position im Team
+    const hatTW = (zustand.torwart != null && zustand.torwart >= 0) || sq.some(i => PLAYER_DATABASE[i].role === 'TW');
+    if (!hatTW) return 'TW';
     const cnt = { DF: 0, MF: 0, ST: 0 };
-    (zustand.squad || []).forEach((i, k) => { if (i == null || k === zustand.torwart) return; const r = PLAYER_DATABASE[i] && PLAYER_DATABASE[i].role; if (cnt[r] != null) cnt[r]++; });
+    sq.forEach(i => { const r = PLAYER_DATABASE[i].role; if (cnt[r] != null) cnt[r]++; });
     if (cnt.DF < 4) return 'DF';
     if (cnt.MF < 4) return 'MF';
     if (cnt.ST < 2) return 'ST';
@@ -4820,7 +4823,7 @@ function zeichneKarten(){
     b.style.setProperty('--c', p.farbe);
     b.dataset.idx = idx;
     b.dataset.role = p.role;   // Position nur intern (für die KI), nicht sichtbar
-    if (!gastHostAnsicht() && hinweis){ if (p.role === hinweis) b.classList.add('hinweis'); else b.classList.add('aus'); }   // V3.0: passende Position leuchtet, der Rest wird ausgegraut (wählbar bleibt er)
+    if (!gastHostAnsicht() && hinweis){ if (p.role === hinweis) b.classList.add('sc-dran'); else b.classList.add('sc-aus'); }   // V3.0: passende Position leuchtet, der Rest wird ausgegraut (wählbar bleibt er)
     b.setAttribute('aria-label', p.name + ', Wert ' + p.rating);
     b.innerHTML =
       '<img src="' + BILDER[p.bild] + '" alt="">' +
@@ -4831,7 +4834,7 @@ function zeichneKarten(){
       '<span class="name"><span>' + p.name + '</span></span>';
     // V2.79: Die Markierung wird ausschließlich aus dem echten Team-Zustand gesetzt.
     // So gibt es keine Doppelreaktion von pointerdown + click und kein Flackern.
-    b.addEventListener('click', () => { if (b.classList.contains('aus') && !gastHostAnsicht()){ const n = { TW: 'einen Torwart', DF: 'einen Abwehrspieler', MF: 'einen Mittelfeldspieler', ST: 'einen Stürmer' }[hinweis] || 'die markierte Position'; toast('Wähle zuerst ' + n + ' – die Karten mit 🧤 sind dran.'); return; } karteGetippt(idx, b); });   // V3.1: nur die markierte Position ist wählbar
+    b.addEventListener('click', () => { if (b.classList.contains('sc-aus') && !gastHostAnsicht()){ const n = { TW: 'einen Torwart', DF: 'einen Abwehrspieler', MF: 'einen Mittelfeldspieler', ST: 'einen Stürmer' }[hinweis] || 'die markierte Position'; toast('Wähle zuerst ' + n + ' – die Karten mit 🧤 sind dran.'); return; } karteGetippt(idx, b); });   // V3.1: nur die markierte Position ist wählbar
     raster.appendChild(b);
   }
   raster.classList.toggle('mitte13', raster.children.length === 13);
@@ -4839,7 +4842,7 @@ function zeichneKarten(){
   $('#seite').textContent = gtm ? 'TEAM DES GASTGEBERS' : 'SEITE ' + zustand.seite + ' / ' + seitenAnzahl();
   $('#zurueck').disabled = gtm || zustand.seite === 1;
   $('#vor').disabled = gtm || zustand.seite === seitenAnzahl();
-  zeichneKarten.sig = gtm ? JSON.stringify(NETZ.hostTeam) : 'normal';
+  zeichneKarten.sig = gtm ? JSON.stringify(NETZ.hostTeam) : 'normal|' + hinweis;   // V3.1: neu zeichnen, sobald die gebrauchte Position wechselt
   raster.querySelectorAll('.name').forEach(namePassen);
   markiereKarten();
 }
@@ -6009,7 +6012,7 @@ function setzeTorwart(i){
 
 function aktualisiere(){
   try { angebotHinweis(); } catch (e) {}
-  { const sig = gastHostAnsicht() ? JSON.stringify(NETZ.hostTeam) : 'normal'; if (zeichneKarten.sig !== sig) zeichneKarten(); }
+  { const sig = gastHostAnsicht() ? JSON.stringify(NETZ.hostTeam) : 'normal|' + hinweisRolle(); if (zeichneKarten.sig !== sig){ if (!gastHostAnsicht() && hinweisRolle()) zustand.seite = 1; zeichneKarten(); } }   // V3.1: neue Position -> Seite 1, dort stehen die gebrauchten Karten
   if (!istGastModus()) gaesteAbgleich();
   if (!istGastModus()) positionenAbgleichen();
   nummernVerteilen();
@@ -17630,6 +17633,7 @@ html body #menue .karte.stufe-gold .stern{color:#ffd21f}html body #menue .karte.
     box.classList.add('an');
     var sq = (typeof zustand !== 'undefined' && zustand.squad) ? zustand.squad.length : 0;
     var tw = (typeof zustand !== 'undefined' && typeof zustand.torwart === 'number') ? zustand.torwart >= 0 : false;
+    var twDa = tw; try { twDa = tw || (zustand.squad || []).some(function(i){ return PLAYER_DATABASE[i] && PLAYER_DATABASE[i].role === 'TW'; }); } catch(e) {}   // V3.1: Torwart-Spieler im Team zählt schon vor der vollen Elf
     var er = (typeof zustand !== 'undefined' && zustand.ersatz) ? zustand.ersatz.length : 0;
     var land = (typeof zustand !== 'undefined') ? zustand.land : null;
     var liga = false;
@@ -17647,11 +17651,11 @@ html body #menue .karte.stufe-gold .stern{color:#ffd21f}html body #menue .karte.
     try { (zustand.squad || []).forEach(function(i, k){ if (i == null || k === zustand.torwart) return; var r = PLAYER_DATABASE[i] && PLAYER_DATABASE[i].role; if (rolleZahl[r] != null) rolleZahl[r]++; }); } catch(e) {}
     var ziele = [['DF','Abwehr',4],['MF','Mittelfeld',4],['ST','Sturm',2]];
     var haken = function(ok){ return ok ? ' <span class="scOk">✓</span>' : ''; };
-    var zeile = 'Startelf ' + Math.min(sq,11) + '/11' + haken(sq >= 11) + ' · Torwart' + (tw ? ' <span class="scOk">✓</span>' : ' fehlt') + ' · Ersatz ' + Math.min(er,2) + '/2' + haken(er >= 2) + ' · Land' + (ok4 ? ' <span class="scOk">✓</span>' : ' fehlt');
+    var zeile = 'Startelf ' + Math.min(sq,11) + '/11' + haken(sq >= 11) + ' · Torwart' + (twDa ? ' <span class="scOk">✓</span>' : ' fehlt') + ' · Ersatz ' + Math.min(er,2) + '/2' + haken(er >= 2) + ' · Land' + (ok4 ? ' <span class="scOk">✓</span>' : ' fehlt');
     ziele.forEach(function(z){ zeile += ' · ' + z[1] + ' ' + Math.min(rolleZahl[z[0]], z[2]) + '/' + z[2] + haken(rolleZahl[z[0]] >= z[2]); });
     zahl.innerHTML = zeile;
     var fehltRolle = ziele.filter(function(z){ return rolleZahl[z[0]] < z[2]; }).map(function(z){ return (z[2] - rolleZahl[z[0]]) + ' ' + ({ DF: 'Abwehrspieler', MF: 'Mittelfeldspieler', ST: 'Stürmer' })[z[0]]; });
-    if (!tw) fehltRolle.unshift('1 Torwart');   // V3.1: Torwart zuerst nennen
+    if (!twDa) fehltRolle.unshift('1 Torwart');   // V3.1: Torwart zuerst nennen
     if (!ok1) { txt.textContent = 'Wähle noch ' + (11 - sq) + ' Spieler für die Startelf' + (fehltRolle.length ? ' · dir fehlen noch ' + fehltRolle.join(', ') : ''); }
     else if (!ok2) { txt.textContent = 'Wähle einen Torwart'; }
     else if (!ok3) { txt.textContent = 'Wähle noch ' + (2 - er) + ' Ersatzspieler'; }
