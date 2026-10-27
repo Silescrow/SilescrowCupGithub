@@ -59,8 +59,8 @@ html body #menue #flaeche .rechts .platz.kaderkachel .kk-staerke b{font-size:22p
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
-<title>SILESCROW CUP · V 2.08</title>
-<meta name="sc-build" content="20261027105000">
+<title>SILESCROW CUP · V 2.07</title>
+<meta name="sc-build" content="20261027112900">
 <script>
 // V7.1: Beim Start immer die neueste Version laden. Prüft (nur online auf der Spielseite) die Versionsnummer
 // der veröffentlichten Seite ohne Zwischenspeicher; ist sie neuer, wird einmal automatisch neu geladen.
@@ -7229,7 +7229,7 @@ function hofTurnierWahl(){   // V10.0: Teamwahl wie überall – MEIN SUPERTEAM 
   fwZeichnen(); $('#fwUeber').hidden = false;
 }
 window.hofTurnierWahl = hofTurnierWahl;
-function ligaTeamWahl(){   // V2.08: LEAGUE nur mit deinem Superteam – keine erneute Länderwahl mehr (Land kommt aus der Einführung)
+function ligaTeamWahl(){   // V2.07: LEAGUE nur mit deinem Superteam – keine erneute Länderwahl mehr (Land kommt aus der Einführung)
   if (!fwSuper()){ toast('Dein Superteam fehlt – wähle im Hauptmenü erst ' + TEAM_GROESSE + ' Spieler.'); return; }
   FW.online = false; FW.einseitig = 'liga'; fwHalle = false; FW.mein = 'super'; FW.gegner = null; FW.zurueckVS = false; FW.schritt = 1;
   ligaMitWahl();
