@@ -1,2 +1,0 @@
-/* Silescrow Cup V 4.2 – js/patches/03-hall-of-fame-krone-aus-dem-haupt.js */
-/* HALL OF FAME: Krone aus dem Hauptmenü-Logo als Hallen-Symbol */window.HALLE_ICON='<img class="halle-ico" src="images/src.webp" alt="">';
