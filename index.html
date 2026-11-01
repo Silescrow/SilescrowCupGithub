@@ -1,0 +1,691 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"><link rel="manifest" href="manifest.webmanifest?v=3"><link rel="stylesheet" href="css/basis.css"><link rel="stylesheet" href="css/oberflaeche.css"><link rel="stylesheet" href="css/erweiterungen.css"><meta name="theme-color" content="#2f62d6"><meta name="mobile-web-app-capable" content="yes"><link rel="apple-touch-icon" href="apple-touch-icon3.png"><link rel="icon" type="image/png" href="icon3-192.png"><script>if("serviceWorker" in navigator && (location.protocol==="https:"||location.hostname==="localhost")) navigator.serviceWorker.register("sw.js").then(function(){return navigator.serviceWorker.ready}).then(function(r){var go=function(){setTimeout(function(){try{(r.active||navigator.serviceWorker.controller).postMessage("warm")}catch(e){}},4000)};if(document.readyState==="complete")go();else addEventListener("load",go)}).catch(function(){});</script>
+
+
+
+
+
+
+
+
+
+
+</head><body>
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<title>SILESCROW CUP · V 4.2</title>
+<meta name="sc-build" content="20261101120000">
+<script src="js/patches/01-beim-start-immer-die-neueste-ver.js"></script>
+
+<script src="js/patches/02-8-1-test-eigener-speicher-damit-.js"></script>
+<script src="js/patches/03-hall-of-fame-krone-aus-dem-haupt.js"></script>
+<script src="js/patches/04-fehleranzeige-zeigt-javascript-f.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/peerjs@1.5.4/dist/peerjs.min.js" async onerror="(function(){var s=document.createElement('script');s.src='https://cdnjs.cloudflare.com/ajax/libs/peerjs/1.5.4/peerjs.min.js';s.async=true;document.head.appendChild(s);})()"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bangers&family=Lilita+One&family=Barlow+Condensed:ital,wght@0,600;0,800;1,600;1,800&display=swap" rel="stylesheet">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="js/patches/05-ja-nein-fenster-im-spiel-design-.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+<body>
+<section id="laden" aria-label="Ladebildschirm">
+<div class="querbild" aria-hidden="true">
+  <div class="qstreifen"></div>
+  <img class="qlogo" alt="" src="images/src_2.webp">
+  <img class="qfigur" alt="">
+  <div class="qbadge">V 4.2</div>
+  <div class="qband"></div>
+  <div class="qanpfiff">Anpfiff bereit!</div>
+  <div class="qprozent">100%</div>
+
+</div>
+
+<main class="buehne neu">
+  <div class="pbadge" aria-hidden="true">V 4.2</div>
+  <h1 class="logo"><span class="l1">SILESCROW</span> <span class="l2">CUP</span></h1>
+  <div class="held">
+    <div class="figur"><img src="images/src_3.webp" alt="Spieler beim Fallrückzieher"></div>
+
+
+  </div>
+
+
+  <div class="lade">
+    <div class="ladezeile">
+    <div class="balken" role="progressbar" aria-label="Spiel wird geladen" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+      <div class="fuellung" id="fuellung"></div>
+      <div class="ball" id="ball">
+        <svg viewBox="0 0 100 100" aria-hidden="true"><g id="ballDreh">
+  <defs>
+    <radialGradient id="bk" cx="34%" cy="28%" r="78%">
+      <stop offset="0" stop-color="#ffffff"/><stop offset=".7" stop-color="#ffffff"/>
+      <stop offset=".9" stop-color="#eceef1"/><stop offset="1" stop-color="#cfd3d9"/>
+    </radialGradient>
+    <radialGradient id="pk" cx="45%" cy="30%" r="75%">
+      <stop offset="0" stop-color="#4a4a4e"/><stop offset=".5" stop-color="#1c1c1f"/><stop offset="1" stop-color="#050506"/>
+    </radialGradient>
+    <radialGradient id="glanz" cx="32%" cy="26%" r="40%">
+      <stop offset="0" stop-color="#fff" stop-opacity=".75"/><stop offset="1" stop-color="#fff" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="rand" cx="50%" cy="50%" r="50%">
+      <stop offset=".78" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#20242c" stop-opacity=".18"/>
+    </radialGradient>
+    <clipPath id="kreis"><circle cx="50" cy="50" r="44"/></clipPath>
+  </defs>
+  <circle cx="50" cy="50" r="44" fill="url(#bk)"/>
+  <g clip-path="url(#kreis)">
+    <g fill="url(#pk)" stroke="#000" stroke-width=".4" stroke-linejoin="round">
+      <polygon points="27.5,22.4 36,11.2 53.3,11.5 54.6,24.8 37.1,30.6"/>
+      <polygon points="70.6,38.2 80.3,32.1 89.8,45.1 82.2,59.9 71.5,54.6"/>
+      <polygon points="23.4,58.8 35.1,49.1 50.8,58.5 47.3,75 28.8,75"/>
+      <polygon points="2,39.4 13,32.1 14.2,45.4 10.2,58.5 2,55"/>
+      <polygon points="56.1,92.5 61.4,85.7 73.5,81.1 81.1,78.5 82,88 68.2,97"/>
+      <polygon points="64.9,8.3 71.2,9.9 84.1,20.4 82.2,22.4 71.2,14.8"/>
+      <polygon points="10,72.8 21.5,80.3 27.5,86.7 19.7,90 8,82"/>
+    </g>
+    <g fill="#fff" opacity=".35">
+      <path d="M38,15 Q46,12.5 51,14 Q46,15.5 39,17.5 Z"/><path d="M36,53 Q42,51 46,56 Q41,55 37,56 Z"/>
+      <path d="M74,38 Q79,35.5 82,37 Q78,38.5 75,40.5 Z"/>
+    </g>
+    <circle cx="50" cy="50" r="44" fill="url(#glanz)"/>
+    <circle cx="50" cy="50" r="44" fill="url(#rand)"/>
+  </g>
+<circle cx="50" cy="50" r="44" fill="none" stroke="#000" stroke-width="5"/></g></svg>
+      </div>
+    </div>
+    <!-- Pokal im Stil des Referenzbilds: dicke schwarze Kontur, gelber Pokal, pinker Sockel -->
+    <svg class="pokal" id="ladePokal" viewBox="0 0 160 200" aria-hidden="true">
+      <g stroke="#000" stroke-width="7" stroke-linejoin="round" stroke-linecap="round">
+        <path d="M38 32 C8 30 4 56 14 72 C22 86 40 92 50 94" fill="none"/>
+        <path d="M122 32 C152 30 156 56 146 72 C138 86 120 92 110 94" fill="none"/>
+        <path d="M34 18 H126 L120 92 C116 116 98 128 80 128 C62 128 44 116 40 92 Z" fill="#ffd23a"/>
+        <rect x="70" y="126" width="20" height="30" fill="#ffb000"/>
+        <rect x="52" y="152" width="56" height="16" rx="3" fill="#ffd23a"/>
+        <rect x="34" y="166" width="92" height="22" rx="6" fill="#ff3fa4"/>
+        <path d="M80 44 L87 60 L104 61 L91 72 L95 89 L80 80 L65 89 L69 72 L56 61 L73 60 Z" fill="#fff"/>
+      </g>
+      <path d="M48 30 L46 74" stroke="#fff" stroke-width="7" stroke-linecap="round" opacity=".55"/>
+      <path class="funkeln" d="M140 8 L144 18 L154 22 L144 26 L140 36 L136 26 L126 22 L136 18 Z" fill="#ffe234" stroke="#000" stroke-width="3"/>
+      <path class="funkeln" d="M14 110 L17 117 L24 120 L17 123 L14 130 L11 123 L4 120 L11 117 Z" fill="#ff3fa4" stroke="#000" stroke-width="3"/>
+    </svg>
+    </div>
+    <div class="status" id="status" aria-live="polite">Rasen wird gemäht …</div>
+  </div>
+
+  
+</main>
+
+<div class="version">V 4.2</div>
+<button class="vollbild" id="vollbild" type="button" aria-label="Vollbild">
+  <svg viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 9V3h6M21 9V3h-6M3 15v6h6M21 15v6h-6"/>
+  </svg>
+</button>
+
+
+
+</section>
+<section id="menue" hidden aria-label="Hauptmenü">
+  <div class="m-version" aria-label="Spielversion">V 4.2</div>
+  <div class="flaeche" id="flaeche">
+    <header class="kopf">
+      <div class="m-logo"><img class="m-logo-img" alt="SILESCROW CUP"></div>
+      <div class="kopf-block"><div class="banner"><span>SUPERTEAM</span></div>
+      <div class="pillen">
+        <div class="pille gold" id="mpPille" hidden></div>
+        <div class="pille beliebt" id="mBeliebt">❤️ BELIEBTHEIT 50 %</div>
+      </div></div>
+<button class="packk" id="packKnopf" type="button" hidden aria-label="Pack-Shop und Crows"><span class="shop-tab" aria-hidden="true">🛒 PACK SHOP</span><span id="packZahl"></span><small id="packText">🛒 SHOP</small></button>
+      <div class="knoepfe-oben">
+        <button class="k-oben" id="mEinst" type="button" aria-label="Einstellungen"><svg viewBox="0 0 24 24" fill="none" stroke="#0b1430" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.2"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></button>
+        <button class="k-oben" id="mVollbild" type="button" aria-label="Vollbild">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#0b1430" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9V3h6M21 9V3h-6M3 15v6h6M21 15v6h-6"/></svg>
+        </button>
+        <button class="k-oben mpk" id="mpKnopf" type="button">👥&nbsp;ONLINE</button>
+        <button class="k-oben" id="beenden" type="button" aria-label="Beenden">✕</button>
+      </div>
+    </header>
+
+    <section class="kartenfenster" aria-label="Spielerkarten">
+      <div class="menu-depth-packs" aria-hidden="true">
+        <div class="depth-row gold-row">
+          <span class="depth-pack gold"><b>★</b><i>GOLD</i></span>
+          <span class="depth-pack gold"><b>★</b><i>GOLD</i></span>
+          <span class="depth-pack gold"><b>★</b><i>GOLD</i></span>
+          <span class="depth-pack gold"><b>★</b><i>GOLD</i></span>
+        </div>
+        <div class="depth-row silver-row">
+          <span class="depth-pack silver"><b>★</b><i>SILBER</i></span>
+          <span class="depth-pack silver"><b>★</b><i>SILBER</i></span>
+          <span class="depth-pack silver"><b>★</b><i>SILBER</i></span>
+        </div>
+        <div class="depth-row bronze-row">
+          <span class="depth-pack bronze"><b>?</b><i>BRONZE</i></span>
+          <span class="depth-pack bronze"><b>?</b><i>BRONZE</i></span>
+          <span class="depth-pack bronze"><b>?</b><i>BRONZE</i></span>
+        </div>
+      </div>
+      <div class="raster" id="raster"></div>
+      <div class="blaettern">
+        <button class="pfeil" id="zurueck" type="button" aria-label="Vorherige Seite">‹</button>
+        <div class="seite" id="seite">SEITE 1 / 2</div>
+        <button class="pfeil" id="vor" type="button" aria-label="Nächste Seite">›</button>
+      </div>
+    </section>
+
+    <aside class="rechts">
+      <section class="teamfenster" aria-label="Dein Team">
+        <button type="button" class="pl-nav pl-zurueck" id="plZurueck" aria-label="Vorherige Spieler" hidden><svg viewBox="0 0 24 24" fill="none" stroke="#0b1430" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 5.5 8 12l6.5 6.5"/></svg></button><button type="button" class="pl-nav pl-vor" id="plVor" aria-label="Weitere Spieler" hidden><svg viewBox="0 0 24 24" fill="none" stroke="#0b1430" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 5.5 16 12l-6.5 6.5"/></svg></button>
+        <h2 class="teamtitel"><span id="teamtitel">DEIN TEAM</span></h2>
+        <div class="plaetze" id="plaetze"></div>
+        <div class="teamhinweis"><span id="teamhinweis">Wähle 11: du steuerst alle Feldspieler</span></div>
+
+      </section>
+      <section class="einstellungen" aria-label="Einstellungen">
+        <button class="landknopf leer" id="landKnopf" type="button"><span id="landAnz">🌍&nbsp; Land wählen</span><i>▾</i></button>
+        <div class="schalter drei" role="group" aria-label="KI-Stärke">
+          <button class="wahl" type="button" data-stufe="leicht">Leicht</button>
+          <button class="wahl an" type="button" data-stufe="mittel">Mittel</button>
+          <button class="wahl" type="button" data-stufe="stark">Stark</button>
+        </div>
+        <button class="wahl formknopf" id="formKnopf" type="button" aria-label="Formation und Aufstellung wählen"><span class="fk-kader" id="fkKader">📋 KADER <b id="kaderAnz">0</b></span><span class="fk-auf">AUFSTELLUNG <b id="formAnz">4-4-2</b></span></button>
+        
+        <button class="menu-continue" id="fortsetzenKnopf" type="button" disabled hidden style="display:none">▶ FORTSETZEN</button>
+        <button class="start" id="start" type="button" disabled>🏆 TURNIER STARTEN / LADEN</button>
+        <div class="modi81" id="modi81"><button class="m81 freund" id="freundKnopf" type="button" aria-label="Freundschaftsspiel starten"><b>🤝</b><span>FREUNDSCHAFT</span></button><button class="m81 pokal" id="pokalKnopf" type="button" aria-label="Silescrow Cup starten oder laden"><b>🏆</b><span class="zwei">SILESCROW<br>CUP</span></button><button class="m81 liga" id="ligaKnopf" type="button" aria-label="Liga starten oder laden"><b>🏅</b><span>LEAGUE</span></button><button class="m81 halle" id="halleKnopf" type="button" aria-label="Hall of Fame – Halle 5 gegen 5"><b class="halle-b"></b><span class="zwei">HALL OF<br>FAME</span></button><div id="shopPlatz" aria-hidden="true"></div></div>
+        <button class="neues-spiel-btn" id="neuesSpielKnopf" type="button">🆕 NEUES SPIEL</button>
+        <div class="menu-status" id="menuStatus">Team zusammenstellen und weiterspielen.</div>
+        <div class="fehlt" id="fehlt">Noch 11 Spieler wählen</div>
+      </section>
+    </aside>
+
+    <div class="m-toast" id="mToast"></div>
+
+    <div class="anpfiff" id="landUeber" hidden>
+      <div class="box landbox" role="dialog" aria-modal="true" aria-labelledby="landTitel">
+        <h2 id="landTitel">WÄHLE DEIN LAND</h2>
+        <div class="landraster" id="landRaster"></div>
+        <div class="mpunten"><button type="button" id="landZu">FERTIG</button></div>
+      </div>
+    </div>
+    <div class="anpfiff" id="fwUeber" hidden>
+      <div class="box landbox fwbox" role="dialog" aria-modal="true" aria-labelledby="fwTitel">
+        <h2 id="fwTitel">FREUNDSCHAFTSSPIEL</h2>
+        <div class="fw-kopf"><span id="fwSchritt">1/2 · WÄHLE DEIN TEAM</span><span id="fwPaar"></span></div>
+        <div class="ort-wahl" id="fwOrt"></div>
+        <div class="landraster fwraster" id="fwRaster"></div>
+        <div class="mpunten fw-unten"><button type="button" id="fwZurueck">ZURÜCK</button><button type="button" id="fwAuf" disabled hidden>📋 AUFSTELLUNG</button><button type="button" id="fwLos" disabled>⚽ ANSTOSS</button></div>
+      </div>
+    </div>
+    <div class="anpfiff" id="hofUeber" hidden>
+      <div class="box hofbox" role="dialog" aria-modal="true"><h2 id="hofTitel">HALL OF FAME</h2>
+        <div class="hof-stufe" id="hofStufe"><button type="button" data-hs="leicht">Leicht</button><button type="button" data-hs="mittel">Mittel</button><button type="button" data-hs="stark">Stark</button></div>
+        <div class="hof-knoepfe"><button type="button" class="hof-f" id="hofFreund">⚽ FREUNDSCHAFTSSPIEL<small>Team und Gegner wählen</small></button><button type="button" class="hof-t" id="hofTurnier">🏆 HALLENTURNIER<small>8 Teams · Sieger 800 / 1.800 / 3.000 Crows</small></button><button type="button" class="hof-n" id="hofNeu" hidden>🆕 NEUES TURNIER<small>Team wählen: Superteam oder 32 Nationen</small></button><button type="button" class="hof-zu" id="hofZu">ZURÜCK</button></div></div>
+    </div>
+    <div class="anpfiff" id="stUeber" hidden>
+      <div class="box stbox" role="dialog" aria-modal="true" aria-labelledby="stTitel">
+        <h2 id="stTitel">⭐ SUPERTEAM</h2>
+        <div class="st-info" id="stInfo"></div>
+        <div class="st-liste" id="stListe"></div>
+        <div class="mpunten"><button type="button" id="stZu">FERTIG</button></div>
+      </div>
+    </div>
+    <div class="anpfiff" id="mpUeber" hidden>
+      <div class="box mpbox" role="dialog" aria-modal="true" aria-labelledby="mpTitel">
+        <h2 id="mpTitel">MULTIPLAYER</h2>
+        <input class="mpname" id="mpName" maxlength="12" autocomplete="off" placeholder="Dein Name" aria-label="Dein Name">
+        <div id="mpStart">
+          <p>Spiel mit einem zweiten Handy – zusammen oder gegeneinander.</p>
+          <div class="mpwahl"><button type="button" id="mpErstellen">RAUM ERSTELLEN</button><button type="button" id="mpBeitreten">RAUM BEITRETEN</button></div>
+        </div>
+        <div id="mpHost" hidden>
+          <p class="mpklein">Dein Raumcode</p>
+          <div class="mpcode" id="mpCode">····</div>
+          <p class="mpklein">Zweites Handy: MULTIPLAYER → RAUM BEITRETEN → Code eingeben</p>
+          <div class="mpliste" id="mpListe"></div>
+          <div class="mpwahl" id="mpModusWahl" style="display:none"><button type="button" class="wahl an" id="mpModusF" style="flex:1;padding:0 6px;font-size:16px">FREUNDSCHAFT</button><button type="button" class="wahl" id="mpModusC" style="flex:1;padding:0 6px;font-size:16px">ONLINE-CUP</button></div>
+          <div class="ort-wahl" id="mpOrt"></div>
+          <div class="mpwahl mp-los"><button type="button" class="mpVs">⚔️ ZUM SPIEL: TEAMS WÄHLEN &amp; ANSTOSS</button></div>
+          <p class="mpklein" id="mpRegel">Freundschaftsspiel: Jeder Gast wählt einen Spieler aus seinen eigenen Karten. Er ersetzt einen KI-Spieler in deinem Team.</p>
+          <p class="mpklein">Neue Gäste werden automatisch verteilt: Du und die ersten zwei Gäste sind 🔵 BLAU, der dritte Gast ist 🔴 ROT. Mit dem Knopf neben einem Gast wechselst du sein Team. Im Freundschaftsspiel stellt er dann ein eigenes Team aus 9 Spielern zusammen und spielt gegen dich (Online-Cup: er steuert einen Gegnerspieler).</p>
+          <div class="mpstatus" id="mpStatusH">Warte auf Mitspieler …</div>
+        </div>
+        <div id="mpGast" hidden>
+          <p class="mpklein">Raumcode eingeben</p>
+          <div class="mpzeile"><input id="mpEingabe" inputmode="numeric" pattern="[0-9]*" maxlength="4" autocomplete="off" aria-label="Raumcode"><button type="button" id="mpLos">BEITRETEN</button></div>
+          <div id="mpTeamG" hidden></div>
+          <div class="ort-wahl" id="mpOrtG"></div>
+          <div class="mpwahl mp-los"><button type="button" class="mpVs">⚔️ ZUM SPIEL: TEAM WÄHLEN</button></div>
+          <div class="mpliste" id="mpListeG"></div>
+          <p class="mpklein" id="mpRegelG"></p>
+          <div class="mpstatus" id="mpStatusG"></div>
+        </div>
+        <div class="mpunten"><button type="button" id="mpVerlassen" hidden>RAUM VERLASSEN</button><button type="button" id="mpZu">FERTIG</button></div>
+      </div>
+    </div>
+    <div class="anpfiff" id="anpfiff" hidden>
+      <div class="box" role="dialog" aria-modal="true" aria-labelledby="anpfiffTitel">
+        <h2 id="anpfiffTitel">TEAM</h2>
+        <div class="reihe" id="anpfiffReihe"></div>
+        <p id="anpfiffText"></p>
+        <button type="button" id="anpfiffZu">ZURÜCK ZUM TEAM</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="spiel" hidden aria-label="Spiel">
+  <canvas id="spielCanvas"></canvas>
+  <div class="hud" id="hud">
+    <div class="on-namen" id="onNamen" hidden><svg viewBox="0 0 24 20" width="16" height="13" fill="none" stroke="#22c55e" stroke-width="2.8" stroke-linecap="round"><path d="M2 7.2a14.5 14.5 0 0 1 20 0"/><path d="M5.4 10.8a9.6 9.6 0 0 1 13.2 0"/><path d="M8.8 14.3a4.8 4.8 0 0 1 6.4 0"/><circle cx="12" cy="17.6" r="1.7" fill="#22c55e" stroke="none"/></svg><span class="on-a" id="onA"></span><i>vs</i><span class="on-b" id="onB"></span></div>
+    <div class="tafel">
+      <div class="team links"><span class="fl" id="flA"></span><span id="kuA">DEU</span></div>
+      <div class="stand" id="stand">0 – 0</div>
+      <div class="team gast"><span id="kuB">BRA</span><span class="fl" id="flB"></span></div>
+      <div class="minute" id="minute">0:00</div>
+    </div>
+    <div class="uhr" id="uhr">3:00</div>
+    <div id="onlineBadge" hidden title="Online"><svg viewBox="0 0 24 20" width="15" height="13" fill="none" stroke="#22c55e" stroke-width="2.8" stroke-linecap="round"><path d="M2 7.2a14.5 14.5 0 0 1 20 0"/><path d="M5.4 10.8a9.6 9.6 0 0 1 13.2 0"/><path d="M8.8 14.3a4.8 4.8 0 0 1 6.4 0"/><circle cx="12" cy="17.6" r="1.7" fill="#22c55e" stroke="none"/></svg></div>
+    <div class="elfBar" id="elfBar" hidden><div class="eb-kopf">ELFMETERSCHIESSEN</div><div class="eb-zeile"><span class="eb-fl" id="ebFlA"></span><span class="eb-punkte" id="ebA"></span><b class="eb-stand" id="ebStand">0 – 0</b><span class="eb-punkte" id="ebB"></span><span class="eb-fl" id="ebFlB"></span></div><div class="eb-info" id="ebInfo"></div></div>
+    <div class="konferenz" id="konferenz"></div>
+    <button class="k-hud" id="pauseKnopf" type="button" aria-label="Pause">
+      <svg viewBox="0 0 20 20"><rect x="4" y="3" width="4" height="14" rx="1" fill="#0b1430"/><rect x="12" y="3" width="4" height="14" rx="1" fill="#0b1430"/></svg>
+    </button>
+    <button class="k-hud" id="grafikKnopf" type="button" aria-label="Grafik einstellen" title="Grafik">⚙️</button>
+    <button class="k-hud" id="spielSimulieren" type="button" hidden aria-label="Spiel zu Ende simulieren" title="Spiel zu Ende simulieren">⏩</button>
+    <button class="k-hud" id="spielVollbild" type="button" aria-label="Vollbild">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#0b1430" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9V3h6M21 9V3h-6M3 15v6h6M21 15v6h-6"/></svg>
+    </button>
+    <div class="joy" id="joy"><div class="basis" id="joyBasis"><div class="knauf" id="joyKnauf"></div></div></div>
+    <div class="aktionen" id="aktionen">
+      <div class="ak" id="kSchuss">SCHUSS</div>
+      <div class="ak" id="kSprint">SPRINT</div>
+      <div class="ak" id="kPass">PASS</div>
+      <div class="ak" id="kFlanke">FLANKE</div>
+      <div class="dosis" id="dosisS" style="right:6px;top:3px;width:76px"><i></i></div>
+      <div class="dosis" id="dosisF" style="right:104px;top:9px;width:68px"><i></i></div>
+      <div class="dosis" id="dosisP" style="right:6px;bottom:-9px;width:76px"><i></i></div>
+      <div class="ak" id="kWechsel" hidden>WECHSEL</div>
+      <div class="ak" id="kSpezial" hidden><i id="kSpezialIcon">⚡</i><b id="kSpezialName"></b></div>
+    </div>
+    <div class="kraft" id="kraft"><i id="kraftI"></i></div>
+    <div class="wdh" id="wdhLabel" hidden><span class="punkt"></span>WIEDERHOLUNG</div>
+    <button type="button" id="wdhSkip" class="skipUnten" hidden>ÜBERSPRINGEN ▸▸</button>
+    <div class="namensschild" id="namensschild"></div>
+    <div class="meldung" id="meldung"><b id="meldungB">TOR!</b><small id="meldungS"></small></div>
+    <div class="wtafel" id="wTafel" aria-live="polite"><div class="wt-kopf">AUSWECHSLUNG</div><div class="wt-zeile wt-raus"><span class="wt-pfeil">▼</span><span class="wt-name" id="wtRausName"></span><span class="wt-nr" id="wtRausNr"></span></div><div class="wt-zeile wt-rein"><span class="wt-pfeil">▲</span><span class="wt-name" id="wtReinName"></span><span class="wt-nr" id="wtReinNr"></span></div></div>
+    <div class="hinweis-spiel" id="hinweisSpiel"></div>
+    <div class="ecken-guide-hinweis" id="eckenGuideHinweis">↗ JOYSTICK = ZIEL · FLANKE / SCHUSS = FLANKE · PASS = KURZ</div>
+  </div>
+  <div id="grafikUeber" hidden aria-label="Grafikeinstellungen">
+    <div class="grafikbox" role="dialog" aria-modal="true" aria-labelledby="grafikTitel">
+      <h2 id="grafikTitel">GRAFIK</h2>
+      <p>Wähle die Qualität passend zu deinem Handy.</p>
+      <div class="grafikwahl" role="group" aria-label="Grafikqualität">
+        <button type="button" data-grafik="auto">AUTO<small>empfohlen</small></button>
+        <button type="button" data-grafik="low">NIEDRIG</button>
+        <button type="button" data-grafik="medium">MITTEL</button>
+        <button type="button" data-grafik="high">HOCH</button>
+        <button type="button" data-grafik="ultra">ULTRA</button>
+      </div>
+      <div class="grafikhinweis" id="grafikHinweis"></div>
+      <button type="button" class="fpsSchalter" id="grafikFps">📊 FPS ANZEIGEN: AUS</button>
+      <button type="button" id="grafikVerlassen" hidden style="background:#ff6b6b;color:#fff">🚪 SPIEL VERLASSEN</button>
+      <button type="button" id="grafikZu">FERTIG</button>
+    </div>
+  </div>
+  <div class="ueber" id="pauseUeber" hidden>
+    <div class="box"><h2>PAUSE</h2><p id="pauseInfo"></p>
+      <div class="reihe-k"><button type="button" id="weiterSpielen">WEITERSPIELEN</button><button type="button" class="zweit" id="pauseGrafik">⚙️ GRAFIK</button><button type="button" class="zweit" id="aufgeben">ZUM MENÜ</button></div></div>
+  </div>
+  <div class="ueber" id="hzUeber" hidden>
+    <div class="box hzbox"><h2>HALBZEIT</h2><div class="ergebnis" id="hzStand"></div>
+      <div class="hzstat" id="hzStat"></div><p id="hzHinweis"></p>
+      <div class="reihe-k"><button type="button" id="hzWeiter">2. HALBZEIT ▸</button></div></div>
+  </div>
+  <div id="elfmeterUeber" class="ueber elfmeterUeber" hidden>
+    <div class="box elfbox"><h2>⚽ ELFMETERSCHIESSEN</h2><div class="ergebnis" id="elfStand"></div><p id="elfText">5 Schützen pro Team – danach Sudden Death.</p><div class="elfshots" id="elfShots"></div></div>
+  </div>
+  <div class="ueber" id="endeUeber" hidden>
+    <div class="box" id="endeBox"><h2>ABPFIFF</h2><div class="ergebnis" id="endeStand"></div><p id="endeText"></p>
+      <div class="bewertung" id="bewertung" hidden></div>
+      <div class="reihe-k"><button type="button" id="turnierWeiter" hidden>WEITER</button><button type="button" id="revanche" hidden>🔁 REVANCHE ANFRAGEN</button><button type="button" id="nochmal">NOCHMAL</button><button type="button" class="zweit" id="zumMenue">ZUM MENÜ</button></div></div>
+  </div>
+</section>
+
+<section id="turnier" hidden aria-label="Turnierbaum">
+  <div class="t-flaeche" id="tFlaeche">
+    <div class="t-titel"><b>SILESCROW CUP</b><span id="tRunde">VIERTELFINALE</span></div>
+    <div id="tBaum"></div>
+    <div class="t-finale" id="tFinale">
+      <div class="t-pokal" id="tPokal">🏆</div><div class="t-fkopf">FINALE</div>
+      <div class="t-chip" id="tF1"><span class="leer">?</span></div>
+      <div class="t-vs">gegen</div>
+      <div class="t-chip" id="tF2"><span class="leer">?</span></div>
+      <div class="t-wetter klein" id="tW5"></div>
+    </div>
+    <div class="t-dein" id="tDein">DEIN SPIEL</div>
+    <div class="t-info" id="tInfo"></div>
+    <div class="t-knoepfe">
+      <button type="button" class="t-zweit" id="tMenue">ZURÜCK</button>
+      <button type="button" id="tAuf" hidden style="background:#5b8cff;color:#fff">📋 AUFSTELLUNG</button>
+      <button type="button" id="tLos">ANPFIFF</button>
+    </div>
+    <div class="t-konfetti" id="tKonfetti"></div>
+    <div class="t-ueber" id="tSperre" hidden>
+      <div class="t-ueberbox">
+        <h3>KARTEN &amp; SPERREN</h3>
+        <div class="t-sperrliste" id="tSperrListe"></div>
+        <button type="button" id="tSperreWeiter">WEITER</button>
+      </div>
+    </div>
+    <div class="t-ueber" id="tErsatz" hidden>
+      <div class="t-ueberbox breit">
+        <h3 id="tErsatzTitel">ERSATZ WÄHLEN</h3>
+        <p id="tErsatzText"></p>
+        <div class="t-ersatzraster" id="tErsatzRaster"></div>
+      </div>
+    </div>
+  </div>
+</section>
+<section id="liga" hidden aria-label="Liga">
+  <div class="lg-flaeche" id="lgFlaeche">
+    <div class="lg-titel"><b>SILESCROW CUP</b><span id="lgTag">LIGA</span></div>
+    <div class="lg-tabs" id="lgTabs">
+      <button type="button" data-v="tabelle">TABELLE</button>
+      <button type="button" data-v="spieltag">SPIELTAG</button>
+      <button type="button" data-v="tore">TORJÄGER</button>
+      <button type="button" data-v="vor">VORLAGEN</button>
+      <button type="button" data-v="liga2">LEAGUE 2</button>
+      <button type="button" data-v="cc" id="lgCcTab" hidden>🏆 CHAMPIONS CUP</button>
+    </div>
+    <div class="lg-info" id="lgInfo"></div>
+    <div class="lg-inhalt" id="lgInhalt"></div>
+    <div class="lg-knoepfe"><button type="button" class="zweit" id="lgMenue">MENÜ</button><button type="button" class="zweit" id="lgPraemien" style="padding:0 16px">🏆 PRÄMIEN</button><button type="button" id="lgLos">ANPFIFF</button></div>
+  </div>
+</section>
+<section id="ehrung" hidden aria-label="Siegerehrung">
+  <canvas id="ehFeuer"></canvas>
+  <div class="eh-strahl l"></div><div class="eh-strahl r"></div>
+  <div class="eh-kopf">
+    <div class="eh-klein">SILESCROW CUP · SIEGERTEAM</div>
+    <div class="eh-titel" id="ehTitel">TÜRKEI</div>
+    <div class="eh-nr" id="ehNr"></div>
+  </div>
+  <div class="eh-podest">
+    <div class="eh-platz p2"><div class="eh-team" id="ehT2"></div><div class="eh-block"><span class="eh-flagge" id="ehF2"></span><b>2</b></div></div>
+    <div class="eh-platz p1"><div class="eh-team" id="ehT1"></div><div class="eh-block"><span class="eh-flagge" id="ehF1"></span><b>1</b></div></div>
+    <div class="eh-platz p3"><div class="eh-team" id="ehT3"></div><div class="eh-block"><span class="eh-flagge" id="ehF3"></span><b>3</b></div></div>
+  </div>
+  <div class="eh-konfetti" id="ehKonfetti"></div>
+  <button type="button" class="eh-weiter" id="ehWeiter">WEITER</button>
+</section>
+
+<div class="drehen" role="alert">
+  <div>
+    <svg viewBox="0 0 64 64" fill="none" stroke="#ffe234" stroke-width="4" stroke-linejoin="round"><rect x="18" y="6" width="28" height="52" rx="6"/><circle cx="32" cy="50" r="2.5" fill="#ffe234"/></svg>
+    <b>HANDY QUER HALTEN</b>
+    <span>Die Spielerauswahl gibt es nur im Querformat.</span>
+  </div>
+</div>
+
+
+<script src="js/start-konfig-musik.js"></script>
+<script src="js/flaggen-wetter.js"></script>
+<script src="js/multiplayer-netz.js"></script>
+<script src="js/ladebildschirm.js"></script>
+<script src="data/spieler.js"></script>
+<script src="data/spielerbilder.js"></script>
+<script src="js/werte-konfig.js"></script>
+<script src="js/spielstand.js"></script>
+<script src="data/nationen.js"></script>
+<script src="data/presse.js"></script>
+<script src="js/kader-formation.js"></script>
+<script src="js/aufstellung-ui.js"></script>
+<script src="js/menue-modi.js"></script>
+<script src="js/gluecksrad.js"></script>
+<script src="js/liga-online-menue.js"></script>
+<script src="data/kommentar.js"></script>
+<script src="js/wettbewerb-turnier.js"></script>
+<script src="js/wettbewerb-liga.js"></script>
+<script src="js/multiplayer-menue.js"></script>
+<script src="data/sprites.js"></script>
+<script src="js/spiel-kern.js"></script>
+
+
+
+
+<div id="finalPack" hidden aria-modal="true" role="dialog">
+  <div class="fp-box" id="fpBox">
+    <div class="fp-title" id="fpTitle">DEINE BELOHNUNG</div>
+    <div class="fp-sub" id="fpSub"></div>
+    <div class="fp-pack" id="fpPack"><span class="fp-foil"></span><span class="fp-star">★</span><span class="fp-label" id="fpPackLabel">PACK</span></div>
+    <div class="fp-card" id="fpCard" hidden></div>
+    <button class="fp-btn" id="fpOpen" type="button">PACK ÖFFNEN</button>
+    <button class="fp-skip" id="fpClose" type="button">Später öffnen</button>
+  </div>
+  <button class="fp-btn" id="fpWeiter" type="button" hidden>WEITER ▶</button>
+</div>
+<script src="js/patches/07-autoweiter-pack-aus-dem-shop-nac.js"></script>
+
+
+
+
+
+
+
+
+<script src="js/patches/08-packsv19js.js"></script>
+<script src="js/patches/09-zusatz.js"></script>
+
+<script src="js/patches/10-starterdelayv28js.js"></script>
+<script src="js/patches/11-autosaveresetv27js.js"></script>
+
+
+
+
+<div id="matchSkillsUeber" hidden>
+  <div class="ms-box" role="dialog" aria-modal="true" aria-labelledby="msTitel">
+    <h2 id="msTitel">TRAINING</h2>
+    <div class="ms-sub" id="msSub">Verteile die Trainingspunkte deines Stars.</div>
+    <div class="ms-punkte"><span>Trainingspunkte</span><span><span class="ms-rest" id="msRest">0</span> übrig</span></div>
+    <div class="ms-staerke" aria-live="polite"><div><small>STÄRKE</small><b id="msName">–</b></div><div class="ms-starkewert"><span id="msStarkeVorher">–</span> → <em id="msStarkeNachher">–</em></div></div>
+    <div id="msHinweis" hidden style="background:#b00020;color:#fff;font-weight:800;border:2px solid #000;border-radius:10px;padding:7px 10px;margin:6px 0"></div>
+    <div id="msListe"></div>
+    <div class="ms-knoepfe"><button type="button" class="ms-zurueck" id="msZurueck">◀ ZURÜCK</button><button type="button" class="ms-start" id="msStart">WEITER ▶</button></div>
+    <div class="ms-note">Vor jedem Spiel hast du 3 Trainingspunkte. Jedes + kostet 1 Punkt und bringt +1 auf den Wert. Höchstwert 110 (SILESCROW 135). Deine Mitspieler trainieren automatisch ihren schwächsten Wert.</div>
+  </div>
+</div>
+
+<script src="js/patches/12-v41-training-js.js"></script>
+
+
+<script src="js/patches/13-loaderrecoveryv29.js"></script>
+
+
+
+<script src="js/patches/14-v231-pack-orientation-js.js"></script>
+
+
+
+
+
+
+<!-- V2.38: STARTER-PACK wirklich nur EINMAL pro Spielstand -->
+<script src="js/patches/15-falls-eine-alte-version-beim-neu.js"></script>
+
+
+
+
+<script src="js/patches/16-v242-loader-logo-copy.js"></script>
+
+
+<script src="js/patches/17-v245startrepairjs.js"></script>
+<div id="einstUeber" hidden>
+  <div class="e-box" role="dialog" aria-modal="true" aria-labelledby="eTitel">
+    <h2 id="eTitel"><svg viewBox="0 0 24 24" width="22" height="22" style="vertical-align:-3px" fill="none" stroke="#ffe234" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.2"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg> EINSTELLUNGEN</h2>
+
+    <div class="e-grafik"><div class="e-gt">🖥️ GRAFIK</div><div class="e-gw"><button type="button" data-mgrafik="auto">AUTO<small>empfohlen</small></button><button type="button" data-mgrafik="low">NIEDRIG</button><button type="button" data-mgrafik="medium">MITTEL</button><button type="button" data-mgrafik="high">HOCH</button><button type="button" data-mgrafik="ultra">ULTRA</button></div><div class="e-gh" id="eGrafikHinweis"></div></div>
+    <div class="e-reihe"><button type="button" class="e-zu fpsSchalter" id="eFps">📊 FPS ANZEIGEN: AUS</button>
+    <button type="button" class="e-zu" id="eSicher">💾 SPIELSTAND</button>
+    <button type="button" class="e-zu" id="eKomTest" hidden style="display:none">🎙️ KOMMENTATOR-TEST</button>
+    <button type="button" class="e-rot" id="eAlles" hidden style="display:none">🔄 ALLES ZURÜCKSETZEN</button></div>
+    <button type="button" class="e-zu" id="eZu">SCHLIESSEN</button>
+    <div class="e-msg" id="eMsg"></div>
+  </div>
+</div>
+
+
+
+<div id="sichUeber" hidden>
+  <div class="s-box" role="dialog" aria-modal="true" aria-labelledby="sTitel">
+    <h2 id="sTitel">💾 SPIELSTAND</h2>
+    <div class="s-tabs"><button type="button" id="sTabS" class="an">SPEICHERN</button><button type="button" id="sTabL">LADEN</button></div>
+    <div class="s-frage" id="sFrage"><div id="sFrageText"></div><div class="s-fz"><button type="button" class="s-rot" id="sFrageJa">JA</button><button type="button" class="s-grau" id="sFrageNein">ABBRECHEN</button></div></div>
+    <div class="s-slots" id="sSlots"></div>
+    <div class="s-code" id="sCodeS"><div class="s-t">ODER ALS CODE (z. B. für anderes Gerät)</div><textarea id="sCodeOut" readonly placeholder="Hier erscheint der Code"></textarea><button type="button" id="sKopieren">📋 CODE ERZEUGEN &amp; KOPIEREN</button></div>
+    <div class="s-code" id="sCodeL" hidden><div class="s-t">ODER CODE EINFÜGEN</div><textarea id="sCodeIn" placeholder="Code hier einfügen"></textarea><button type="button" id="sCodeLaden">📂 CODE LADEN</button></div>
+    <button type="button" class="s-rot" id="sReset" style="margin-top:6px">🗑️ ALLES ZURÜCKSETZEN</button>
+    <button type="button" class="s-grau" id="sZu">ZURÜCK</button>
+    <div class="s-msg" id="sMsg"></div>
+  </div>
+</div>
+<script src="js/patches/18-spielstandv119js.js"></script>
+<script src="js/patches/19-radersterstart.js"></script>
+<script src="js/patches/20-einstellungenv350js.js"></script>
+
+<div id="kmTest" hidden>
+  <div class="kt-kopf">
+    <div class="kt-zeile"><input id="ktSuche" type="search" placeholder="Satz oder Zuordnung suchen"><button type="button" class="kt-grau" id="ktZu">Schließen</button></div>
+    <div class="kt-zeile"><select id="ktBlock"></select><button type="button" id="ktAlle">▶ Liste abspielen</button><button type="button" class="kt-grau" id="ktStopp">■</button></div>
+    <div class="kt-zeile"><button type="button" id="ktKopie">Falsche kopieren</button><span class="kt-info" id="ktInfo"></span></div>
+  </div>
+  <div class="kt-liste" id="ktListe"></div>
+</div>
+<script src="js/patches/21-kommentatortestv62js.js"></script>
+
+</body>
+</html>
+
+
+
+
+
+<div id="fpsAnzeige" hidden>FPS --</div>
+<script src="js/patches/22-fpsanzeigev63js.js"></script>
+<script src="js/patches/23-pack-shop-pro-geoeffnetem-pack-w.js"></script>
+<script src="js/patches/24-zusatz.js"></script>
+
+<div id="htUeber" hidden><div class="htbox" role="dialog" aria-modal="true"></div></div>
+<script src="js/patches/25-hallenturnierjs.js"></script>
+
+<!-- V 3.06 Testversion: geführte Einführung mit Live-Zähler (blockiert nicht die Auswahl) -->
+
+
+<div id="scFuehrung" role="status" aria-label="Einführung">
+  <div class="fh">👆</div>
+  <div style="max-width:150px">
+    <div class="ft" id="scFuehrungText">Wähle 11 Spieler</div>
+    <div class="fz" id="scFuehrungZahl">0 von 11 · Torwart fehlt · 0 von 2 Ersatz</div>
+  </div>
+  <button type="button" class="fb" id="scFuehrungBtn" disabled>WEITER</button>
+</div>
+<script src="js/patches/26-scfuehrungjs.js"></script>
+<script src="js/patches/27-waehrend-des-spiels-wird-das-hau.js"></script>
+<script src="js/patches/28-herzlichen-glueckwunsch-fenster-.js"></script>
+<script src="js/patches/29-league-fenster-knopf-praemien-ze.js"></script>
+<script src="js/patches/30-kleine-anzeige-automatisch-gespe.js"></script>
+<script src="js/patches/31-schriftzug-und-praemie-waehrend-.js"></script>
+
+
+<script src="js/patches/32-v307-fixes-js.js"></script>
+
+
+
+
+
+
+
+
+
+
+<script src="js/patches/33-grosser-hinweis-der-kurz-erschei.js"></script>
+<script src="js/patches/34-einmaligerreset.js"></script>
+
+<script src="js/patches/35-zusatz.js"></script>
+
+
+
+
+
+
+
+
+
+
+<script src="js/patches/36-v41-online-titel.js"></script>
+
+<script src="js/patches/37-v51-skalierung.js"></script>
+<script src="js/patches/38-v51-autosave-platz1.js"></script>
+
+</body></html>

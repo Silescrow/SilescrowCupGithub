@@ -1,0 +1,910 @@
+/* Silescrow Cup V 4.2 – css/oberflaeche.css */
+
+.v22-savebox{margin-top:12px;padding:12px;border:2px solid rgba(19,32,79,.22);border-radius:16px;background:rgba(245,247,255,.92);box-shadow:0 5px 14px rgba(0,0,0,.08)}
+.v22-save-title{text-align:center;font-weight:1000;font-size:15px;letter-spacing:.04em;color:#13204f;margin-bottom:4px}
+.v22-save-status{text-align:center;font-size:11px;font-weight:800;color:#5d6680;min-height:15px;margin-bottom:8px}
+.v22-save-grid{display:grid;grid-template-columns:1fr 1fr auto;gap:7px;align-items:stretch}
+.v22-save-grid .speicher-btn{min-height:42px;margin:0;font-weight:1000;touch-action:manipulation}
+.v22-save-grid #speicherLoeschen{width:48px;padding:0;font-size:19px;color:#9b1824;border-color:#9b1824;background:#fff1f2}
+@media(max-width:700px){.v22-savebox{margin-top:10px}.v22-save-grid{grid-template-columns:1fr 1fr auto}.v22-save-grid .speicher-btn{font-size:12px;padding:9px 7px}}
+
+
+/* V2.24: Speichern/Laden/Mülleimer wirklich oben im echten Hauptmenü (#menue) */
+#menue .save-topbar{
+  position:absolute; z-index:50; left:50%; top:8px; transform:translateX(-50%);
+  display:grid; grid-template-columns:1fr 1fr 52px; gap:8px; align-items:center;
+  width:min(430px,46vw);
+}
+#menue .save-topbar .speicher-btn{
+  min-height:44px; margin:0; padding:7px 12px; border:3px solid #000; border-radius:8px;
+  background:var(--gelb); color:var(--tinte); box-shadow:3px 3px 0 #000;
+  font-family:var(--display); font-size:22px; letter-spacing:.5px; font-weight:900; cursor:pointer;
+  touch-action:manipulation;
+}
+#menue .save-topbar .speicher-btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 #000}
+#menue .save-topbar #speicherLoeschen{width:52px; min-width:52px; padding:0; font-size:22px; color:#9b1824; background:#fff1f2; border-color:#000}
+#menue .speicherbox.v22-savebox{display:none!important}
+@media(max-width:760px){
+  #menue .save-topbar{width:min(360px,44vw);grid-template-columns:1fr 1fr 46px;gap:6px}
+  #menue .save-topbar .speicher-btn{font-size:17px;min-height:40px;padding:5px 7px}
+  #menue .save-topbar #speicherLoeschen{width:46px;min-width:46px;font-size:20px}
+}
+
+
+/* V2.24 Bronze-Pack: klar unter Silber, aber über den Basis-Spielern */
+#finalPack.v19-reward .fp-pack.bronze{animation:fpPulse 1.15s ease-in-out infinite, v19Shake .95s ease-in-out infinite;box-shadow:0 12px 0 rgba(70,35,12,.45),0 0 34px rgba(201,135,69,.35)}
+
+
+/* V2.27: Kein Speichern/Laden-Balken mehr im Hauptmenü. Speicherung läuft unsichtbar im Hintergrund. */
+#menue .save-topbar{display:none !important}
+#menue .neues-spiel-btn{
+  width:100%; margin-top:8px; min-height:44px; padding:8px 12px;
+  border:3px solid #000; border-radius:9px; background:#fff1f2; color:#8e1721;
+  box-shadow:3px 3px 0 #000; font-family:var(--display,Impact); font-size:18px;
+  font-weight:900; letter-spacing:.4px; cursor:pointer; touch-action:manipulation;
+}
+#menue .neues-spiel-btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 #000}
+
+
+#menue .save-topbar,#menue .speicherbox,#menue #spielstandBox,#menue #speichernKnopf,#menue #ladenKnopf,#menue #speicherLoeschen,#menue #spielstandStatus{display:none!important;visibility:hidden!important;pointer-events:none!important}
+
+
+/* V2.34: Hauptmenü mit räumlicher Pack-Tiefe: Gold hinten, Silber mittig, Bronze vorne.
+   Die echten Spielerkarten bleiben als oberste Ebene darüber. */
+#menue .kartenfenster{position:absolute;isolation:isolate;overflow:hidden;background:rgba(14,27,71,.90)}
+#menue .menu-depth-packs{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden;
+  background:radial-gradient(circle at 50% 68%,rgba(255,226,52,.12),transparent 46%)}
+#menue .depth-row{position:absolute;left:0;right:0;display:flex;justify-content:center;align-items:flex-end;gap:28px;pointer-events:none}
+#menue .gold-row{top:20px;z-index:1;transform:scale(.82);opacity:.48;filter:saturate(.85) brightness(.9);gap:34px}
+#menue .silver-row{top:105px;z-index:2;transform:scale(.91);opacity:.64;filter:brightness(.94);gap:32px}
+#menue .bronze-row{top:205px;z-index:3;transform:scale(1.02);opacity:.78;gap:26px}
+#menue .depth-pack{position:relative;width:112px;height:154px;border:4px solid #0a1230;border-radius:12px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  box-shadow:0 12px 0 rgba(0,0,0,.28),0 0 26px rgba(255,255,255,.14);
+  transform-origin:center bottom;overflow:hidden;
+  font-family:var(--display,Impact);color:#fff;text-shadow:2px 3px 0 #000}
+#menue .depth-pack::before{content:"";position:absolute;inset:-35%;background:repeating-conic-gradient(from 0deg,rgba(255,255,255,.18) 0 8deg,transparent 8deg 18deg);transform:rotate(12deg)}
+#menue .depth-pack::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 38%,rgba(255,255,255,.3),transparent 50%)}
+#menue .depth-pack b,#menue .depth-pack i{position:relative;z-index:1}
+#menue .depth-pack b{font-style:normal;font-size:55px;line-height:1}
+#menue .depth-pack i{font-style:normal;font-size:16px;letter-spacing:1.5px;margin-top:8px;background:rgba(0,0,0,.52);padding:4px 9px;border-radius:6px}
+#menue .depth-pack.gold{background:linear-gradient(145deg,#fff4a0,#ffd21f 48%,#a96b00)}
+#menue .depth-pack.silver{background:linear-gradient(145deg,#fff,#d8dee8 48%,#7c879a)}
+#menue .depth-pack.bronze{background:linear-gradient(145deg,#ffe4c4,#c98745 48%,#754318)}
+#menue .gold-row .depth-pack:nth-child(1){transform:rotate(-8deg) translateY(10px)}
+#menue .gold-row .depth-pack:nth-child(2){transform:rotate(-3deg) translateY(2px)}
+#menue .gold-row .depth-pack:nth-child(3){transform:rotate(3deg) translateY(2px)}
+#menue .gold-row .depth-pack:nth-child(4){transform:rotate(8deg) translateY(10px)}
+#menue .silver-row .depth-pack:nth-child(1){transform:rotate(-7deg) translateY(7px)}
+#menue .silver-row .depth-pack:nth-child(2){transform:rotate(0deg)}
+#menue .silver-row .depth-pack:nth-child(3){transform:rotate(7deg) translateY(7px)}
+#menue .bronze-row .depth-pack:nth-child(1){transform:rotate(-8deg) translateY(12px)}
+#menue .bronze-row .depth-pack:nth-child(2){transform:rotate(0deg) translateY(-2px)}
+#menue .bronze-row .depth-pack:nth-child(3){transform:rotate(8deg) translateY(12px)}
+#menue .kartenfenster>.raster{position:relative;z-index:8}
+#menue .kartenfenster>.blaettern{position:relative;z-index:9}
+@media (max-width:900px){
+  #menue .depth-pack{width:96px;height:136px}
+  #menue .gold-row{gap:20px}.silver-row{gap:18px}.bronze-row{gap:15px}
+}
+@media (orientation:portrait){
+  #menue .depth-pack{width:82px;height:116px;border-width:3px}
+  #menue .depth-pack b{font-size:42px}.depth-pack i{font-size:12px!important}
+  #menue .gold-row{top:24px}.silver-row{top:100px}.bronze-row{top:180px}
+}
+@media (prefers-reduced-motion:reduce){#menue .depth-pack{transition:none}}
+
+
+/* V2.38: Gold/Silber/Bronze im Hauptmenü sofort erkennbar */
+#menue .karte{position:relative;overflow:hidden}
+#menue .karte .tier-badge{
+  position:absolute;left:50%;top:7px;transform:translateX(-50%);z-index:6;
+  min-width:72%;padding:3px 7px 2px;border:2px solid #000;border-radius:7px;
+  box-shadow:2px 2px 0 #000;font-family:var(--display,Impact);font-size:clamp(10px,1.45vw,15px);
+  line-height:1;letter-spacing:.7px;text-align:center;color:#0b1430;white-space:nowrap;
+}
+#menue .karte .tier-badge.gold{background:linear-gradient(180deg,#fff8b8,#ffd21f);}
+#menue .karte .tier-badge.silber{background:linear-gradient(180deg,#fff,#cbd3df);}
+#menue .karte .tier-badge.bronze{background:linear-gradient(180deg,#ffe7c9,#c98745);}
+#menue .karte.stufe-gold .tier-badge{box-shadow:0 0 10px rgba(255,226,52,.85),2px 2px 0 #000}
+#menue .karte.stufe-silber .tier-badge{box-shadow:0 0 8px rgba(255,255,255,.7),2px 2px 0 #000}
+#menue .karte.stufe-bronze .tier-badge{box-shadow:0 0 8px rgba(201,135,69,.65),2px 2px 0 #000}
+#menue .karte.stufe-gold .tier-badge,#menue .karte.stufe-silber .tier-badge{background:none !important;box-shadow:none !important;border:none !important;border-radius:0 !important;color:#fff;text-shadow:0 0 3px #000,1px 1px 0 #000,-1px -1px 0 #000}
+#menue .karte.stufe-gold .tier-badge{color:#ffe234}   /* V10.8: Gold: nur Stern, kein Kreis */
+#menue .karte.stufe-gold .tier-badge,#menue .karte.stufe-silber .tier-badge{width:auto !important;height:auto !important;min-width:0 !important;padding:0 !important;border-radius:0 !important;display:block !important;background:transparent !important;box-shadow:none !important;outline:none !important;font-size:20px !important;line-height:1 !important;text-align:center !important}
+#menue .karte .wert{top:34px}
+@media (max-width:900px){#menue .karte .tier-badge{top:5px;font-size:10px;padding:3px 5px}#menue .karte .wert{top:31px}}
+@media (orientation:portrait){#menue .karte .tier-badge{font-size:9px;letter-spacing:.35px;top:4px}#menue .karte .wert{top:29px}}
+/* V11.0: Bronze/Silber/Gold nur als kleines rundes Symbol oben auf der Karte (kein Text mehr) */
+#menue .karte .tier-badge{min-width:0;width:24px;height:24px;padding:0;border-radius:50%;display:grid;place-items:center;font-size:14px;letter-spacing:0;top:5px;line-height:1}
+
+
+/* V2.57: Hauptmenü verwendet exakt das Logo vom Ladebildschirm – inklusive Krone */
+#menue .m-logo{
+  top:10px !important;
+  width:min(300px,28vw);
+  height:auto;
+  transform:rotate(-4deg);
+  transform-origin:left center;
+  z-index:20;
+}
+#menue .m-logo-img{
+  display:block;
+  width:100%;
+  height:auto;
+  max-height:90px;
+  object-fit:contain;
+  object-position:left top;
+  filter:drop-shadow(0 3px 4px rgba(0,0,40,.35));
+}
+@media (max-width:900px){
+  #menue .m-logo{width:min(250px,42vw);top:10px !important;}
+  #menue .m-logo-img{max-height:78px;}
+}
+
+
+/* V2.43: Hauptmenü-Logo etwas größer, Position bleibt erhalten */
+#menue .m-logo{width:min(345px,32vw) !important;}
+#menue .m-logo-img{max-height:104px !important;}
+@media (max-width:900px){
+  #menue .m-logo{width:min(285px,48vw) !important;}
+  #menue .m-logo-img{max-height:92px !important;}
+}
+
+
+/* V2.57: Das größere Hauptmenü-Logo bleibt oberhalb der Spielerkarten-Kante. */
+#menue .m-logo{
+  top:2px !important;
+  width:min(315px,29vw) !important;
+}
+#menue .m-logo-img{max-height:88px !important;}
+@media (max-width:900px){
+  #menue .m-logo{top:4px !important;width:min(255px,44vw) !important;}
+  #menue .m-logo-img{max-height:80px !important;}
+}
+
+
+/* V2.67: Position und Trikotnummer sind getrennte Bedienfelder; nur Position erhält einen animierten Hinweis. */
+.plaetze.tipp .platz.belegt .tw{animation:tippPositionPuls 1.15s ease-in-out infinite}
+@keyframes tippPositionPuls{0%,100%{transform:scale(1);box-shadow:0 0 0 0 rgba(255,226,52,0)}45%{transform:scale(1.06) rotate(-1deg);box-shadow:0 0 0 4px rgba(255,226,52,.95)}70%{transform:scale(1) rotate(0);box-shadow:0 0 0 0 rgba(255,226,52,0)}}
+@media (prefers-reduced-motion:reduce){.plaetze.tipp .platz.belegt .tw{animation:none;outline:3px solid #ffe234;outline-offset:2px}}
+
+
+/* V2.67: Der Positions-Hinweis sitzt direkt im Positions-Button und überdeckt die Nummer nicht. */
+.teamhinweis{position:relative;display:flex;align-items:center;justify-content:center;gap:6px}
+.teamhinweis::before{content:'✎';display:inline-block;font-size:18px;line-height:1;animation:positionsStift 1.05s ease-in-out infinite}
+.plaetze.tipp .tw{animation:positionsKnopf 1.05s ease-in-out infinite !important}
+.plaetze.tipp .tw .wechsel{display:inline-block;font-style:normal;font-size:18px;line-height:1;animation:positionsStift 1.05s ease-in-out infinite}
+.plaetze.tipp .tw{outline:2px solid rgba(255,226,52,.9);outline-offset:2px}
+@keyframes positionsStift{0%,100%{transform:translateY(0) rotate(0) scale(1)}35%{transform:translateY(-3px) rotate(-12deg) scale(1.12)}65%{transform:translateY(1px) rotate(9deg) scale(1.05)}}
+@keyframes positionsKnopf{0%,100%{transform:scale(1)}45%{transform:scale(1.08) rotate(-1deg)}70%{transform:scale(1.02) rotate(0)}}
+@media (prefers-reduced-motion:reduce){.teamhinweis::before,.plaetze.tipp .tw,.plaetze.tipp .tw .wechsel{animation:none !important}.plaetze.tipp .tw{outline:3px solid #ffe234}}
+
+
+/* V2.68: Beide Bedienfelder bekommen ein klares Symbol mit rotierendem Ring.
+   Der Ring ist rein visuell und blockiert keinerlei Klicks. */
+.platz.belegt .tw,
+.platz.belegt .nrwahl{
+  position:absolute;
+  z-index:6;
+  overflow:visible !important;
+  display:flex !important;
+  align-items:center;
+  justify-content:center;
+  gap:3px;
+  border:2px solid #0a1230 !important;
+  border-radius:999px !important;
+  background:#ffe234 !important;
+  color:#0a1230 !important;
+  font-weight:900 !important;
+  white-space:nowrap;
+  box-sizing:border-box;
+}
+.platz.belegt .nrwahl::before{
+  content:'👕';
+  font-size:15px;
+  line-height:1;
+  filter:saturate(1.1);
+}
+.platz.belegt .tw::before{
+  content:'⚽';
+  font-size:14px;
+  line-height:1;
+}
+.platz.belegt .nrwahl::after,
+.platz.belegt .tw::after{
+  content:'';
+  position:absolute;
+  inset:-5px;
+  border:2px dashed rgba(255,226,52,.95);
+  border-left-color:rgba(255,63,164,.95);
+  border-radius:50%;
+  pointer-events:none;
+  animation:v268Orbit 2.2s linear infinite;
+}
+.platz.belegt:first-child .nrwahl,
+.platz.belegt:first-child .tw{
+  animation:v268ButtonPulse 1.5s ease-in-out infinite !important;
+  box-shadow:0 0 0 2px rgba(255,226,52,.72), 0 0 12px rgba(255,226,52,.28) !important;
+}
+.platz.belegt:first-child .nrwahl::after,
+.platz.belegt:first-child .tw::after{
+  animation:v268Orbit 1.8s linear infinite;
+}
+/* Der bisherige Stift-/Zauberstab-Hinweis wird durch das neue Symbol ersetzt. */
+.platz.belegt .wechsel{display:none !important}
+.platz.belegt:first-child .tw::before,
+.platz.belegt:first-child .nrwahl::before{animation:none !important}
+@keyframes v268Orbit{to{transform:rotate(360deg)}}
+@keyframes v268ButtonPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+@media (max-width:520px){
+  .platz.belegt .tw,.platz.belegt .nrwahl{height:24px !important;min-height:24px !important;font-size:11px !important;gap:2px}
+  .platz.belegt .nrwahl{min-width:48px !important}
+  .platz.belegt .tw{max-width:calc(50% - 6px) !important}
+  .platz.belegt .nrwahl::before{font-size:13px}
+  .platz.belegt .tw::before{font-size:12px}
+}
+@media (prefers-reduced-motion:reduce){
+  .platz.belegt:first-child .nrwahl,.platz.belegt:first-child .tw,
+  .platz.belegt .nrwahl::after,.platz.belegt .tw::after{animation:none !important}
+  .platz.belegt:first-child .nrwahl,.platz.belegt:first-child .tw{outline:3px solid #ffe234;outline-offset:3px}
+}
+
+
+/* V2.67: Position und Trikotnummer sind getrennte, feste Bedienfelder. Kein Overlay. */
+.platz.belegt img{height:45px;bottom:21px}
+.platz.belegt .tw,.platz.belegt .nrwahl{top:68px;height:20px;min-height:20px}
+.platz.belegt .tw{left:4px;right:auto;max-width:calc(50% - 7px);padding:0 5px;font-size:12px !important}
+.platz.belegt .nrwahl{right:4px;left:auto;min-width:42px;padding:0 5px;font-size:13px}
+/* Nur der Positions-Button des ersten Spielers bekommt einen kleinen, nicht überdeckenden Hinweis. */
+.platz.belegt:first-child .tw::before{content:'🪄';display:inline-block;margin-right:2px;font-size:12px;animation:v266Zauber 1.15s ease-in-out infinite}
+.platz.belegt:first-child .tw{box-shadow:0 0 0 2px rgba(255,226,52,.75);animation:v266PositionPulse 1.15s ease-in-out infinite}
+.platz.belegt:first-child .nrwahl{box-shadow:none;animation:none}
+@keyframes v266Zauber{0%,100%{transform:rotate(-8deg) translateY(0)}45%{transform:rotate(12deg) translateY(-2px)}70%{transform:rotate(0) translateY(0)}}
+@keyframes v266PositionPulse{0%,100%{transform:scale(1)}45%{transform:scale(1.045)}70%{transform:scale(1)}}
+@media (max-width:520px){
+  .platz.belegt img{height:42px;bottom:21px}
+  .platz.belegt .tw,.platz.belegt .nrwahl{top:69px;height:19px;min-height:19px}
+  .platz.belegt .tw{font-size:11px !important;max-width:calc(50% - 6px)}
+  .platz.belegt .nrwahl{font-size:12px;min-width:38px}
+}
+@media (prefers-reduced-motion:reduce){.platz.belegt:first-child .tw,.platz.belegt:first-child .tw::before{animation:none!important}}
+
+
+/* V2.72: Position wird eindeutig über ein echtes Auswahl-Popup erklärt.
+   Der Hinweis sitzt nur beim Positionsfeld und blockiert weder Nummer noch Spielerkarte. */
+.platz.belegt:first-child .tw{
+  animation:v269PosPulse 1.15s ease-in-out infinite !important;
+  box-shadow:0 0 0 3px rgba(255,226,52,.95),0 0 18px rgba(255,226,52,.45) !important;
+}
+.platz.belegt:first-child .tw::before{
+  content:'⚽';
+  display:inline-block;
+  margin-right:3px;
+}
+.platz.belegt:first-child .tw::after{
+  content:'👆 POSITION';
+  position:absolute;
+  left:50%;
+  bottom:calc(100% + 7px);
+  transform:translateX(-50%);
+  padding:4px 8px;
+  border:2px solid #0a1230;
+  border-radius:999px;
+  background:#ffe234;
+  color:#0a1230;
+  font:900 10px/1 var(--text,Arial);
+  white-space:nowrap;
+  pointer-events:none;
+  z-index:30;
+  box-shadow:3px 3px 0 rgba(0,0,0,.3);
+  animation:v269Callout 1.15s ease-in-out infinite;
+}
+#posWahl{
+  width:min(260px,calc(100vw - 28px)) !important;
+  padding:12px !important;
+  border:3px solid #ffe234 !important;
+  border-radius:16px !important;
+  background:linear-gradient(180deg,#14285f,#0b1430) !important;
+  box-shadow:6px 7px 0 rgba(0,0,0,.4),0 0 22px rgba(255,226,52,.25) !important;
+  grid-template-columns:1fr 1fr !important;
+  gap:8px !important;
+}
+#posWahl::before{
+  content:'🪄';
+  position:absolute;
+  top:-17px;
+  right:12px;
+  font-size:28px;
+  animation:v269Wand 1s ease-in-out infinite;
+}
+#posWahl b{
+  font-size:17px !important;
+  text-align:center;
+  padding:2px 0 0;
+}
+#posWahl b::after{
+  content:'Hier kannst du die Position wählen';
+  display:block;
+  margin-top:5px;
+  color:#ffe234;
+  font:800 11px/1.2 var(--text,Arial);
+}
+#posWahl button{height:42px !important;font-size:15px !important;border-radius:10px !important}
+#posWahl button.an{outline:3px solid #fff !important;outline-offset:2px;transform:scale(1.03)}
+@keyframes v269PosPulse{0%,100%{transform:scale(1)}45%{transform:scale(1.07) rotate(-1deg)}70%{transform:scale(1.02)}}
+@keyframes v269Callout{0%,100%{transform:translateX(-50%) translateY(0) scale(1)}50%{transform:translateX(-50%) translateY(-4px) scale(1.06)}}
+@keyframes v269Wand{0%,100%{transform:rotate(-12deg) translateY(0)}50%{transform:rotate(12deg) translateY(-3px)}}
+@media (max-width:520px){
+  .platz.belegt:first-child .tw::after{font-size:9px;padding:4px 6px}
+  #posWahl{width:min(250px,calc(100vw - 22px)) !important}
+}
+@media (prefers-reduced-motion:reduce){
+  .platz.belegt:first-child .tw,.platz.belegt:first-child .tw::after,#posWahl::before{animation:none !important}
+  .platz.belegt:first-child .tw{outline:3px solid #ffe234;outline-offset:3px}
+}
+
+
+/* V2.72: Position direkt auf der Spielerkarte anzeigen; Spielerfigur deutlich groesser. */
+.platz{height:116px}
+.platz.belegt img{height:68px !important;bottom:20px !important;z-index:1}
+.platz.belegt .pname{height:20px;z-index:4;display:grid;grid-template-columns:1fr auto;gap:4px;padding:0 7px}
+.platz.belegt .pname span{position:static;transform:none;min-width:0;overflow:hidden;text-overflow:ellipsis}
+.platz.belegt .poskurz{display:inline-grid;place-items:center;min-width:29px;height:17px;padding:0 5px;border:2px solid #0a1230;border-radius:6px;background:#ffe234;color:#0b1430;font:900 12px/13px var(--display,Impact);font-style:italic}
+.platz.belegt .poskurz.twkurz{background:#2fc94a;color:#fff}
+@media(max-width:520px){.platz{height:112px}.platz.belegt img{height:63px !important;bottom:20px !important}.platz.belegt .pname{height:19px;padding:0 5px}.platz.belegt .poskurz{min-width:27px;height:16px;font-size:11px}}
+
+
+/* V2.72: Ein gemeinsames Bearbeitungsfenster für den eigenen Spieler. */
+.du-bearbeiten{position:absolute;right:5px;top:3px;height:22px;padding:0 7px;border:2px solid #ffe234;border-radius:999px;background:#ffe234;color:#0b1430;font:900 11px/18px var(--text,Arial);cursor:pointer;z-index:8;box-shadow:2px 2px 0 rgba(0,0,0,.3);animation:v270EditPulse 1.25s ease-in-out infinite}
+.du-bearbeiten span{font-size:13px}
+.platz.belegt:first-child .tw,.platz.belegt:first-child .nrwahl{display:none !important}
+#spielerEditWahl{position:absolute;z-index:9999;pointer-events:auto;width:min(430px,calc(100vw - 24px));padding:14px;border:3px solid #ffe234;border-radius:18px;background:linear-gradient(180deg,#14285f,#0b1430);box-shadow:7px 8px 0 rgba(0,0,0,.4),0 0 28px rgba(255,226,52,.3);color:#fff;touch-action:manipulation}
+#spielerEditWahl[hidden]{display:none}
+#spielerEditWahl .se-title{font:900 19px/1.1 var(--text,Arial);text-align:center;margin-bottom:3px}
+#spielerEditWahl .se-sub{font:800 11px/1.2 var(--text,Arial);text-align:center;color:#ffe234;margin-bottom:11px}
+#spielerEditWahl .se-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+#spielerEditWahl .se-block{padding:10px;border:2px solid rgba(255,255,255,.18);border-radius:13px;background:rgba(255,255,255,.06)}
+#spielerEditWahl .se-label{display:block;text-align:center;font:900 13px/1 var(--text,Arial);margin-bottom:8px}
+#spielerEditWahl .se-number-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:5px}
+#spielerEditWahl button{min-height:36px;border:2px solid #07102b;border-radius:8px;background:#33456f;color:#fff;font:900 13px/1 var(--text,Arial);cursor:pointer}
+#spielerEditWahl button:hover{filter:brightness(1.12)}
+#spielerEditWahl button.an{outline:3px solid #fff;outline-offset:1px;background:#ffe234;color:#0b1430}
+#spielerEditWahl button.belegt{opacity:.3;cursor:not-allowed}
+#spielerEditWahl button.belegt:not([disabled]){cursor:pointer}
+#spielerEditWahl .se-tausch{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:30;width:86%;padding:12px;border:3px solid #ffe234;border-radius:14px;background:#0b1430;color:#fff;font:800 15px/1.35 var(--text,Arial);text-align:center;box-shadow:0 0 0 999px rgba(0,0,0,.45)}
+#spielerEditWahl .se-tausch b{color:#ffe234}
+#spielerEditWahl .se-tausch-k{display:flex;gap:8px;margin-top:10px}
+#spielerEditWahl .se-tausch-k button{flex:1;min-height:42px;border:2px solid #000;border-radius:10px;font:900 15px var(--text,Arial);cursor:pointer}
+#spielerEditWahl .se-tausch-k .ja{background:#5dff6d;color:#062a0d}
+#spielerEditWahl .se-tausch-k .nein{background:#4b5878;color:#fff}
+#spielerEditWahl .se-pos{display:grid;grid-template-columns:1fr 1fr;gap:5px}
+#spielerEditWahl .se-pos .pw-tw{grid-column:1/-1;background:#2fc94a}
+#spielerEditWahl .se-pos .pw-al,#spielerEditWahl .se-pos .pw-ar{background:#3fa7ff}
+#spielerEditWahl .se-pos .pw-mit{background:#ffd21f;color:#0b1430}
+#spielerEditWahl .se-pos .pw-stu{background:#ff4b4b}
+#spielerEditWahl .se-actions{display:flex;gap:7px;margin-top:10px}
+#spielerEditWahl .se-actions button{flex:1;background:#fff;color:#0b1430}
+#spielerEditWahl .se-actions .se-close{background:#ffe234}
+#spielerEditWahl .se-actions{display:flex;gap:8px}
+#spielerEditWahl .se-pos1{display:block !important}
+#spielerEditWahl .se-pos1 button{width:100%;min-height:44px;font-size:15px !important}
+#spielerEditWahl .se-pos1 button i{display:block;font-style:normal;font-size:10px;opacity:.85;margin-top:2px}
+#spielerEditWahl .se-hinw{display:block;margin-top:5px;font:700 10px/1.25 var(--text,Arial);color:#c9d6f5}
+#formEditor[data-ziel=DF] .fe-tok.DF:not(.sel),#formEditor[data-ziel=MF] .fe-tok.MF:not(.sel),#formEditor[data-ziel=ST] .fe-tok.ST:not(.sel){box-shadow:0 0 0 3px #ffe234,0 0 12px 3px rgba(255,226,52,.8) !important;border-radius:12px}
+#spielerEditWahl .se-actions .se-entf{flex:0 0 auto;background:#ff6b6b !important;color:#fff !important;border:2px solid #000;border-radius:10px;font:900 13px var(--text,Arial);padding:0 10px;cursor:pointer}
+#spielerEditWahl .se-actions .se-close{flex:1 1 auto}
+#menue #plaetze .platz .du-bearbeiten{display:grid !important;place-items:center;transform:none !important;position:absolute !important;right:2px !important;top:2px !important;left:auto !important;width:17px !important;height:17px !important;min-width:0 !important;padding:0 !important;border:1.5px solid #0b1430 !important;border-radius:50% !important;background:#ffe234 !important;font-size:0 !important;line-height:1 !important;animation:none !important;box-shadow:1px 1px 0 rgba(0,0,0,.4) !important;z-index:9}
+#menue #plaetze .platz .du-bearbeiten span{font-size:11px !important;line-height:1;color:#0b1430}
+/* V6.0: leuchtender Rand mit laufender Schlange um den Stift */
+#menue #plaetze .platz .du-bearbeiten{overflow:hidden !important;isolation:isolate;border:0 !important;background:#0b1430 !important;box-shadow:0 0 5px 1px rgba(255,226,52,.75) !important}
+#menue #plaetze .platz .du-bearbeiten::before{content:'';position:absolute;left:50%;top:50%;width:300%;aspect-ratio:1;transform:translate(-50%,-50%) rotate(0deg);z-index:-2;background:conic-gradient(from 0deg,transparent 0deg 210deg,#ffe234 280deg,#fff 315deg,#ffe234 335deg,transparent 360deg);animation:stSchlange 1.6s linear infinite}
+#menue #plaetze .platz .du-bearbeiten::after{content:'';position:absolute;inset:2px;border-radius:50%;z-index:-1;background:#ffe234}
+#menue #plaetze .platz .du-bearbeiten span{position:relative;z-index:1}   /* V6.0: kleines ✎ zeigt: antippen = Nummer/Position ändern */
+#menue #plaetze .platz.belegt{cursor:pointer}
+#spielerEditWahl .se-more{grid-column:1/-1;background:#1e3268}
+#spielerEditWahl .se-moregrid{display:grid;grid-template-columns:repeat(8,1fr);gap:4px;margin-top:6px}
+#spielerEditWahl .se-moregrid[hidden]{display:none}
+@keyframes v270EditPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08) rotate(-1deg)}}
+@media(max-width:520px){#spielerEditWahl{padding:10px}.du-bearbeiten{font-size:10px}.se-grid{grid-template-columns:1fr !important}.se-number-grid{grid-template-columns:repeat(6,1fr) !important}.se-moregrid{grid-template-columns:repeat(8,1fr) !important}}
+@media(prefers-reduced-motion:reduce){.du-bearbeiten{animation:none}}
+
+
+/* V2.74: Eigene Positions-/Nummernauswahl optisch an die KI-Auswahl angleichen. */
+#spielerEditWahl{
+  width:min(246px,calc(100vw - 24px)) !important;
+  padding:9px !important;
+  border:3px solid #ffe234 !important;
+  border-radius:12px !important;
+  background:#0e1b47 !important;
+  box-shadow:5px 6px 0 rgba(0,0,0,.35) !important;
+  color:#fff !important;
+}
+#spielerEditWahl .se-title{
+  font:800 15px/1.1 var(--text,Arial) !important;
+  margin:0 0 3px !important;
+  text-align:center !important;
+}
+#spielerEditWahl .se-sub{
+  font:800 10px/1.15 var(--text,Arial) !important;
+  color:#ffe234 !important;
+  margin:0 0 7px !important;
+  text-align:center !important;
+}
+#spielerEditWahl .se-grid{
+  display:grid !important;
+  grid-template-columns:1fr !important;
+  gap:7px !important;
+}
+#spielerEditWahl .se-block{
+  padding:0 !important;
+  border:0 !important;
+  border-radius:0 !important;
+  background:transparent !important;
+}
+#spielerEditWahl .se-label{
+  display:block !important;
+  text-align:center !important;
+  font:800 13px/1.1 var(--text,Arial) !important;
+  color:#fff !important;
+  margin:0 0 5px !important;
+}
+#spielerEditWahl .se-number-grid{
+  display:grid !important;
+  grid-template-columns:repeat(6,1fr) !important;
+  gap:5px !important;
+}
+#spielerEditWahl button{
+  min-height:34px !important;
+  height:34px !important;
+  border:2px solid #000 !important;
+  border-radius:8px !important;
+  background:#ffe234 !important;
+  color:#0b1430 !important;
+  font:800 14px/1 var(--text,Arial) !important;
+  cursor:pointer !important;
+}
+#spielerEditWahl button:hover{filter:brightness(1.05)}
+#spielerEditWahl button.an{
+  outline:3px solid #fff !important;
+  outline-offset:1px !important;
+  box-shadow:0 0 0 2px #ffe234 inset !important;
+  background:#ffe234 !important;
+  color:#0b1430 !important;
+}
+#spielerEditWahl button.belegt{
+  opacity:.28 !important;
+  cursor:not-allowed !important;
+}
+#spielerEditWahl .se-pos{
+  display:grid !important;
+  grid-template-columns:1fr 1fr !important;
+  gap:6px !important;
+}
+#spielerEditWahl .se-pos button{height:34px !important}
+#spielerEditWahl .se-pos .pw-tw{
+  grid-column:1/-1 !important;
+  background:#2fc94a !important;
+  color:#fff !important;
+}
+#spielerEditWahl .se-pos .pw-al,
+#spielerEditWahl .se-pos .pw-ar{
+  background:#3fa7ff !important;
+  color:#fff !important;
+}
+#spielerEditWahl .se-pos .pw-mit{
+  background:#ffd21f !important;
+  color:#0b1430 !important;
+}
+#spielerEditWahl .se-pos .pw-stu{
+  background:#ff4b4b !important;
+  color:#fff !important;
+}
+#spielerEditWahl .se-actions{
+  display:flex !important;
+  gap:5px !important;
+  margin-top:7px !important;
+}
+#spielerEditWahl .se-actions button{
+  height:28px !important;
+  min-height:28px !important;
+  background:#dfe4f2 !important;
+  color:#0b1430 !important;
+  font-size:12px !important;
+}
+#spielerEditWahl .se-actions .se-close{
+  background:#ffe234 !important;
+}
+#spielerEditWahl .se-more{
+  width:100% !important;
+  margin-top:6px !important;
+  background:#fff !important;
+  color:#0b1430 !important;
+}
+#spielerEditWahl .se-moregrid{
+  display:grid !important;
+  grid-template-columns:repeat(6,1fr) !important;
+  gap:4px !important;
+  margin-top:7px !important;
+  max-height:190px !important;
+  overflow:auto !important;
+  padding-right:2px !important;
+}
+#spielerEditWahl .se-moregrid button{
+  height:30px !important;
+  min-height:30px !important;
+  border-radius:7px !important;
+  font-size:12px !important;
+}
+/* Die Figur sitzt exakt mittig im blauen Bereich zwischen Kopfband und gelber Namensleiste. */
+.platz.belegt img{
+  top:calc(22px + (100% - 22px - 20px)/2) !important;
+  bottom:auto !important;
+  transform:translate(-50%,-50%) !important;
+}
+@media(max-width:520px){
+  #spielerEditWahl{padding:9px !important}
+  #spielerEditWahl .se-number-grid{grid-template-columns:repeat(6,1fr) !important}
+  #spielerEditWahl .se-moregrid{grid-template-columns:repeat(6,1fr) !important}
+  .platz.belegt img{
+    top:calc(22px + (100% - 22px - 19px)/2) !important;
+  }
+}
+
+
+/* V2.75: Positionsauswahl rechts neben der Trikotnummer, nicht darunter. */
+#spielerEditWahl{width:min(430px,calc(100vw - 24px)) !important;}
+#spielerEditWahl .se-grid{
+  display:grid !important;
+  grid-template-columns:minmax(0,1.35fr) minmax(0,.9fr) !important;
+  align-items:start !important;
+  gap:10px !important;
+}
+#spielerEditWahl .se-block{min-width:0 !important;}
+#spielerEditWahl .se-pos{grid-template-columns:1fr 1fr !important;}
+#spielerEditWahl .se-pos .pw-tw{grid-column:1/-1 !important;}
+@media(max-width:520px){
+  #spielerEditWahl{width:min(430px,calc(100vw - 20px)) !important;}
+  #spielerEditWahl .se-grid{grid-template-columns:minmax(0,1.35fr) minmax(0,.9fr) !important;}
+}
+
+
+/* V2.78: Auswahl ohne sichtbare Verzögerung und mit kurzer, flüssiger Bewegung. */
+#menue .karte{
+  transition:box-shadow .12s ease, transform .12s ease, outline-color .12s ease, filter .12s ease !important;
+  will-change:transform,box-shadow;
+}
+#menue .karte.gewaehlt{
+  outline:4px solid #ffe234 !important;
+  outline-offset:-4px !important;
+  transform:translateY(-2px) !important;
+}
+
+
+/* V2.79: Eine einzige, zustandsgebundene Auswahl – sofort sichtbar und stabil. */
+#menue .karte.gewaehlt{
+  outline:4px solid #ffe234 !important;
+  outline-offset:-4px !important;
+  box-shadow:0 0 0 4px #0a1230,0 0 0 8px #ffe234,0 8px 18px rgba(0,0,0,.28) !important;
+  transform:translateY(-2px) !important;
+  z-index:12 !important;
+}
+#menue .karte{
+  -webkit-tap-highlight-color:transparent;
+  touch-action:manipulation;
+}
+
+
+/* V2.77: Auswahl im Hauptmenü klar sichtbar, ohne die Kartenfunktion zu ändern. */
+#menue .karte.gewaehlt{
+  outline:4px solid #ffe234 !important;
+  outline-offset:-4px !important;
+  box-shadow:0 0 0 4px #0a1230,0 0 0 8px #ffe234,0 8px 18px rgba(0,0,0,.28) !important;
+  transform:translateY(-2px) !important;
+  z-index:12 !important;
+}
+#menue .karte.gewaehlt .name{
+  background:#ff3fa4 !important;
+  color:#fff !important;
+}
+
+/* V2.77: Den rotierenden Kreis/Zauber-Hinweis unter den Spielern entfernen. */
+#menue .platz.belegt .tw::after,
+#menue .platz.belegt .nrwahl::after{
+  content:none !important;
+  display:none !important;
+  animation:none !important;
+}
+#menue .platz.belegt .tw::before,
+#menue .platz.belegt .nrwahl::before{
+  content:none !important;
+  display:none !important;
+  animation:none !important;
+}
+#menue .platz.belegt:first-child .tw,
+#menue .platz.belegt:first-child .nrwahl{
+  animation:none !important;
+  box-shadow:none !important;
+}
+#menue .platz.belegt:first-child .tw{
+  outline:none !important;
+}
+
+
+/* V4.0: laufende Liga sperrt Land und Stufe */
+#landKnopf.gesperrt,.einstellungen .schalter.gesperrt{opacity:.45;filter:grayscale(.85)}
+.einstellungen .schalter.gesperrt .wahl{cursor:not-allowed}
+#landKnopf.gesperrt{cursor:not-allowed}
+/* V10.0: Hall-of-Fame-Fenster im weißen Dialog-Design */
+#hofUeber .hofbox{background:#fff !important;border:3px solid #000 !important;border-radius:14px !important;color:#0b1430 !important;box-shadow:none !important;padding:16px !important;max-width:340px}
+#hofUeber .hofbox h2{background:none !important;-webkit-background-clip:border-box !important;background-clip:border-box !important;-webkit-text-fill-color:#0b1430 !important;color:#0b1430 !important;-webkit-text-stroke:0 !important;text-shadow:none !important;text-transform:none;transform:none !important;font:900 20px/1.1 var(--text,sans-serif) !important;letter-spacing:0 !important;display:flex;align-items:center;justify-content:center;gap:6px;margin:0}
+#hofUeber .hofbox h2 .halle-ico{height:1.3em;margin:0}
+#hofUeber .hofbox .mpklein{color:#0b1430 !important;font:600 14px/1.3 var(--text,sans-serif) !important;margin:8px 0 6px}
+#hofUeber .hof-stufe{display:flex;gap:6px;margin:6px 0}#hofUeber .hof-stufe button{flex:1;padding:9px 4px;border:3px solid #000;border-radius:10px;background:#e8ecf5;color:#0b1430;font:900 15px system-ui,sans-serif}#hofUeber .hof-stufe button.an{background:#ffe234}
+#hofUeber .hof-knoepfe{max-width:none;gap:8px;margin:6px 0 0}
+#hofUeber .hof-knoepfe.vier{gap:8px}
+#hofUeber .hof-knoepfe button{min-height:46px;height:auto;border:2px solid #000;border-radius:10px;box-shadow:none;font:800 15px/1.15 var(--text,sans-serif);color:#0b1430;padding:7px 12px}
+#hofUeber .hof-knoepfe button small{display:block;margin-top:2px;font:600 11px/1.1 var(--text,sans-serif);letter-spacing:0;text-transform:none;opacity:.75}
+#hofUeber .hof-f{background:#ffe234}
+#hofUeber .hof-t,#hofUeber .hof-n{background:#dfe4f2}
+#hofUeber .hof-zu{background:#fff}
+#wahlDialog .hofbox{background:#fff !important;border:3px solid #000 !important;border-radius:14px !important;color:#0b1430 !important;box-shadow:none !important;padding:16px !important;max-width:340px}
+#wahlDialog .hofbox h2{background:none !important;-webkit-background-clip:border-box !important;background-clip:border-box !important;-webkit-text-fill-color:#0b1430 !important;color:#0b1430 !important;-webkit-text-stroke:0 !important;text-shadow:none !important;text-transform:none;transform:none !important;font:900 20px/1.1 var(--text,sans-serif) !important;letter-spacing:0 !important;display:flex;align-items:center;justify-content:center;gap:6px;margin:0}
+#wahlDialog .hofbox h2 .halle-ico{height:1.3em;margin:0}
+#wahlDialog .hofbox .mpklein{color:#0b1430 !important;font:600 14px/1.3 var(--text,sans-serif) !important;margin:8px 0 6px}
+#wahlDialog .hof-stufe{display:flex;gap:6px;margin:6px 0}#wahlDialog .hof-stufe button{flex:1;padding:9px 4px;border:3px solid #000;border-radius:10px;background:#e8ecf5;color:#0b1430;font:900 15px system-ui,sans-serif}#wahlDialog .hof-stufe button.an{background:#ffe234}
+#wahlDialog .hof-knoepfe{max-width:none;gap:8px;margin:6px 0 0}
+#wahlDialog .hof-knoepfe.vier{gap:8px}
+#wahlDialog .hof-knoepfe button{min-height:46px;height:auto;border:2px solid #000;border-radius:10px;box-shadow:none;font:800 15px/1.15 var(--text,sans-serif);color:#0b1430;padding:7px 12px}
+#wahlDialog .hof-knoepfe button small{display:block;margin-top:2px;font:600 11px/1.1 var(--text,sans-serif);letter-spacing:0;text-transform:none;opacity:.75}
+#wahlDialog .hof-f{background:#ffe234}
+#wahlDialog .hof-t,#wahlDialog .hof-n{background:#dfe4f2}
+#wahlDialog .hof-zu{background:#fff}
+.hof-n{background:linear-gradient(180deg,#ff8cc8,#ff3fa4)}
+.hof-knoepfe button[hidden]{display:none}
+.hof-knoepfe.vier{gap:6px}
+.hof-knoepfe.vier button{padding:7px 12px}
+/* V10.0: Krone immer an MEIN SUPERTEAM */
+.landzelle.fw-super{position:relative}
+.landzelle.fw-super .fw-krone{position:absolute;top:3px;right:5px;font-style:normal;font-size:20px;line-height:1;pointer-events:none}
+.landzelle.fw-super .fw-krone .halle-ico{height:1.25em;width:auto;margin:0;vertical-align:top}
+
+
+#menue .liga-btn{width:100%;height:40px;white-space:nowrap;font-size:19px !important;border:3px solid #000;border-radius:10px;background:linear-gradient(180deg,#7fd6ff,#2a8fe0);color:#fff;box-shadow:3px 3px 0 #000;font-family:var(--display);font-size:22px;letter-spacing:1px;-webkit-text-stroke:1.2px #000;paint-order:stroke fill;cursor:pointer;touch-action:manipulation}
+#menue .start{white-space:nowrap;font-size:20px !important;letter-spacing:1px}
+#menue .liga-btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 #000}
+#liga{position:fixed;inset:0;z-index:41;background:#0a1233;overflow:hidden}
+#liga[hidden]{display:none}
+#liga .lg-flaeche{position:absolute;left:50%;top:50%;width:1120px;height:600px;transform-origin:center;transform:translate(-50%,-50%);font-family:var(--text)}
+#liga .lg-titel{position:absolute;left:0;right:0;top:8px;text-align:center}
+#liga .lg-titel b{display:block;font-family:var(--display);font-weight:400;font-size:44px;line-height:1;color:var(--gelb);letter-spacing:1px;-webkit-text-stroke:4px #000;paint-order:stroke fill;text-shadow:3px 4px 0 var(--pink)}
+#liga .lg-titel span{display:inline-block;margin-top:4px;background:var(--gelb);color:#000;font-family:var(--display);font-size:20px;letter-spacing:1.5px;padding:1px 16px;border:3px solid #000;transform:skewX(-8deg)}
+#liga .lg-tabs{position:absolute;left:40px;right:40px;top:86px;display:flex;gap:8px;justify-content:center}
+#liga .lg-tabs button{height:34px;padding:0 13px;border:3px solid #000;border-radius:9px;background:#26357a;color:#c9d6f5;font-family:var(--display);font-size:20px;letter-spacing:1px;cursor:pointer;box-shadow:3px 3px 0 #000}
+#liga .lg-tabs button.an{background:var(--gelb);color:#000}
+/* V5.0: League 2 + Champions Cup */
+#liga tr.cc-platz td{background:rgba(255,226,52,.12)}
+#liga .cc-mark{background:#7b2cff;color:#fff;border-radius:5px;padding:1px 5px;font-size:12px;margin-left:4px}
+#liga .cc-baum{display:flex;gap:14px;justify-content:center;align-items:stretch;height:100%;padding:4px;box-sizing:border-box}
+#liga .cc-runde{flex:1 1 0;display:flex;flex-direction:column;justify-content:space-around;gap:5px;min-width:0}
+#liga .cc-runde h4{margin:0;text-align:center;font:400 18px/1 var(--display);color:#ffe234;letter-spacing:1px}
+#liga .cc-runde.leer{opacity:.45}
+#liga .cc-paar{display:flex;flex-direction:column;gap:1px;background:#16275e;border:3px solid #000;border-radius:10px;padding:3px 8px;color:#fff}
+#liga .cc-paar.du{border-color:#ffe234;box-shadow:0 0 0 2px #ffe234}
+#liga .cc-paar b{text-align:center;font:400 16px/1 var(--display);color:#ffe234}
+#liga .cc-paar b small{font-size:12px;color:#fff}
+#liga .cc-t{display:flex;align-items:center;gap:6px;font:900 14px/1.1 var(--text);white-space:nowrap;overflow:hidden}
+#liga .cc-t .cflag{height:18px}
+#liga .cc-t small{margin-left:auto;font-size:11px;color:#9fb2e8}
+#liga .cc-t.du{color:#ffe234}
+#liga .cc-t.raus{opacity:.45;text-decoration:line-through}
+#liga .cc-t.leer{justify-content:center;color:#9fb2e8}
+#liga .cc-paar.los{opacity:0;transform:scale(.6) rotate(-6deg);animation:ccLos .7s cubic-bezier(.2,1.6,.4,1) forwards}
+@keyframes ccLos{to{opacity:1;transform:none}}
+#liga .cc-sieger{position:absolute;left:50%;bottom:4px;transform:translateX(-50%);background:linear-gradient(160deg,#ffd84a,#c99400);color:#000;border:3px solid #000;border-radius:12px;padding:6px 16px;font:900 20px/1 var(--text);white-space:nowrap}
+#liga .lg-info{position:absolute;left:40px;right:40px;top:128px;height:24px;text-align:center;color:var(--gelb);font:800 18px/24px var(--text)}
+#liga .lg-inhalt{position:absolute;left:40px;right:40px;top:156px;height:372px;overflow-y:auto;background:rgba(255,255,255,.05);border:3px solid #000;border-radius:10px;padding:4px 8px}
+#liga table{width:100%;border-collapse:collapse;color:#fff;font:700 16px/1 var(--text)}
+#liga th{color:var(--gelb);font-family:var(--display);font-weight:400;font-size:15px;letter-spacing:1px;padding:3px 6px;text-align:center}
+#liga td{padding:3px 6px;text-align:center;height:20px}
+#liga th.l,#liga td.l{text-align:left}
+#liga tbody tr:nth-child(even){background:rgba(255,255,255,.06)}
+#liga tr.du{background:rgba(255,226,52,.25)!important;color:var(--gelb)}
+#liga tr.meister td:first-child{color:var(--gelb)}
+#liga td b{color:var(--gelb)}
+#liga .cflag{height:15px;vertical-align:middle;margin-right:6px}
+#liga .lg-pager{display:flex;align-items:center;justify-content:center;gap:16px;margin:4px 0 8px}
+#liga .lg-pager b{font-family:var(--display);font-weight:400;font-size:22px;color:var(--gelb);letter-spacing:1px;min-width:190px;text-align:center}
+#liga .lg-pager button{width:42px;height:32px;border:3px solid #000;border-radius:8px;background:var(--gelb);font:900 20px/1 var(--text);cursor:pointer}
+#liga .lg-spiel{display:grid;grid-template-columns:1fr 90px 1fr;align-items:center;gap:10px;padding:6px 14px;margin:3px 0;border-radius:8px;background:rgba(255,255,255,.06);color:#fff;font:700 19px/1 var(--text)}
+#liga .lg-spiel.du{background:rgba(255,226,52,.25);color:var(--gelb)}
+#liga .lg-spiel .a{text-align:right}
+#liga .lg-spiel .e{text-align:center;font-family:var(--display);font-size:24px;color:var(--gelb)}
+#liga .lg-leer{padding:40px;text-align:center;color:#9fb3e0;font:700 20px var(--text)}
+#liga .lg-knoepfe{position:absolute;left:0;right:0;bottom:12px;display:flex;justify-content:center;gap:16px}
+#liga .lg-knoepfe button{height:50px;padding:0 30px;border:3px solid #000;border-radius:12px;background:linear-gradient(180deg,#ff62b6,var(--pink));color:#fff;-webkit-text-stroke:1.5px #000;paint-order:stroke fill;box-shadow:4px 5px 0 #000;font-family:var(--display);font-size:26px;letter-spacing:1px;cursor:pointer}
+#liga .lg-knoepfe button.zweit{background:#4b5878;animation:none}
+#liga .lg-knoepfe button:active{transform:translate(2px,2px);box-shadow:2px 2px 0 #000}
+
+
+#mEinst{font-size:22px;line-height:1;color:#0b1430}
+#einstUeber{position:fixed;inset:0;z-index:999990;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.78);backdrop-filter:blur(5px);padding:16px}
+#einstUeber[hidden]{display:none!important}
+#einstUeber .e-box{width:min(380px,94vw);max-height:92vh;overflow:auto;padding:18px 18px 16px;border-radius:18px;text-align:center;background:linear-gradient(145deg,#151922,#303744);border:2px solid rgba(255,255,255,.18);color:#fff;font-family:var(--text,Arial)}
+#einstUeber h2{margin:0 0 4px;font:400 28px var(--display,Impact);letter-spacing:1px;color:#ffe234}
+#einstUeber p{margin:0 0 12px;font:700 14px/1.25 var(--text,Arial);color:#c9d6f5}
+#einstUeber button{display:block;width:100%;min-height:46px;margin:8px 0 0;border:3px solid #000;border-radius:10px;font:400 20px var(--display,Impact);letter-spacing:.5px;cursor:pointer;touch-action:manipulation;box-shadow:3px 3px 0 #000;background:#e8eefc;color:#0b1430}
+#einstUeber button:active{transform:translate(2px,2px);box-shadow:1px 1px 0 #000}
+#einstUeber button.e-rot{background:linear-gradient(180deg,#ff6b6b,#d62828);color:#fff}
+#einstUeber button.e-zu{background:#4b5878;color:#fff}
+#einstUeber .e-grafik{margin:8px 0 2px;padding:8px;border-radius:12px;background:rgba(0,0,0,.25);border:2px solid rgba(255,255,255,.12)}
+#einstUeber .e-gt{font:400 18px var(--display,Impact);color:#ffe234;letter-spacing:.5px;margin-bottom:6px}
+#einstUeber .e-gw{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px}#einstUeber [data-mgrafik=auto]{display:none !important}
+#einstUeber .e-gw button{margin:0 !important;min-height:44px !important;padding:3px 1px !important;font:900 12px/1.05 var(--text,Arial) !important;letter-spacing:0 !important;box-shadow:2px 2px 0 #000 !important;border-width:2px !important}
+#einstUeber .e-gw button small{display:block;font:700 9px/1.1 var(--text,Arial);opacity:.75;margin-top:2px}
+#einstUeber .e-gw button.an{background:#ffe234 !important;color:#0b1430 !important}
+#einstUeber .e-gh{margin-top:6px;font:700 11px/1.3 var(--text,Arial);color:#c9d6f5;min-height:14px}
+/* V8.0: alles auf einen Bildschirm (kein Scrollen) */
+#einstUeber .e-box{width:min(560px,94vw) !important;max-height:none !important;overflow:visible !important;padding:10px 14px 10px !important}
+#einstUeber h2{font-size:24px !important;margin:0 0 6px !important}
+#einstUeber .e-grafik{margin:0 0 6px !important;padding:6px 8px !important}
+#einstUeber .e-gt{font-size:16px !important;margin-bottom:4px !important}
+#einstUeber .e-gw button{min-height:38px !important}
+#einstUeber .e-gh:empty{display:none}
+#einstUeber .e-reihe{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+#einstUeber .e-reihe button,#einstUeber #eZu{margin:0 !important;min-height:40px !important;font-size:16px !important}
+#einstUeber #eZu{margin-top:8px !important}
+#einstUeber #eAlles{grid-column:1/-1}#einstUeber #eSicher{grid-column:auto}
+#einstUeber .e-msg{min-height:0 !important;margin-top:4px !important;min-height:18px;margin-top:10px;font:800 13px var(--text,Arial);color:#8dff9a}
+
+
+/* Online-Turnier: Ergebnis-/Turnierfarben wie im gewünschten Mockup */
+#endeUeber .box, #turnier .t-flaeche {
+  background: radial-gradient(ellipse at 50% 0%, #153a78 0%, #071a3e 62%, #06132d 100%) !important;
+  color: #f7f9ff !important;
+  border: 3px solid #ffdf19 !important;
+  box-shadow: 0 14px 0 #030914, 0 0 0 5px rgba(255,223,25,.13), 0 22px 48px rgba(0,0,0,.48) !important;
+}
+#endeUeber .box h2, #turnier .t-titel b, #turnier .t-fkopf { color:#ffdf19 !important; }
+#endeUeber .ergebnis { color:#fff !important; font-weight:1000; text-shadow:0 3px 0 #07132d; }
+#endeUeber .reihe-k button, #turnier .t-knoepfe button {
+  border:2px solid #ffdf19 !important; border-radius:14px !important;
+  background:linear-gradient(180deg,#ffe94a,#ffc900) !important; color:#07132d !important;
+  font-weight:1000 !important; box-shadow:0 5px 0 #050c1c !important;
+}
+#endeUeber .reihe-k button.zweit, #turnier .t-knoepfe button.t-zweit {
+  background:linear-gradient(180deg,#f8fbff,#dce7f7) !important; color:#07132d !important;
+}
+#turnier .t-chip, #turnier .t-info, #turnier .t-dein { border-color:#ffdf19 !important; }
+#turnier .t-chip { background:linear-gradient(180deg,#16376d,#081a3a) !important; color:#f7f9ff !important; }
+#turnier .t-chip .leer { color:#aabbdc !important; }
+#turnier .t-knoepfe { gap:14px !important; }
+#turnier .t-pokal { filter:drop-shadow(0 0 14px rgba(255,223,25,.35)); }
+@media(max-width:640px){
+  #endeUeber .box { width:min(96vw,680px) !important; max-height:92vh; overflow:auto; }
+  #endeUeber .reihe-k { gap:8px !important; }
+  #endeUeber .reihe-k button { min-height:44px; }
+}
+
+
+/* V11.7: Turnierbildschirm – gut lesbare Buttons, Blase und Banner (weisse Schrift, kein Text-Rand) */
+#turnier .t-knoepfe{gap:12px !important}
+#turnier .t-knoepfe button{height:52px !important;padding:0 26px !important;border:2px solid #ffdf19 !important;border-radius:14px !important;color:#fff !important;-webkit-text-stroke:0 !important;paint-order:normal !important;font-family:var(--display) !important;font-weight:400 !important;font-size:24px !important;letter-spacing:1.5px !important;text-shadow:0 2px 0 rgba(0,0,0,.5) !important;box-shadow:0 5px 0 #050c1c !important}
+#turnier .t-knoepfe button.t-zweit{background:linear-gradient(180deg,#ffe94a,#ffc900) !important;color:#07132d !important;border-color:#ffdf19 !important;text-shadow:none !important}
+#turnier .t-knoepfe #tAuf{background:linear-gradient(180deg,#4a86ff,#1e4fd8) !important}
+#turnier .t-knoepfe #tLos{background:linear-gradient(180deg,#34e872,#13a043) !important}
+#turnier .t-knoepfe button:active{transform:translateY(3px) !important;box-shadow:0 2px 0 #050c1c !important}
+#turnier .t-dein{background:#ff3fa4 !important;color:#fff !important;border:2px solid #fff !important;-webkit-text-stroke:0 !important;text-shadow:0 2px 0 #7a1050 !important}
+#turnier .t-titel span{background:#16376d !important;color:#fff !important;border:3px solid #ffdf19 !important;-webkit-text-stroke:0 !important;text-shadow:0 2px 0 rgba(0,0,0,.5) !important}
+
+
+/* V4.7: Multiplayer-Fenster scrollt, FERTIG-Knopf bleibt immer sichtbar */
+#mpUeber .box.mpbox{max-height:570px;overflow-y:auto;overscroll-behavior:contain}
+#mpUeber .mpunten{position:sticky;bottom:-18px;z-index:3;margin:12px -22px -18px;padding:10px 22px 14px;background:#0e1b47;border-top:3px solid #ffe234}
+/* Ping-Anzeige (ms) ausblenden */
+#netzPing{display:none !important}
+/* V4.9: Team-Banner beim Gast */
+#mpTeamG{margin:8px 0 4px;padding:10px 8px;border-radius:10px;border:3px solid #0a1230;color:#fff;text-align:center;font:900 20px/1.2 var(--text);letter-spacing:.5px}
+#mpTeamG[hidden]{display:none}
+
+
+/* V8.0: Menü auf volle Bildschirmbreite – rechte Spalte rechts verankert, Kartenfenster wächst mit */
+#menue .rechts{left:auto !important;right:14px !important}
+#menue .kartenfenster{width:calc(var(--fw, 1120px) - 378px) !important}
+/* V1.2 Menü-Fix: rechte Spalte passt in die 1120x600-Fläche */
+.rechts{grid-template-columns:minmax(0,1fr) !important;gap:8px !important}
+.teamfenster,.einstellungen{min-width:0 !important;box-sizing:border-box !important}
+.einstellungen{grid-template-columns:minmax(0,1fr) !important;gap:5px !important;padding:6px 8px !important}
+.einstellungen > *{min-width:0 !important;box-sizing:border-box !important}
+.teamtitel{font-size:22px !important;margin-bottom:4px !important}
+.teamhinweis{min-height:0 !important}
+#menue .menu-status{display:none !important}
+#menue .landknopf{height:34px !important}
+#menue .start{min-height:38px !important;height:38px !important;font-size:17px !important}
+#menue .neues-spiel-btn{min-height:34px !important;height:34px !important}
+#menue .einstellungen .wahl{height:24px !important}
+
+
+/* V2.1 Elfmeterschießen: Torecken-Auswahl */
+#elfWahl[hidden]{display:none}
+#elfWahl{margin-top:12px;text-align:center}
+#elfWahl .et{font:900 22px/1.2 var(--text,Arial);color:#ffe234;margin-bottom:8px;letter-spacing:.5px}
+#elfWahl .etor{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;max-width:420px;margin:0 auto;padding:10px 10px 8px;border:4px solid #fff;border-bottom:none;border-radius:10px 10px 0 0;background:rgba(255,255,255,.08)}
+#elfWahl button{height:64px;font:900 30px/1 var(--text,Arial);border:3px solid #000;border-radius:10px;background:linear-gradient(180deg,#ffe96a,#ffe234);color:#0b1430;box-shadow:3px 4px 0 #000;cursor:pointer;touch-action:manipulation}
+#elfWahl button:active{transform:translate(2px,2px);box-shadow:1px 2px 0 #000}
+
+
+/* V2.2 Menü: Freundschaftsspiel / Pokal / Liga */
+#menue #start{display:none !important}
+#menue .modi81{display:grid !important;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px}
+#menue .modi81 .m81{display:flex !important;flex-direction:column;align-items:center;justify-content:center;gap:1px;height:46px !important;min-height:0 !important;width:auto !important;margin:0 !important;padding:2px 1px !important;border:3px solid #000;border-radius:10px;color:#0b1430;box-shadow:3px 4px 0 #000;cursor:pointer;font-family:var(--text,Arial);animation:none !important;touch-action:manipulation}
+#menue .modi81 .m81 b{font-size:18px;line-height:1;font-weight:400}
+#menue .modi81 .m81 span{font-size:11px;line-height:1.05;font-weight:900;letter-spacing:.2px;white-space:nowrap}
+#menue .modi81 .freund{background:linear-gradient(180deg,#a7f07a,#52c43f)}
+#menue .modi81 .pokal{background:linear-gradient(180deg,#ffe96a,#ffe234)}
+#menue .modi81 .liga{background:linear-gradient(180deg,#ff8cc8,#ff3fa4)}
+#menue .modi81 .halle{grid-column:1/-1;flex-direction:row !important;gap:6px !important;height:34px !important;background:linear-gradient(180deg,#7fb2ff,#2f62d6);color:#fff;text-shadow:0 1px 0 #000}
+#menue .modi81 .m81.halle b,#menue .rechts .modi81 .m81.halle b{display:inline-flex !important;align-items:center}
+#menue .rechts .modi81 .m81.halle span{font-size:12px !important;letter-spacing:.6px !important}
+#menue .modi81 .m81.freund span,#menue .rechts .modi81 .m81.freund span{font-size:9px !important;letter-spacing:-.5px !important}
+#menue .modi81 .halle b img{height:17px;width:auto;margin:0}
+#menue .modi81 .halle span{font-size:12px !important;letter-spacing:.6px !important}
+#hofUeber .hofbox{text-align:center}
+#hofUeber .hofbox h2 img{height:1em;width:auto;vertical-align:-.1em;margin-right:6px}
+#hofUeber .hof-knoepfe{display:flex;flex-direction:column;gap:9px;margin:10px auto 4px;max-width:360px}
+#hofUeber .hof-knoepfe button{font:900 17px/1.1 system-ui,sans-serif;border:3px solid #000;border-radius:12px;padding:11px 12px;box-shadow:0 4px 0 #000;cursor:pointer;color:#0b1430}
+#hofUeber .hof-f{background:linear-gradient(180deg,#a7f07a,#52c43f)}
+#hofUeber .hof-t{background:linear-gradient(180deg,#ffe96a,#ffcf1a)}
+#hofUeber .hof-zu{background:#4a5677;color:#fff !important}
+#hofUeber small{display:block;font-size:11px;font-weight:700;opacity:.85;margin-top:2px}
+#wahlDialog .hofbox{text-align:center}
+#wahlDialog .hofbox h2 img{height:1em;width:auto;vertical-align:-.1em;margin-right:6px}
+#wahlDialog .hof-knoepfe{display:flex;flex-direction:column;gap:9px;margin:10px auto 4px;max-width:360px}
+#wahlDialog .hof-knoepfe button{font:900 17px/1.1 system-ui,sans-serif;border:3px solid #000;border-radius:12px;padding:11px 12px;box-shadow:0 4px 0 #000;cursor:pointer;color:#0b1430}
+#wahlDialog .hof-f{background:linear-gradient(180deg,#a7f07a,#52c43f)}
+#wahlDialog .hof-t{background:linear-gradient(180deg,#ffe96a,#ffcf1a)}
+#wahlDialog .hof-zu{background:#4a5677;color:#fff !important}
+#wahlDialog small{display:block;font-size:11px;font-weight:700;opacity:.85;margin-top:2px}
+#menue .modi81 .m81:active{transform:translate(2px,2px);box-shadow:1px 2px 0 #000}
+#menue .modi81 .m81.aus{filter:none}
+#menue .modi81 .m81{position:relative}
+@media (max-height:440px){#menue .modi81 .m81{height:30px !important;flex-direction:row !important;gap:4px !important}#menue .modi81 .m81 b{display:none}}
+#menue .modi81 .m81.laeuft::after{content:'▶ ' attr(data-info);white-space:nowrap;position:absolute;top:-11px;right:-4px;background:#0b1430;color:#ffe234;border:2px solid #000;border-radius:7px;font:900 8.5px/1 system-ui,sans-serif;padding:2px 4px;letter-spacing:.3px}
+
+
+/* V2.3 Nummern-/Positions-Fenster passt immer ins Bild */
+#spielerEditWahl{display:flex;flex-direction:column;box-sizing:border-box;max-height:588px;overflow:hidden}
+#spielerEditWahl[hidden]{display:none !important}
+#spielerEditWahl .se-title,#spielerEditWahl .se-sub,#spielerEditWahl .se-vor{flex:0 0 auto}
+#spielerEditWahl .se-vor{text-align:center;font:800 13px/1.2 var(--text,Arial);color:#fff;background:rgba(255,226,52,.16);border:2px dashed #ffe234;border-radius:10px;padding:5px 8px;margin:0 0 9px}
+#spielerEditWahl .se-vor b{color:#ffe234}
+#spielerEditWahl .se-grid{flex:1 1 auto;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch}
+#spielerEditWahl .se-actions{flex:0 0 auto;margin-top:8px}
+#spielerEditWahl .se-actions .se-close{min-height:44px;font-size:16px}
+#menue #teamhinweis{white-space:nowrap}
+#menue .teamhinweis{font-size:13px !important}
+/* V5.5: rechtes Fenster passt auch bei 16:9 ganz auf den Bildschirm */
+#menue .rechts .plaetze .platz.kaderkachel{grid-column:span 3 !important}
+#menue .rechts .teamhinweis.voll{display:none !important}
+#menue .rechts .einstellungen{grid-template-columns:minmax(0,1fr) minmax(0,1fr) !important}
+#menue .rechts .einstellungen > *{grid-column:1 / -1}
+#menue .rechts .einstellungen > #formKnopf,#menue .rechts .einstellungen > #neuesSpielKnopf{grid-column:auto !important;min-width:0;height:30px !important;min-height:0 !important;margin:0 !important;padding:0 6px !important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:13px !important;line-height:26px !important}
+#menue .rechts .einstellungen > #neuesSpielKnopf{display:none !important}   /* V5.6: Neu anfangen über LEAGUE / SILESCROW CUP; alles löschen nur noch in den Einstellungen */
+#menue .rechts .einstellungen > #formKnopf{grid-column:1 / -1 !important}
+#menue .rechts .einstellungen > #formKnopf{order:2}
+#menue .rechts .einstellungen > .modi81{order:4}
+#menue .rechts .einstellungen > .menu-status,#menue .rechts .einstellungen > .fehlt{order:5}
+#menue .rechts .einstellungen > #fortsetzenKnopf,#menue .rechts .einstellungen > #start{order:4}
+#menue .rechts .einstellungen > .landknopf,#menue .rechts .einstellungen > .schalter{order:1}
+#menue .rechts .modi81 .m81{height:34px !important;flex-direction:row !important;gap:4px !important}
+#menue .rechts .modi81 .m81 b{display:none !important}
+#menue .modi81 .m81.online-aus{filter:grayscale(1);opacity:.45}
+#menue .rechts .modi81 .m81 span{font-size:11px !important;letter-spacing:-.2px !important;white-space:nowrap}
+#menue .rechts .modi81 .m81{padding:2px 0 !important}
+#menue .modi81 .m81 span.zwei{white-space:normal !important;line-height:1 !important;text-align:center;font-size:10px !important}
+#menue .rechts .modi81 .m81 span{font-size:10px !important;letter-spacing:-.4px !important}
+#menue .rechts .modi81 .m81.halle span{font-size:12px !important;letter-spacing:.6px !important}
+#menue .rechts .einstellungen > #formKnopf{font-size:11px !important;letter-spacing:0 !important;padding:0 3px !important}
+#menue .rechts .einstellungen > #formKnopf b{font-size:11px !important;padding:0 3px !important}
+#menue .rechts .plaetze .platz{height:57px !important}
+#menue .rechts .einstellungen > .fehlt:empty{display:none !important}
